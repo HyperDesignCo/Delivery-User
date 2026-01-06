@@ -46,6 +46,7 @@ kotlin {
 dependencies {
     //Compose
     implementation(libs.androidx.compose.ui.tooling.preview)
+    testImplementation(libs.junit.jupiter)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.icons.extended)
@@ -69,6 +70,7 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     //Ktor
     implementation(libs.ktor.client.core)
