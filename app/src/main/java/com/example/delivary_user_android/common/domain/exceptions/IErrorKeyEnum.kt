@@ -1,3 +1,0 @@
-package com.example.delivary_user_android.common.domain.exceptions
-
-interface IErrorKeyEnum

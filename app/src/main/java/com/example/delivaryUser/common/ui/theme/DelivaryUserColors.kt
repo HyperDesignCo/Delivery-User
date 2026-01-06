@@ -1,0 +1,69 @@
+package com.example.delivaryUser.common.ui.theme
+
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
+val LocalDelivaryUserColors = staticCompositionLocalOf<DelivaryUserColors> { error("Cannot provide colors") }
+data class DelivaryUserColors(
+    val primary: Color,
+    val secondary: Color,
+    val primaryVariant: Color,
+    val background: BackgroundColors,
+    val status: StatusColors,
+)
+
+data class BackgroundColors(
+    val surface: Color,
+    val surfaceHigh: Color,
+    val hint: Color,
+)
+
+data class StatusColors(
+    val redAccent: Color,
+    val yellowAccent: Color,
+    val greenAccent: Color,
+    val blueAccent: Color,
+    val grayAccent: Color,
+    val orangeAccent: Color,
+)
+
+val backgroundLightColors = BackgroundColors(
+    surface = Color(0XFFEEEEEE),
+    surfaceHigh = Color(0XFFFBFBFB),
+    hint = Color(0x804E4E4E)
+)
+val statusLightColors = StatusColors(
+    redAccent = Color(0XFFFF4949),
+    yellowAccent = Color(0XFFFFCC3D),
+    greenAccent = Color(0XFF00E264),
+    blueAccent = Color(0XFFC2FFD2),
+    grayAccent = Color(0x1A0973BA),
+    orangeAccent = Color(0XFFFAC371)
+)
+val delivaryUserLightColors = DelivaryUserColors(
+    primary = Color(0XFFE41F28),
+    secondary = Color(0XFF4E4E4E),
+    primaryVariant = Color(0XFFEE1E25),
+    background = backgroundLightColors,
+    status = statusLightColors
+)
+
+val backgroundDarkColors = BackgroundColors(
+    surface = Color(0XFF1E1E1E),
+    surfaceHigh = Color(0XFF2C2C2C),
+    hint = Color(0x80B0B0B0)
+)
+val statusDarkColors = StatusColors(
+    redAccent = Color(0XFFFF5252),
+    yellowAccent = Color(0XFFFFD54F),
+    greenAccent = Color(0XFF00E676),
+    blueAccent = Color(0XFF69F0AE),
+    grayAccent = Color(0XFF42A5F5),
+    orangeAccent = Color(0XFFFFD088)
+)
+val delivaryUserDarkColors = DelivaryUserColors(
+    primary = Color(0XFFFF3B43),
+    secondary = Color(0XFFFF444C),
+    primaryVariant = Color(0XFFE0E0E0),
+    background = backgroundDarkColors,
+    status = statusDarkColors
+)
