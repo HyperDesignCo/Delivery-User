@@ -13,7 +13,7 @@ val localDelivaryUserTypography =
     staticCompositionLocalOf<DelivaryUserTypography> { error("Cannot provide text style") }
 val cairo = FontFamily(
     Font(R.font.cairo_bold, weight = FontWeight.Bold),
-    Font(R.font.cairo_bold, weight = FontWeight.Normal),
+    Font(R.font.cairo_regular, weight = FontWeight.Normal),
 )
 
 data class DelivaryUserTypography(
@@ -102,31 +102,31 @@ private val body = SizedTypography(
         fontSize = 20.sp,
         lineHeight = 25.sp,
         fontFamily = cairo,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Normal
     ),
     large = TextStyle(
         fontSize = 16.sp,
         lineHeight = 25.sp,
         fontFamily = cairo,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Normal
     ),
     medium = TextStyle(
         fontSize = 16.sp,
         lineHeight = 16.sp,
         fontFamily = cairo,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Normal
     ),
     small = TextStyle(
         fontSize = 14.sp,
         lineHeight = 25.sp,
         fontFamily = cairo,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Normal
     ),
     extraSmall = TextStyle(
         fontSize = 14.sp,
         lineHeight = 14.sp,
         fontFamily = cairo,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Normal
     )
 )
 
