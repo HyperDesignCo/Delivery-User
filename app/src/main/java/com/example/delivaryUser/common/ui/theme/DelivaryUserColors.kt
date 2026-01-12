@@ -70,7 +70,7 @@ val statusDarkColors = StatusColors(
 )
 val delivaryUserDarkColors = DelivaryUserColors(
     primary = Color(0XFFFF3B43),
-    secondary = Color(0XFFFF444C),
+    secondary = Color(0XFFE0E0E0),
     primaryVariant = Color(0XFFE0E0E0),
     background = backgroundDarkColors,
     status = statusDarkColors
