@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <string name="unknown_error">حدث خطأ غير معروف</string>
+    <string name="something_wrong">حدث خطأ</string>
+    <string name="password_length_between_8_15">يجب أن تكون كلمة المرور بين 8 و15 حرفًا</string>
+    <string name="phone_number_between_9_15">يجب أن يكون رقم الهاتف بين 9 و15 رقمًا</string>
+
+    <!-- Login -->
+    <string name="password">كلمة المرور</string>
+    <string name="remember_me">تذكرني</string>
+    <string name="forgot_password">نسيت كلمة المرور؟</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="do_not_have_and_account">ليس لديك حساب؟</string>
+    <string name="register">التسجيل</string>
+    <string name="phone_number">رقم الهاتف</string>
+</resources>

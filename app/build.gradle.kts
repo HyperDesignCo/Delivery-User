@@ -46,6 +46,7 @@ kotlin {
 dependencies {
     //Compose
     implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.ui.text)
     testImplementation(libs.junit.jupiter)
     debugImplementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.material3)

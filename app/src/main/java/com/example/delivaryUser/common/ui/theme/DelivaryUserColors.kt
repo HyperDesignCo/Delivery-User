@@ -2,7 +2,9 @@ package com.example.delivaryUser.common.ui.theme
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+
 val LocalDelivaryUserColors = staticCompositionLocalOf<DelivaryUserColors> { error("Cannot provide colors") }
+
 data class DelivaryUserColors(
     val primary: Color,
     val secondary: Color,
@@ -15,6 +17,8 @@ data class BackgroundColors(
     val surface: Color,
     val surfaceHigh: Color,
     val hint: Color,
+    val disable: Color,
+    val stoke: Color,
 )
 
 data class StatusColors(
@@ -29,7 +33,9 @@ data class StatusColors(
 val backgroundLightColors = BackgroundColors(
     surface = Color(0XFFEEEEEE),
     surfaceHigh = Color(0XFFFBFBFB),
-    hint = Color(0x804E4E4E)
+    hint = Color(0x804E4E4E),
+    disable = Color(0xFFE1E4E5),
+    stoke = Color(0x8046200B)
 )
 val statusLightColors = StatusColors(
     redAccent = Color(0XFFFF4949),
@@ -50,7 +56,9 @@ val delivaryUserLightColors = DelivaryUserColors(
 val backgroundDarkColors = BackgroundColors(
     surface = Color(0XFF1E1E1E),
     surfaceHigh = Color(0XFF2C2C2C),
-    hint = Color(0x80B0B0B0)
+    hint = Color(0x80B0B0B0),
+    disable = Color(0xFF292828),
+    stoke = Color(0x8046200B)
 )
 val statusDarkColors = StatusColors(
     redAccent = Color(0XFFFF5252),
@@ -62,7 +70,7 @@ val statusDarkColors = StatusColors(
 )
 val delivaryUserDarkColors = DelivaryUserColors(
     primary = Color(0XFFFF3B43),
-    secondary = Color(0XFFFF444C),
+    secondary = Color(0XFFE0E0E0),
     primaryVariant = Color(0XFFE0E0E0),
     background = backgroundDarkColors,
     status = statusDarkColors

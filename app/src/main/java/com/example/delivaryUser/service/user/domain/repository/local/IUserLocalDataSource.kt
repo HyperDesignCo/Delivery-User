@@ -7,4 +7,6 @@ interface IUserLocalDataSource {
     suspend fun getToken(): String
     suspend fun saveUser(user: UserEntity)
     suspend fun getUser(): UserEntity
+    suspend fun saveRememberMe(rememberMe: Boolean)
+    suspend fun getRememberMe(): Boolean
 }

@@ -5,6 +5,7 @@ import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.domain.exceptions.RequestErrorKeyValues
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 @Serializable
 data class LoginRequest(
@@ -12,6 +13,8 @@ data class LoginRequest(
     val phone: String,
     @SerialName("password")
     val password: String,
+    @Transient
+    val rememberMe: Boolean = false
 ) {
     private fun validatePassword() = password.length in 8..50
 
