@@ -7,3 +7,8 @@ interface FieldState {
     val error: UIText?
     fun isError(): Boolean = error != null
 }
+
+data class TextFieldState(
+    override val value: String = "",
+    override val error: UIText? = null,
+) : FieldState
