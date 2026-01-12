@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Delivary_User_Android</string>
+
+    <!-- General -->
+    <string name="unknown_error">Unknown error occurred</string>
+    <string name="something_wrong">Something went wrong</string>
+    <string name="password_length_between_8_15">Password must be between 8 and 15 characters</string>
+    <string name="phone_number_between_9_15">Phone number must be between 9 and 15 digits</string>
+
+    <!-- Login -->
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="login">Login</string>
+    <string name="do_not_have_and_account">Don\'t have an account?</string>
+    <string name="register">Register</string>
+    <string name="phone_number">Phone number</string>
 </resources>
