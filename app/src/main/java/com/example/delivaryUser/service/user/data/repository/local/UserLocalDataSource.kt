@@ -11,27 +11,27 @@ class UserLocalDataSource(private val localProvider: ILocalDataSourceProvider, p
     override suspend fun saveToken(token: String) =
         localProvider.save(key = LocalDataSourceEnum.ACCESS_TOKEN, value = token, type = String::class.java)
 
-    override suspend fun getToken(): String =
-        localProvider.read(
-            key = LocalDataSourceEnum.ACCESS_TOKEN,
-            defaultValue = "",
-            type = String::class.java
-        )
+    override suspend fun getToken(): String = localProvider.read(
+        key = LocalDataSourceEnum.ACCESS_TOKEN, defaultValue = "", type = String::class.java
+    )
 
-    override suspend fun saveUser(user: UserEntity) =
+    override suspend fun saveUser(user: UserEntity) = localProvider.save(
+        key = LocalDataSourceEnum.USER, value = json.encodeToString(value = user), type = String::class.java
+    )
+
+    override suspend fun getUser(): UserEntity = json.decodeFromString(
+        string = localProvider.read(
+            key = LocalDataSourceEnum.USER, defaultValue = "", type = String::class.java
+        ), deserializer = UserEntity.serializer()
+    )
+
+    override suspend fun saveRememberMe(rememberMe: Boolean) {
         localProvider.save(
-            key = LocalDataSourceEnum.USER,
-            value = json.encodeToString(value = user),
-            type = String::class.java
+            key = LocalDataSourceEnum.REMEMBER_ME, value = rememberMe, type = Boolean::class.java
         )
+    }
 
-    override suspend fun getUser(): UserEntity =
-        json.decodeFromString(
-            string = localProvider.read(
-                key = LocalDataSourceEnum.USER,
-                defaultValue = "",
-                type = String::class.java
-            ),
-            deserializer = UserEntity.serializer()
-        )
+    override suspend fun getRememberMe(): Boolean =
+        localProvider.read(key = LocalDataSourceEnum.REMEMBER_ME, defaultValue = false, type = Boolean::class.java)
+
 }

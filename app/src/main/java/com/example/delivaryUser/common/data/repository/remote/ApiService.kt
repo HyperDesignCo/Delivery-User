@@ -1,7 +1,6 @@
 package com.example.delivaryUser.common.data.repository.remote
 
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -24,7 +23,7 @@ class ApiService(private val client: HttpClient) {
                 header(key, value)
             }
         }
-        return response.body()
+        return response
     }
 
     suspend fun post(

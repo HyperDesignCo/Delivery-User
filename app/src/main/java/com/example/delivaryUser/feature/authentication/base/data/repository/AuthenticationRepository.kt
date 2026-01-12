@@ -14,6 +14,8 @@ class AuthenticationRepository(val remote: IAuthenticationRemoteDataSource, val 
     override suspend fun login(request: LoginRequest): Authentication {
         val result = remote.login(request)
         local.saveUser(user = UserMapper.dtoToEntity(model = result.user ?: UserDto()))
+        local.saveToken(token = result.accessToken.orEmpty())
+        local.saveRememberMe(request.rememberMe)
         return AuthenticationMapper.dtoToDomain(model = result)
     }
 }

@@ -11,12 +11,23 @@ import com.example.delivaryUser.common.data.repository.remote.RemoteDataSourcePr
 import com.example.delivaryUser.common.data.repository.remote.provideHttpClient
 import com.example.delivaryUser.common.domain.local.ILocalDataSourceProvider
 import com.example.delivaryUser.common.domain.remote.IRemoteDataSourceProvider
+import com.example.delivaryUser.common.ui.eventcontroller.EventController
+import com.example.delivaryUser.common.ui.eventcontroller.IEventController
+import com.example.delivaryUser.common.ui.loading.ILoadingEvent
+import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.navigation.IAuthGraph
+import com.example.delivaryUser.common.ui.navigation.INavigator
+import com.example.delivaryUser.common.ui.navigation.Navigator
 import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val appModule = module {
+    single<INavigator> { Navigator(startGraph = IAuthGraph.AuthGraph) }
+    single<IEventController<IMessageEvent>>(qualifier = named("MessageEvent")) { EventController() }
+    single<IEventController<ILoadingEvent>>(qualifier = named("LoadingEvent")) { EventController() }
     single<Json> {
         Json {
             ignoreUnknownKeys = true
