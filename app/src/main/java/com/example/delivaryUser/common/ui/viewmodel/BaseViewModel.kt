@@ -3,6 +3,7 @@ package com.example.delivaryUser.common.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptionsBuilder
+import com.example.delivaryUser.R
 import com.example.delivaryUser.common.data.DelivaryUserException
 import com.example.delivaryUser.common.domain.Resource
 import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
@@ -13,7 +14,6 @@ import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.IDestination
 import com.example.delivaryUser.common.ui.navigation.INavigator
-import com.example.delivaryUser.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -111,8 +111,11 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
 
     companion object {
         private val requestErrorMap = mapOf<RequestErrorKeyValues, UIText>(
-            RequestErrorKeyValues.PASSWORD_LENGTH_BETWEEN_8_15 to UIText.StringResource(R.string.password_length_between_8_15),
-            RequestErrorKeyValues.PHONE_NUMBER_BETWEEN_9_15 to UIText.StringResource(R.string.phone_number_between_9_15),
+            RequestErrorKeyValues.PASSWORD_VALIDATION to UIText.StringResource(R.string.password_validation_message),
+            RequestErrorKeyValues.PHONE_VALIDATION to UIText.StringResource(R.string.phone_validation_message),
+            RequestErrorKeyValues.NAME_VALIDATION to UIText.StringResource(R.string.user_name_validation_message),
+            RequestErrorKeyValues.EMAIL_VALIDATION to UIText.StringResource(R.string.email_validation_message),
+            RequestErrorKeyValues.OTP_VALIDATION to UIText.StringResource(R.string.otp_validation_message)
         )
     }
 }

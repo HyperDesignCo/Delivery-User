@@ -36,7 +36,7 @@ fun provideHttpClient(json: Json) = HttpClient(Android) {
         socketTimeoutMillis = 20_000
     }
     defaultRequest {
-        url("https://delivery-online.com")
+        url("https://delivery-online.com/api/user/")
         contentType(ContentType.Application.Json)
         header("Accept-Language", "en")
     }
@@ -57,6 +57,14 @@ private suspend fun handleResponseException(
     when (val statusCode = response.status.value) {
         HttpStatusCode.Unauthorized.value -> throw DelivaryUserException.Client.UnAuthorized()
         HttpStatusCode.UnprocessableEntity.value -> {
+            val responseBodyText = response.bodyAsText()
+            return responseValidationMapping(
+                json.decodeFromString<APIErrorResponse>(
+                    responseBodyText
+                )
+            )
+        }
+        HttpStatusCode.NotFound.value ->{
             val responseBodyText = response.bodyAsText()
             return responseValidationMapping(
                 json.decodeFromString<APIErrorResponse>(

@@ -5,6 +5,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
 import com.example.delivaryUser.feature.authentication.login.ui.view.LoginScreen
+import com.example.delivaryUser.feature.authentication.register.ui.view.RegisterScreen
+import com.example.delivaryUser.feature.authentication.verifyOtp.ui.view.VerifyOtpScreen
 import kotlinx.serialization.Serializable
 
 sealed interface IAuthGraph {
@@ -14,10 +16,17 @@ sealed interface IAuthGraph {
     @Serializable
     data object Login : IDestination
 
+    @Serializable
+    data object Register : IDestination
+
+    @Serializable
+    data object VerifyOtp : IDestination
 }
 
 fun NavGraphBuilder.buildNavAuthGraph() {
     navigation<IAuthGraph.AuthGraph>(startDestination = IAuthGraph.Login) {
         composable<IAuthGraph.Login> { LoginScreen() }
+        composable<IAuthGraph.Register> { RegisterScreen() }
+        composable<IAuthGraph.VerifyOtp > { VerifyOtpScreen() }
     }
 }

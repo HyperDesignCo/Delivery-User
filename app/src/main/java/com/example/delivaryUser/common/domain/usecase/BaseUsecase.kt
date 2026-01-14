@@ -1,5 +1,6 @@
 package com.example.delivaryUser.common.domain.usecase
 
+import android.util.Log
 import com.example.delivaryUser.common.data.DelivaryUserException
 import com.example.delivaryUser.common.domain.Resource
 import kotlinx.coroutines.flow.catch

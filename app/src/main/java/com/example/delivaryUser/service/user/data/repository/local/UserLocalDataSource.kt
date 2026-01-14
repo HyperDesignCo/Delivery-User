@@ -34,4 +34,11 @@ class UserLocalDataSource(private val localProvider: ILocalDataSourceProvider, p
     override suspend fun getRememberMe(): Boolean =
         localProvider.read(key = LocalDataSourceEnum.REMEMBER_ME, defaultValue = false, type = Boolean::class.java)
 
+    override suspend fun saveIsVerified(isVerified: Boolean) {
+        localProvider.save(
+            key = LocalDataSourceEnum.IS_VERIFIED, value = isVerified, type = Boolean::class.java
+        )
+    }
+    override suspend fun getIsVerified(): Boolean =
+        localProvider.read(key = LocalDataSourceEnum.IS_VERIFIED, defaultValue = false, type = Boolean::class.java)
 }

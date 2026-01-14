@@ -12,5 +12,9 @@ enum class ErrorKeyEnum : IErrorKeyEnum {
     EMAIL,
     @SerialName("password")
     PASSWORD,
+    @SerialName("name")
+    NAME,
+    @SerialName("code")
+    OTP,
     UNKNOWN;
 }

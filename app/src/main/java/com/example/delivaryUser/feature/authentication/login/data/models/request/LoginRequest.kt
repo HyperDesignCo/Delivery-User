@@ -23,10 +23,10 @@ data class LoginRequest(
     fun validateFields(): Map<IErrorKeyEnum, RequestErrorKeyValues> {
         val errors = mutableMapOf<IErrorKeyEnum, RequestErrorKeyValues>()
         if (!validatePassword()) errors[ErrorKeyEnum.PASSWORD] =
-            RequestErrorKeyValues.PASSWORD_LENGTH_BETWEEN_8_15
+            RequestErrorKeyValues.PASSWORD_VALIDATION
 
         if (!validatePhoneNumber()) errors[ErrorKeyEnum.PHONE_NUMBER] =
-            RequestErrorKeyValues.PHONE_NUMBER_BETWEEN_9_15
+            RequestErrorKeyValues.PHONE_VALIDATION
 
         return errors
     }
