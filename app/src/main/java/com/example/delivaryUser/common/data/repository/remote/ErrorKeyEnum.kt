@@ -8,13 +8,20 @@ import kotlinx.serialization.Serializable
 enum class ErrorKeyEnum : IErrorKeyEnum {
     @SerialName("phone")
     PHONE_NUMBER,
+
     @SerialName("email")
     EMAIL,
+
     @SerialName("password")
     PASSWORD,
+
     @SerialName("name")
     NAME,
+
     @SerialName("code")
     OTP,
+
+    @SerialName("confirmationPassword")
+    CONFIRMATION_PASSWORD,
     UNKNOWN;
 }

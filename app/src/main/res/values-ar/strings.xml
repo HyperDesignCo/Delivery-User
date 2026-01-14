@@ -30,4 +30,12 @@
     <string name="forget_password">نسيت كلمة المرور</string>
     <string name="please_enter_phone_number_to_send_code">يرجى إدخال بريدك الإلكتروني أو رقم هاتفك لتلقي رمز التحقق</string>
     <string name="send_otp">إرسال OTP</string>
+
+    <!--change password-->
+    <string name="confirmation_password_does_not_match">كلمة مرور التأكيد لا تتطابق</string>
+    <string name="new_password">كلمة مرور جديدة</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="create_new_password">إنشاء كلمة مرور جديدة</string>
+    <string name="new_password_must_be_different">يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور المستخدمة سابقًا</string>
+    <string name="send">ارسال</string>
 </resources>

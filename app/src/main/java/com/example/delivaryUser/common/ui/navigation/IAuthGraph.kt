@@ -30,7 +30,7 @@ fun NavGraphBuilder.buildNavAuthGraph() {
     navigation<IAuthGraph.AuthGraph>(startDestination = IAuthGraph.Login) {
         composable<IAuthGraph.Login> { LoginScreen() }
         composable<IAuthGraph.Register> { RegisterScreen() }
-        composable<IAuthGraph.VerifyOtp > { VerifyOtpScreen() }
-        composable<IAuthGraph.ForgetPassword > { ForgetPasswordScreen() }
+        composable<IAuthGraph.VerifyOtp> { VerifyOtpScreen() }
+        composable<IAuthGraph.ForgetPassword> { ForgetPasswordScreen() }
     }
 }

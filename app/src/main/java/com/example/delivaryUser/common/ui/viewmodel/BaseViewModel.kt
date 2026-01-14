@@ -115,7 +115,8 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
             RequestErrorKeyValues.PHONE_VALIDATION to UIText.StringResource(R.string.phone_validation_message),
             RequestErrorKeyValues.NAME_VALIDATION to UIText.StringResource(R.string.user_name_validation_message),
             RequestErrorKeyValues.EMAIL_VALIDATION to UIText.StringResource(R.string.email_validation_message),
-            RequestErrorKeyValues.OTP_VALIDATION to UIText.StringResource(R.string.otp_validation_message)
+            RequestErrorKeyValues.OTP_VALIDATION to UIText.StringResource(R.string.otp_validation_message) ,
+            RequestErrorKeyValues.CONFIRMATION_PASSWORD to UIText.StringResource(R.string.confirmation_password_does_not_match)
         )
     }
 }
