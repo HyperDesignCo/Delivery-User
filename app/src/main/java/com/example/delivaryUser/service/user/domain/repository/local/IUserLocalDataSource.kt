@@ -9,4 +9,6 @@ interface IUserLocalDataSource {
     suspend fun getUser(): UserEntity
     suspend fun saveRememberMe(rememberMe: Boolean)
     suspend fun getRememberMe(): Boolean
+    suspend fun saveIsVerified(isVerified: Boolean)
+    suspend fun getIsVerified(): Boolean
 }

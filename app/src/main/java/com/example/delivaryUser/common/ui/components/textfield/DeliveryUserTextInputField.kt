@@ -18,6 +18,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,6 +47,7 @@ fun DelivaryUserTextInputField(
     minLines: Int = DeliveryUserTextInputFieldDefaults.minLines,
     shape: Shape = DeliveryUserTextInputFieldDefaults.shape,
     colors: DeliveryUserTextInputFieldColors = DeliveryUserTextInputFieldDefaults.color(),
+    textAlign: TextAlign = DeliveryUserTextInputFieldDefaults.textAlign,
 ) {
 
     OutlinedTextField(
@@ -72,7 +74,8 @@ fun DelivaryUserTextInputField(
                     style = DeliveryUserTextInputFieldDefaults.supportingTextStyle,
                     minLines = 1,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = textAlign
                 )
             }
         },
@@ -134,6 +137,7 @@ object DeliveryUserTextInputFieldDefaults {
     val keyboardActions: KeyboardActions = KeyboardActions.Default
     val iconSize = 20.dp
     val isEnabled = true
+    val textAlign = TextAlign.Start
 
     @Composable
     fun color(
