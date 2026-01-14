@@ -22,12 +22,8 @@ class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginCon
             is LoginContract.Action.PhoneChanged -> phoneChanged(action.phoneNumber)
             is LoginContract.Action.RememberMeClicked -> rememberMeClicked()
             is LoginContract.Action.RegisterClicked -> registerClicked()
-            is LoginContract.Action.ForgotPasswordClicked -> {
-                // TODO Navigate to forget password
-            }
-
+            is LoginContract.Action.ForgotPasswordClicked -> forgotPasswordClicked()
             is LoginContract.Action.LoginClicked -> loginClicked()
-
         }
     }
 
@@ -54,6 +50,7 @@ class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginCon
             )
         }
     }
+    private fun forgotPasswordClicked() = fireNavigate(IAuthGraph.ForgetPassword)
 
     override fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) = updateState {
         copy(

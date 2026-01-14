@@ -71,7 +71,11 @@ private fun LoginContent(state: LoginContract.State, action: (LoginContract.Acti
             checked = state.rememberMe,
             onCheckChanged = {
                 action(LoginContract.Action.RememberMeClicked)
-            })
+            },
+            onForgetPasswordClicked = {
+                action(LoginContract.Action.ForgotPasswordClicked)
+            }
+        )
         Spacer(modifier = Modifier.weight(0.225f))
         DelivaryUserButtonPrimary(
             modifier = Modifier.fillMaxWidth(),
@@ -91,6 +95,7 @@ private fun RememberPassword(
     modifier: Modifier = Modifier,
     checked: Boolean,
     onCheckChanged: () -> Unit,
+    onForgetPasswordClicked: () -> Unit,
 ) {
     Row(
         modifier = modifier,
@@ -117,6 +122,9 @@ private fun RememberPassword(
         )
         Spacer(modifier = Modifier.weight(1f))
         Text(
+            modifier = Modifier.clickableWithNoRipple {
+                onForgetPasswordClicked()
+            },
             text = stringResource(R.string.forgot_password),
             style = DelivaryUserTheme.typography.body.medium,
             color = DelivaryUserTheme.colors.secondary

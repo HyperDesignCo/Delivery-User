@@ -26,4 +26,8 @@
     <string name="please_enter_the_otp_sent_to_your_phone_number">يرجى إدخال الرمز المكون من 4 أرقام الذي تم إرساله إلى بريدك الإلكتروني أو رقم هاتفك</string>
     <string name="resend_code">إعادة إرسال الرمز</string>
     <string name="verify">تحقق</string>
+    <!--Forget Password -->
+    <string name="forget_password">نسيت كلمة المرور</string>
+    <string name="please_enter_phone_number_to_send_code">يرجى إدخال بريدك الإلكتروني أو رقم هاتفك لتلقي رمز التحقق</string>
+    <string name="send_otp">إرسال OTP</string>
 </resources>
