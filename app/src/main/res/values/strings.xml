@@ -4,9 +4,11 @@
     <!-- General -->
     <string name="unknown_error">Unknown error occurred</string>
     <string name="something_wrong">Something went wrong</string>
-    <string name="password_length_between_8_15">Password must be between 8 and 15 characters</string>
-    <string name="phone_number_between_9_15">Phone number must be between 9 and 15 digits</string>
-
+    <string name="password_validation_message">Password must include letters and numbers and be at least 8 characters.</string>
+    <string name="phone_validation_message">Please enter a valid phone number.</string>
+    <string name="email_validation_message">Email must be between 8 and 50 characters and in a valid format.</string>
+    <string name="user_name_validation_message">Name must be 3–50 letters and contain only alphabetic characters.</string>
+    <string name="otp_validation_message">Code must be 4 digits.</string>
     <!-- Login -->
     <string name="password">Password</string>
     <string name="remember_me">Remember me</string>
@@ -15,4 +17,14 @@
     <string name="do_not_have_and_account">Don\'t have an account?</string>
     <string name="register">Register</string>
     <string name="phone_number">Phone number</string>
+    <!--Register -->
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="have_account">Already has an account?</string>
+
+    <!--verify Otp -->
+    <string name="verify_otp">Verify OTP</string>
+    <string name="please_enter_the_otp_sent_to_your_phone_number">Please enter 4 digit code sent to your email or phone number</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="verify">Verify</string>
 </resources>

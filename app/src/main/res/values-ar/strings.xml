@@ -4,9 +4,11 @@
     <!-- General -->
     <string name="unknown_error">حدث خطأ غير معروف</string>
     <string name="something_wrong">حدث خطأ</string>
-    <string name="password_length_between_8_15">يجب أن تكون كلمة المرور بين 8 و15 حرفًا</string>
-    <string name="phone_number_between_9_15">يجب أن يكون رقم الهاتف بين 9 و15 رقمًا</string>
-
+    <string name="password_validation_message">كلمة المرور لازم تحتوي على حروف وأرقام وطولها لا يقل عن 8.</string>
+    <string name="phone_validation_message">من فضلك أدخل رقم هاتف صحيح.</string>
+    <string name="email_validation_message">البريد الإلكتروني يجب أن يكون من 8 إلى 50 حرف وبصيغة صحيحة.</string>
+    <string name="user_name_validation_message">الاسم يجب أن يكون من 3 إلى 50 حرف ويحتوي على حروف فقط بدون أرقام أو رموز.</string>
+    <string name="otp_validation_message">يجب أن يتكون الرمز من 4 أرقام.</string>
     <!-- Login -->
     <string name="password">كلمة المرور</string>
     <string name="remember_me">تذكرني</string>
@@ -15,4 +17,13 @@
     <string name="do_not_have_and_account">ليس لديك حساب؟</string>
     <string name="register">التسجيل</string>
     <string name="phone_number">رقم الهاتف</string>
+    <!--Register -->
+    <string name="name">اسم المستخدم</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="have_account">لديك حساب بالفعل؟</string>
+    <!--verify Otp -->
+    <string name="verify_otp">تحقق من OTP</string>
+    <string name="please_enter_the_otp_sent_to_your_phone_number">يرجى إدخال الرمز المكون من 4 أرقام الذي تم إرساله إلى بريدك الإلكتروني أو رقم هاتفك</string>
+    <string name="resend_code">إعادة إرسال الرمز</string>
+    <string name="verify">تحقق</string>
 </resources>
