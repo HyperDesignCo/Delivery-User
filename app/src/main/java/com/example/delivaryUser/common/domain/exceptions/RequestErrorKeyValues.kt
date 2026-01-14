@@ -6,4 +6,5 @@ enum class RequestErrorKeyValues {
     NAME_VALIDATION,
     EMAIL_VALIDATION,
     OTP_VALIDATION,
+    CONFIRMATION_PASSWORD
 }
