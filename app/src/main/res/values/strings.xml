@@ -35,6 +35,14 @@
     <string name="forget_password">Forget Password</string>
     <string name="please_enter_phone_number_to_send_code">Please enter your email or phone number to receive a verification code</string>
     <string name="send_otp">Send OTP</string>
+
+    <!--change password-->
+    <string name="confirmation_password_does_not_match">Confirmation password does not match</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="create_new_password">Create New Password</string>
+    <string name="new_password_must_be_different">New password must be different from previously used password</string>
+    <string name="send">Send</string>
     <!--Home -->
     <string name="fast_order">Fast order</string>
     <string name="order_with_ai">Order With Ai</string>

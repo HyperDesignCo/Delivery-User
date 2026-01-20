@@ -16,13 +16,14 @@ fun DelivaryUserPasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    placeholder : String = stringResource(R.string.password),
     supportingText: String? = null,
 ) {
     DelivaryUserTextInputField(
         modifier = modifier,
         value = value,
         onValueChange = { onValueChange(it) },
-        placeholder = stringResource(R.string.password),
+        placeholder = placeholder,
         colors = DelivaryUserPasswordTextFieldDefaults.colors,
         trailingIconRes = R.drawable.ic_password,
         supportingText = supportingText,
