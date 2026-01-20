@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.LayoutDirection
 fun Modifier.autoMirror(): Modifier {
     val layoutDirection = LocalLayoutDirection.current
     return when (layoutDirection) {
-        LayoutDirection.Rtl -> this
-        LayoutDirection.Ltr -> this.scale(scaleX = -1f, scaleY = 1f)
+        LayoutDirection.Ltr -> this
+        LayoutDirection.Rtl -> this.scale(scaleX = -1f, scaleY = 1f)
     }
 }
 @Composable

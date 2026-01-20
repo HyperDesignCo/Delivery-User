@@ -17,15 +17,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.example.delivaryUser.common.ui.components.bars.navigationbar.DelivaryUserNavigationBar
 import com.example.delivaryUser.common.ui.components.dialogs.DelivaryUserLoadingDialog
 import com.example.delivaryUser.common.ui.eventcontroller.IEventController
 import com.example.delivaryUser.common.ui.extension.ObserveAsEvents
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.navigation.BottomDestination
 import com.example.delivaryUser.common.ui.navigation.INavigator
 import com.example.delivaryUser.common.ui.navigation.NavigationEvent
 import com.example.delivaryUser.common.ui.navigation.buildNavAuthGraph
+import com.example.delivaryUser.common.ui.navigation.buildNavMainGraph
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -51,6 +54,12 @@ fun DelivaryUserApp(
         }
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            bottomBar = {
+                DelivaryUserNavigationBar(
+                    navController = navHostController, destinations = BottomDestination.destinations,
+                    onFloatingButtonClick = {}
+                )
+            }
         ) { innerPadding ->
             CompositionLocalProvider(LocalPadding provides innerPadding) {
                 NavHost(
@@ -58,6 +67,7 @@ fun DelivaryUserApp(
                     startDestination = navigator.startGraph,
                 ) {
                     buildNavAuthGraph()
+                    buildNavMainGraph()
                 }
             }
         }

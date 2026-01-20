@@ -5,6 +5,7 @@ import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.authentication.verifyOtp.data.models.request.VerifyOtpRequest
 import com.example.delivaryUser.feature.authentication.verifyOtp.domain.interactors.ResendCodeUseCase
@@ -53,6 +54,7 @@ class VerifyOtpViewModel(private val verify: VerifyOtpUseCase, private val resen
                 onSuccess = {
                     fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(it.message)))
                     startTimer()
+                    navigateToHome()
                 },
                 onLoading = {
                     fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
@@ -81,13 +83,20 @@ class VerifyOtpViewModel(private val verify: VerifyOtpUseCase, private val resen
                 updateState { copy(timer = i.toString()) }
                 delay(1000)
             }
-            if(state.value.timer == "0"){
+            if (state.value.timer == "0") {
                 updateState { copy(isResendEnabled = true, timer = "") }
-            }else{
+            } else {
                 updateState { copy(isResendEnabled = false) }
             }
         }
     }
+
+    private fun navigateToHome() = fireNavigate(IMainGraph.Home, builder = {
+        popUpTo(0) {
+            saveState = true
+            inclusive = true
+        }
+    })
 
     override fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) {
         super.onRequestValidation(errors)

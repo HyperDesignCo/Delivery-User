@@ -9,6 +9,11 @@
     <string name="email_validation_message">البريد الإلكتروني يجب أن يكون من 8 إلى 50 حرف وبصيغة صحيحة.</string>
     <string name="user_name_validation_message">الاسم يجب أن يكون من 3 إلى 50 حرف ويحتوي على حروف فقط بدون أرقام أو رموز.</string>
     <string name="otp_validation_message">يجب أن يتكون الرمز من 4 أرقام.</string>
+    <!-- navigation bar -->
+    <string name="home">الرئيسيه</string>
+    <string name="chat">الدردشة</string>
+    <string name="order">الطلب</string>
+    <string name="account">الحساب</string>
     <!-- Login -->
     <string name="password">كلمة المرور</string>
     <string name="remember_me">تذكرني</string>
@@ -38,4 +43,7 @@
     <string name="create_new_password">إنشاء كلمة مرور جديدة</string>
     <string name="new_password_must_be_different">يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور المستخدمة سابقًا</string>
     <string name="send">ارسال</string>
+    <!--Home -->
+    <string name="fast_order">طلب سريع</string>
+    <string name="order_with_ai">طلب بالذكاء الاصطناعي</string>
 </resources>
