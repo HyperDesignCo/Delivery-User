@@ -9,6 +9,11 @@
     <string name="email_validation_message">Email must be between 8 and 50 characters and in a valid format.</string>
     <string name="user_name_validation_message">Name must be 3–50 letters and contain only alphabetic characters.</string>
     <string name="otp_validation_message">Code must be 4 digits.</string>
+    <!-- navigation bar -->
+    <string name="home">Home</string>
+    <string name="chat">Chat</string>
+    <string name="order">Order</string>
+    <string name="account">Account</string>
     <!-- Login -->
     <string name="password">Password</string>
     <string name="remember_me">Remember me</string>
@@ -21,7 +26,6 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="have_account">Already has an account?</string>
-
     <!--verify Otp -->
     <string name="verify_otp">Verify OTP</string>
     <string name="please_enter_the_otp_sent_to_your_phone_number">Please enter 4 digit code sent to your email or phone number</string>
@@ -31,4 +35,7 @@
     <string name="forget_password">Forget Password</string>
     <string name="please_enter_phone_number_to_send_code">Please enter your email or phone number to receive a verification code</string>
     <string name="send_otp">Send OTP</string>
+    <!--Home -->
+    <string name="fast_order">Fast order</string>
+    <string name="order_with_ai">Order With Ai</string>
 </resources>
