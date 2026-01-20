@@ -5,11 +5,12 @@ import com.example.delivaryUser.feature.authentication.forgetpassword.di.forgetP
 import com.example.delivaryUser.feature.authentication.login.di.loginModule
 import com.example.delivaryUser.feature.authentication.register.di.registerModule
 import com.example.delivaryUser.feature.authentication.verifyOtp.di.verifyOtpModule
+import com.example.delivaryUser.feature.home.di.homeModule
 import com.example.delivaryUser.service.user.di.userModule
 import org.koin.dsl.module
 
 val featuresModule = module {
     includes(
-        userModule, authenticationModule, loginModule, registerModule, verifyOtpModule, forgetPasswordModule
+        userModule, authenticationModule, loginModule, registerModule, verifyOtpModule, forgetPasswordModule, homeModule
     )
 }

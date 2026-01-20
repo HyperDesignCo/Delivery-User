@@ -8,6 +8,7 @@ import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.IAuthGraph
+import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.authentication.login.data.models.request.LoginRequest
 import com.example.delivaryUser.feature.authentication.login.domain.interactors.LoginUseCase
@@ -43,6 +44,7 @@ class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginCon
             useCase.invoke(body = request).collectResource(
                 onSuccess = {
                     fireMessage(IMessageEvent.Toast(UIText.StringResource(R.string.login)))
+                    navigateToHome()
                 },
                 onLoading = {
                     fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
@@ -51,6 +53,12 @@ class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginCon
         }
     }
     private fun forgotPasswordClicked() = fireNavigate(IAuthGraph.ForgetPassword)
+    private fun navigateToHome() = fireNavigate(IMainGraph.Home, builder = {
+        popUpTo(0) {
+            saveState = true
+            inclusive = true
+        }
+    })
 
     override fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) = updateState {
         copy(

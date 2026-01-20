@@ -16,12 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.buttons.DelivaryUserButtonPrimary
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
+import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScaffold
 import com.example.delivaryUser.common.ui.components.textfield.DelivaryUserPasswordTextField
 import com.example.delivaryUser.common.ui.components.textfield.DelivaryUserTextInputField
 import com.example.delivaryUser.common.ui.extension.asString
@@ -41,9 +41,10 @@ fun RegisterScreen(viewModel: RegisterViewModel = koinInject()) {
 private fun RegisterContent(state: RegisterContract.State, action: (RegisterContract.Action) -> Unit) {
     Column(
         modifier = Modifier
+
             .fillMaxSize()
             .background(color = DelivaryUserTheme.colors.background.surfaceHigh)
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp).padding(DelivaryUserScaffold.innerPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(

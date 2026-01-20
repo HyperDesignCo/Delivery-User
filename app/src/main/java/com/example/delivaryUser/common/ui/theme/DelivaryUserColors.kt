@@ -9,14 +9,17 @@ data class DelivaryUserColors(
     val primary: Color,
     val secondary: Color,
     val primaryVariant: Color,
+    val shadow : Color,
     val background: BackgroundColors,
     val status: StatusColors,
 )
 
 data class BackgroundColors(
     val surface: Color,
+    val background: Color,
     val surfaceHigh: Color,
     val hint: Color,
+    val stroke: Color,
     val disable: Color,
     val stoke: Color,
 )
@@ -32,10 +35,12 @@ data class StatusColors(
 
 val backgroundLightColors = BackgroundColors(
     surface = Color(0XFFEEEEEE),
+    background = Color(0XFFFFFFFF),
     surfaceHigh = Color(0XFFFBFBFB),
     hint = Color(0x804E4E4E),
     disable = Color(0xFFE1E4E5),
-    stoke = Color(0x8046200B)
+    stoke = Color(0x8046200B),
+    stroke = Color(0XFFD9D9D9)
 )
 val statusLightColors = StatusColors(
     redAccent = Color(0XFFFF4949),
@@ -50,7 +55,8 @@ val delivaryUserLightColors = DelivaryUserColors(
     secondary = Color(0XFF4E4E4E),
     primaryVariant = Color(0XFFEE1E25),
     background = backgroundLightColors,
-    status = statusLightColors
+    status = statusLightColors,
+    shadow = Color(0x0D000000)
 )
 
 val backgroundDarkColors = BackgroundColors(
@@ -58,7 +64,9 @@ val backgroundDarkColors = BackgroundColors(
     surfaceHigh = Color(0XFF2C2C2C),
     hint = Color(0x80B0B0B0),
     disable = Color(0xFF292828),
-    stoke = Color(0x8046200B)
+    stoke = Color(0x8046200B),
+    background = Color(0XFFFFFFFF),
+    stroke = Color(0XFF2D2D2D)
 )
 val statusDarkColors = StatusColors(
     redAccent = Color(0XFFFF5252),
@@ -73,5 +81,6 @@ val delivaryUserDarkColors = DelivaryUserColors(
     secondary = Color(0XFFE0E0E0),
     primaryVariant = Color(0XFFE0E0E0),
     background = backgroundDarkColors,
-    status = statusDarkColors
+    status = statusDarkColors,
+    shadow = Color(0x0D000000)
 )
