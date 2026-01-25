@@ -7,6 +7,9 @@ import com.example.delivaryUser.feature.authentication.login.di.loginModule
 import com.example.delivaryUser.feature.authentication.register.di.registerModule
 import com.example.delivaryUser.feature.authentication.verifyOtp.di.verifyOtpModule
 import com.example.delivaryUser.feature.home.di.homeModule
+import com.example.delivaryUser.feature.orders.base.di.ordersModule
+import com.example.delivaryUser.feature.orders.orderdetails.di.orderDetailsModule
+import com.example.delivaryUser.feature.orders.orderslist.di.ordersListModule
 import com.example.delivaryUser.service.user.di.userModule
 import org.koin.dsl.module
 
@@ -19,6 +22,9 @@ val featuresModule = module {
         verifyOtpModule,
         forgetPasswordModule,
         changePasswordModule,
-        homeModule
+        homeModule,
+        ordersModule,
+        ordersListModule,
+        orderDetailsModule
     )
 }

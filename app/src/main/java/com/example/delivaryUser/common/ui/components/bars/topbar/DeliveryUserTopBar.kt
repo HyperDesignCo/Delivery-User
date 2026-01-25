@@ -4,12 +4,14 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,6 +44,7 @@ fun DelivaryUserTopBar(
             .fillMaxWidth()
             .height(DeliveryUserTopBarDefaults.height)
             .background(color = colors.containerColor)
+            .statusBarsPadding()
             .padding(start = DeliveryUserTopBarDefaults.startPadding, end = DeliveryUserTopBarDefaults.endPadding),
         verticalAlignment = DeliveryUserTopBarDefaults.verticalAlignment,
         horizontalArrangement = DeliveryUserTopBarDefaults.horizontalArrangement
@@ -54,14 +57,19 @@ fun DelivaryUserTopBar(
                 contentDescription = null
             )
         }
-        content ?: Image(
-            modifier = Modifier.size(
-                width = DeliveryUserTopBarDefaults.logoWidth,
-                height = DeliveryUserTopBarDefaults.logoHeight
-            ),
-            painter = painterResource(R.drawable.img_topbar_logo),
-            contentDescription = null
-        )
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            content?.invoke() ?: Image(
+                modifier = Modifier.size(
+                    width = DeliveryUserTopBarDefaults.logoWidth,
+                    height = DeliveryUserTopBarDefaults.logoHeight
+                ),
+                painter = painterResource(R.drawable.img_topbar_logo),
+                contentDescription = null
+            )
+        }
         endIcon?.let {
             IconButton(
                 modifier = Modifier.size(DeliveryUserTopBarDefaults.iconSize),
@@ -102,5 +110,6 @@ object DeliveryUserTopBarDefaults {
 @Composable
 @PreviewAllVariants
 private fun DelivaryUserTopBarPreview() = DelivaryUserTheme {
-    DelivaryUserTopBar(onStartIconClicked = {})
+    DelivaryUserTopBar(
+        onStartIconClicked = {},)
 }

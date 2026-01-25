@@ -46,4 +46,26 @@
     <!--Home -->
     <string name="fast_order">Fast order</string>
     <string name="order_with_ai">Order With Ai</string>
+    <!--Orders -->
+    <string name="from">From</string>
+    <string name="egp">EGP</string>
+    <string name="order_is_pending">Order is pending</string>
+    <string name="order_is_accepted">Order is accepted</string>
+    <string name="order_is_placed">Order is placed</string>
+    <string name="order_is_cancelled">Order is cancelled</string>
+    <string name="order_is_on_the_way">Order is on way</string>
+    <string name="order_is_delivered">Order is delivered</string>
+    <string name="order_is_arrived">Delivery arrived</string>
+    <string name="order_list_empty">Your order list is empty</string>
+    <!--Order Details -->
+    <string name="order_details">Order details</string>
+    <string name="order_number">Order number</string>
+    <string name="provider_name">Provider name</string>
+    <string name="client_name">Client name</string>
+    <string name="delivery_name">Delivery name</string>
+    <string name="delivery_number">Delivery number</string>
+    <string name="order_price">Order price</string>
+    <string name="delivery">Delivery</string>
+    <string name="total">Total</string>
+    <string name="user_estimated_price">User estimated order price</string>
 </resources>
