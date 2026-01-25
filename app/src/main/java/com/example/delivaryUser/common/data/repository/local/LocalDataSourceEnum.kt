@@ -6,5 +6,7 @@ enum class LocalDataSourceEnum(override val keyValue: String) : ILocalDataSource
     ACCESS_TOKEN("access_token"),
     USER("user"),
     REMEMBER_ME("remember_me"),
-    IS_VERIFIED("is_verified")
+    IS_VERIFIED("is_verified"),
+    SAVED_LOCATION("saved_location"),
+    FIRST_LAUNCH_COMPLETE("first_launch_complete")
 }

@@ -51,6 +51,26 @@ coilCompose = "2.7.0"
 datastorePreferences = "1.2.0"
 uiText = "1.10.0"
 
+#googlemap
+servicLocation="21.3.0"
+playServicesMaps = "18.2.0"
+mapsCompose = "6.5.2"
+places = "5.0.0"
+
+#Accompanist
+accompanist = "0.37.3"
+
+#GoogleMapsPlatformSecrets
+googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
+
+#Security
+securityCrypto = "1.1.0-alpha06"
+material = "1.13.0"
+jetbrainsKotlinJvm = "2.3.0"
+
+
+
+
 [libraries]
 #Compose
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -103,6 +123,21 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
 androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
 
+# Google Maps
+google-play-services-location = {module = "com.google.android.gms:play-services-location", version.ref = "servicLocation"}
+google-play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+google-maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
+google-places = { module = "com.google.android.libraries.places:places", version.ref = "places" }
+
+#Accompanist
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+
+#Security
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto"}
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+
+
 [plugins]
 #Build
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -114,3 +149,7 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 #kotlinx
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
+#Google Maps Platform Secrets
+google-android-libraries-mapsplatform-secrets-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "googleAndroidLibrariesMapsplatformSecretsGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }

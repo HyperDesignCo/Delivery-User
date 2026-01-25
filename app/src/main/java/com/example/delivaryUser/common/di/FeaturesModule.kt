@@ -1,5 +1,6 @@
 package com.example.delivaryUser.common.di
 
+import com.example.delivaryUser.feature.address.mapview.di.mapModule
 import com.example.delivaryUser.feature.authentication.base.di.authenticationModule
 import com.example.delivaryUser.feature.authentication.changepassword.di.changePasswordModule
 import com.example.delivaryUser.feature.authentication.forgetpassword.di.forgetPasswordModule
@@ -19,6 +20,7 @@ val featuresModule = module {
         verifyOtpModule,
         forgetPasswordModule,
         changePasswordModule,
+        mapModule,
         homeModule
     )
 }

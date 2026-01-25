@@ -43,7 +43,17 @@
     <string name="create_new_password">إنشاء كلمة مرور جديدة</string>
     <string name="new_password_must_be_different">يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور المستخدمة سابقًا</string>
     <string name="send">ارسال</string>
+    <string name="please_select_a_location_on_the_map">Please select a location on the map</string>
+    <string name="choose_location">Choose Location</string>
     <!--Home -->
     <string name="fast_order">طلب سريع</string>
     <string name="order_with_ai">طلب بالذكاء الاصطناعي</string>
+    <string name="add_new_address">إضافة عنوان جديد</string>
+    <string name="please_wait">يرجى الانتظار قليلاً</string>
+    <string name="search_for_a_location">Search for a location</string>
+    <string name="your_location_is_being_determined">جاري تحديد موقعك...</string>
+    <string name="selected_address">الموقع المحدد:</string>
+    <string name="we_need_your_location_to_can_access_this_screen">We need your location to can access this screen</string>
+    <string name="location_permission_required">Location Permission Required</string>
+    <string name="allow_permission">Allow permission</string>
 </resources>
