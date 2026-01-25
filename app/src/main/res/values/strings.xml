@@ -46,6 +46,8 @@
     <!--Home -->
     <string name="fast_order">Fast order</string>
     <string name="order_with_ai">Order With Ai</string>
+    <string name="new_order">New Order</string>
+    <string name="point_to_point">Point to Point</string>
     <!--Orders -->
     <string name="from">From</string>
     <string name="egp">EGP</string>

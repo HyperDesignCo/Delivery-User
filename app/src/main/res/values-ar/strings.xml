@@ -46,6 +46,8 @@
     <!--Home -->
     <string name="fast_order">طلب سريع</string>
     <string name="order_with_ai">طلب بالذكاء الاصطناعي</string>
+    <string name="new_order">طلب جديد</string>
+    <string name="point_to_point">من نقطة إلى نقطة</string>
     <!--Orders -->
     <string name="from">من</string>
     <string name="egp">ج.م</string>
