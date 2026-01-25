@@ -6,6 +6,8 @@ import androidx.navigation.navigation
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.bars.navigationbar.DelivaryUserNavigationBarItemState
 import com.example.delivaryUser.feature.home.ui.view.HomeScreen
+import com.example.delivaryUser.feature.orders.orderdetails.ui.view.OrderDetailsScreen
+import com.example.delivaryUser.feature.orders.orderslist.ui.view.OrdersScreen
 import kotlinx.serialization.Serializable
 
 sealed interface IMainGraph : IDestination {
@@ -23,11 +25,18 @@ sealed interface IMainGraph : IDestination {
 
     @Serializable
     data object Account : IMainGraph
+
+    @Serializable
+    data class OrderDetails(val id: Int) : IMainGraph
 }
 
 fun NavGraphBuilder.buildNavMainGraph() {
     navigation<IMainGraph.RootGraph>(startDestination = IMainGraph.Home) {
         composable<IMainGraph.Home> { HomeScreen() }
+        composable<IMainGraph.Orders> { OrdersScreen() }
+        composable<IMainGraph.OrderDetails> {
+            OrderDetailsScreen()
+        }
     }
 }
 
