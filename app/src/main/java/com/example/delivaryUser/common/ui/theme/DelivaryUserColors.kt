@@ -30,6 +30,7 @@ data class StatusColors(
     val greenAccent: Color,
     val blueAccent: Color,
     val grayAccent: Color,
+    val darkGreen : Color,
     val orangeAccent: Color,
     val accentColor : Color,
 )
@@ -50,7 +51,8 @@ val statusLightColors = StatusColors(
     blueAccent = Color(0XFFC2FFD2),
     grayAccent = Color(0x1A0973BA),
     orangeAccent = Color(0XFFFFF5BC),
-    accentColor = Color(0xFFFEB249)
+    accentColor = Color(0xFFFEB249),
+    darkGreen =  Color(0xFF309449)
 )
 val delivaryUserLightColors = DelivaryUserColors(
     primary = Color(0XFFE41F28),
@@ -77,7 +79,8 @@ val statusDarkColors = StatusColors(
     blueAccent = Color(0XFF69F0AE),
     grayAccent = Color(0XFF42A5F5),
     orangeAccent = Color(0XFFFFD088),
-    accentColor = Color(0xFFFEB249)
+    accentColor = Color(0xFFFEB249),
+    darkGreen =  Color(0xFF309449)
 )
 val delivaryUserDarkColors = DelivaryUserColors(
     primary = Color(0XFFFF3B43),
