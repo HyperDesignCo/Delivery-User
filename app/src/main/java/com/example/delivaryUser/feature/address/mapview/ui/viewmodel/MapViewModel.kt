@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.delivaryUser.BuildConfig
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.extension.UIText
+import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetCurrentLocationUseCase
@@ -13,12 +14,16 @@ import com.example.delivaryUser.feature.address.mapview.domain.usecase.IsFirstLa
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.ReverseGeocodeUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SetFirstLaunchCompleteUseCase
+import com.example.delivaryUser.service.location.data.model.request.CheckLocationRequest
+import com.example.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
+import com.example.delivaryUser.service.location.domain.model.CheckLocation
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.net.PlacesClient
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -29,6 +34,7 @@ class MapViewModel(
     private val getSavedLocationUseCase: GetSavedLocationUseCase,
     private val isFirstLaunchUseCase: IsFirstLaunchUseCase,
     private val setFirstLaunchCompleteUseCase: SetFirstLaunchCompleteUseCase,
+    private val checkLocationUseCase: CheckLocationUseCase,
     private val context: Context,
 ) : BaseViewModel<MapContract.State, MapContract.Action>(
     state = MapContract.State()
@@ -231,6 +237,29 @@ class MapViewModel(
             return
         }
         reverseGeocodeLocation(targetLatLng)
+        val request = CheckLocationRequest(
+            latitude = targetLatLng.latitude.toString(),
+            longitude = targetLatLng.longitude.toString()
+        )
+        viewModelScope.launch(Dispatchers.IO) {
+            checkLocationUseCase.invoke(request).collectResource(
+                onLoading =::loading,
+                onSuccess =::getResponseOfCheckLocation
+            )
+        }
+
+    }
+
+
+    fun loading(isLoading: Boolean){
+        fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading))
+    }
+
+    fun getResponseOfCheckLocation(checkLocation: CheckLocation){
+        fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(checkLocation.message)))
+        updateState {
+            copy(checkLocationResponse=checkLocation)
+        }
     }
 
     private fun cameraIdleAtLocation(latLng: LatLng) {

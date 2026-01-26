@@ -76,10 +76,10 @@ fun SearchLocationBar(
         shape = RoundedCornerShape(10.dp),
         singleLine = true,
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Color.Transparent,
-            unfocusedBorderColor = Color.Transparent,
-            focusedContainerColor = DelivaryUserTheme.colors.background.background,
-            unfocusedContainerColor = DelivaryUserTheme.colors.background.background
+            focusedTextColor =  DelivaryUserTheme.colors.secondary,
+            unfocusedTextColor = DelivaryUserTheme.colors.secondary,
+            focusedContainerColor = DelivaryUserTheme.colors.background.surfaceHigh,
+            unfocusedContainerColor = DelivaryUserTheme.colors.background.surfaceHigh
         )
     )
 }
@@ -92,7 +92,7 @@ fun SearchResultsList(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = DelivaryUserTheme.colors.background.background)
+        colors = CardDefaults.cardColors(containerColor = DelivaryUserTheme.colors.background.surfaceHigh)
     ) {
         LazyColumn(
             modifier = Modifier

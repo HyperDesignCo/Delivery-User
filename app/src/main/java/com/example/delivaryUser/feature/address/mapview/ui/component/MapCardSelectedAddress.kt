@@ -25,7 +25,7 @@ fun SelectedLocationCard(address: String?) {
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, DelivaryUserTheme.colors.background.stroke),
-        colors = CardDefaults.cardColors(containerColor = DelivaryUserTheme.colors.background.background)
+        colors = CardDefaults.cardColors(containerColor = DelivaryUserTheme.colors.background.surfaceHigh)
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(

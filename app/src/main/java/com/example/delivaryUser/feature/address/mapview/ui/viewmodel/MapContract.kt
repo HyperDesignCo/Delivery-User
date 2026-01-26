@@ -1,6 +1,7 @@
 package com.example.delivaryUser.feature.address.mapview.ui.viewmodel
 
 import com.example.delivaryUser.feature.authentication.login.ui.viewmodel.LoginContract
+import com.example.delivaryUser.service.location.domain.model.CheckLocation
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
@@ -48,7 +49,8 @@ interface MapContract {
         val placePredictions: List<Pair<String, String>> = emptyList(),
         val placesClient: PlacesClient? = null,
         val sessionToken: AutocompleteSessionToken? = null,
-        val currentUserLocation: LatLng? = null
+        val currentUserLocation: LatLng? = null,
+        val checkLocationResponse: CheckLocation?=null
     )
 
 

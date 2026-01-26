@@ -108,7 +108,7 @@ private fun MapScreenContent(
     }
 
     DelivaryUserScreen(
-        Modifier.fillMaxSize(), header = {
+        header = {
             DelivaryUserTopBar(
                 onStartIconClicked = { },
                 content = { Text(stringResource(R.string.add_new_address)) },
@@ -122,7 +122,7 @@ private fun MapScreenContent(
             LocationIsNotReadyYet()
 
         } else {
-            Box(Modifier.fillMaxSize()) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
                 AndroidView(
                     factory = { context ->
@@ -136,17 +136,12 @@ private fun MapScreenContent(
                     }, modifier = Modifier.fillMaxSize()
                 )
 
-                Box(
-                    modifier = Modifier.align(Alignment.Center), contentAlignment = Alignment.Center
-                ) {
                     Icon(
                         painter = painterResource(R.drawable.mark),
                         contentDescription = "Location pin",
                         modifier = Modifier.size(28.dp),
                         tint = DelivaryUserTheme.colors.primary
                     )
-                }
-
 
                 Column(
                     modifier = Modifier

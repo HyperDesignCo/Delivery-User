@@ -22,7 +22,7 @@ import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 @Composable
 fun LocationIsNotReadyYet() {
     Box(
-        modifier = Modifier.fillMaxSize().background(DelivaryUserTheme.colors.background.background),
+        modifier = Modifier.fillMaxSize().background(DelivaryUserTheme.colors.background.surfaceHigh),
         contentAlignment = Alignment.Center,
     ) {
         Column(

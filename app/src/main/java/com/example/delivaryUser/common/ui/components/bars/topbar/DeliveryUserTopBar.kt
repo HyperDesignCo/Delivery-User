@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,14 +56,19 @@ fun DelivaryUserTopBar(
                 contentDescription = null
             )
         }
-        content ?: Image(
-            modifier = Modifier.size(
-                width = DeliveryUserTopBarDefaults.logoWidth,
-                height = DeliveryUserTopBarDefaults.logoHeight
-            ),
-            painter = painterResource(R.drawable.img_topbar_logo),
-            contentDescription = null
-        )
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            content?.invoke() ?: Image(
+                modifier = Modifier.size(
+                    width = DeliveryUserTopBarDefaults.logoWidth,
+                    height = DeliveryUserTopBarDefaults.logoHeight
+                ),
+                painter = painterResource(R.drawable.img_topbar_logo),
+                contentDescription = null
+            )
+        }
         endIcon?.let {
             IconButton(
                 modifier = Modifier.size(DeliveryUserTopBarDefaults.iconSize),
@@ -102,5 +109,7 @@ object DeliveryUserTopBarDefaults {
 @Composable
 @PreviewAllVariants
 private fun DelivaryUserTopBarPreview() = DelivaryUserTheme {
-    DelivaryUserTopBar(onStartIconClicked = {})
+    DelivaryUserTopBar(onStartIconClicked = {}, content = {
+        Text("test", color = DelivaryUserTheme.colors.background.background)
+    })
 }
