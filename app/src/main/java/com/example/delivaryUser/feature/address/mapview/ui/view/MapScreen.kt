@@ -2,6 +2,7 @@ package com.example.delivaryUser.feature.address.mapview.ui.view
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -243,20 +244,6 @@ private fun MapScreenContent(
                     }
                 }
             }
-        }
-
-        state.showNoDeliveryDialog.let {
-//            NoDeliveryDialog(
-//                onDismiss = { action(MapContract.Action.NoDeliveryDialogDismissed) },
-//                onPickupClick = { action(MapContract.Action.PickupClicked) }
-//            )
-        }
-
-        state.showDiffBranchDialog.let {
-//            DiffBranchDialog(
-//                onDismiss = { action(MapContract.Action.DiffBranchDialogDismissed) },
-//                onChangeBranch = { action(MapContract.Action.ChangeBranchClicked) }
-//            )
         }
     }
 }

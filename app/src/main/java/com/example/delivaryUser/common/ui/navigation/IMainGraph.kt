@@ -5,9 +5,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.bars.navigationbar.DelivaryUserNavigationBarItemState
+import com.example.delivaryUser.feature.outzonedelivery.ui.view.OutSideZoneDeliveryScreen
 import com.example.delivaryUser.feature.home.ui.view.HomeScreen
 import com.example.delivaryUser.feature.orders.orderdetails.ui.view.OrderDetailsScreen
 import com.example.delivaryUser.feature.orders.orderslist.ui.view.OrdersScreen
+import com.example.delivaryUser.feature.outzonedelivery.domain.OpenDeliveryZone
 import kotlinx.serialization.Serializable
 
 sealed interface IMainGraph : IDestination {
@@ -28,6 +30,9 @@ sealed interface IMainGraph : IDestination {
 
     @Serializable
     data class OrderDetails(val id: Int) : IMainGraph
+
+    @Serializable
+    data class OutSideZoneDelivery(val lat:String,val lng:String,val openDeliveryZone: OpenDeliveryZone) : IMainGraph
 }
 
 fun NavGraphBuilder.buildNavMainGraph() {
@@ -37,6 +42,7 @@ fun NavGraphBuilder.buildNavMainGraph() {
         composable<IMainGraph.OrderDetails> {
             OrderDetailsScreen()
         }
+        composable<IMainGraph.OutSideZoneDelivery> { OutSideZoneDeliveryScreen() }
     }
 }
 

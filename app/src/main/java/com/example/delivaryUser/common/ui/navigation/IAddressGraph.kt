@@ -14,11 +14,12 @@ sealed interface IAddressGraph{
     data object Map : IDestination
 
 
+
+
 }
 
 fun NavGraphBuilder.buildNavAddressGraph() {
     navigation<IAddressGraph.AddressGraph>(startDestination = IAddressGraph.Map) {
         composable<IAddressGraph.Map> { MapScreen() }
-
     }
 }

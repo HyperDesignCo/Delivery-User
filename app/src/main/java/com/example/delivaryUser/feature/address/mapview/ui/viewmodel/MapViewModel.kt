@@ -7,6 +7,8 @@ import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.navigation.IAddressGraph
+import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetCurrentLocationUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
@@ -14,6 +16,7 @@ import com.example.delivaryUser.feature.address.mapview.domain.usecase.IsFirstLa
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.ReverseGeocodeUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SetFirstLaunchCompleteUseCase
+import com.example.delivaryUser.feature.outzonedelivery.domain.OpenDeliveryZone
 import com.example.delivaryUser.service.location.data.model.request.CheckLocationRequest
 import com.example.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
 import com.example.delivaryUser.service.location.domain.model.CheckLocation
@@ -66,7 +69,15 @@ class MapViewModel(
             is MapContract.Action.SetPlacesClient -> setPlacesClient(action.client)
             is MapContract.Action.SetSessionToken -> setSessionToken(action.token)
             is MapContract.Action.SetCurrentUserLocation -> setCurrentUserLocation(action.location)
+            is MapContract.Action.NoAreaScreenChange -> changeNowAreaAvailable(action.isShow)
         }
+    }
+
+    private fun changeNowAreaAvailable(show: Boolean) {
+        updateState {
+            copy(showNoAreaScreen = show)
+        }
+
     }
 
     private fun initializePlacesApi() {
@@ -243,22 +254,36 @@ class MapViewModel(
         )
         viewModelScope.launch(Dispatchers.IO) {
             checkLocationUseCase.invoke(request).collectResource(
-                onLoading =::loading,
-                onSuccess =::getResponseOfCheckLocation
+                onLoading = ::loading,
+                onSuccess = { checkLocationResponse ->
+                    getResponseOfCheckLocation(
+                        checkLocation = checkLocationResponse,
+                        targetLatLng = targetLatLng
+                    )
+                }
             )
         }
 
     }
 
 
-    fun loading(isLoading: Boolean){
+    fun loading(isLoading: Boolean) {
         fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading))
     }
 
-    fun getResponseOfCheckLocation(checkLocation: CheckLocation){
+    fun getResponseOfCheckLocation(checkLocation: CheckLocation, targetLatLng: LatLng) {
         fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(checkLocation.message)))
         updateState {
-            copy(checkLocationResponse=checkLocation)
+            copy(checkLocationResponse = checkLocation)
+        }
+        if (checkLocation.data?.currentRegion.isNullOrEmpty() || checkLocation.data.currentArea.isNullOrEmpty()) {
+            fireNavigate(
+                IMainGraph.OutSideZoneDelivery(
+                    lat = targetLatLng.latitude.toString(),
+                    lng = targetLatLng.longitude.toString(),
+                    openDeliveryZone = OpenDeliveryZone.MAP_SCREEN
+                )
+            )
         }
     }
 
@@ -276,7 +301,7 @@ class MapViewModel(
     }
 
     private fun dismissNoDeliveryDialog() {
-        updateState { copy(showNoDeliveryDialog = false) }
+//        updateState { copy(showNoDeliveryDialog = false) }
     }
 
     private fun retryLocationClicked() {

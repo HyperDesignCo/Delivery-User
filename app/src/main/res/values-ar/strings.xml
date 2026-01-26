@@ -80,4 +80,8 @@
     <string name="delivery">التسليم</string>
     <string name="total">الإجمالي</string>
     <string name="user_estimated_price">سعر الطلب المقدر من قبل المستخدم</string>
+    <string name="outside_delivery_zone">Outside delivery zone</string>
+    <string name="dont_deliver_to_your_area_yet">We don\'t deliver to your area yet, but you can vote for it to help us prioritize expanding our service. Your feedback helps us improve!</string>
+    <string name="vote_for_this_location">Vote for this location</string>
+    <string name="change_location">Change Location</string>
 </resources>

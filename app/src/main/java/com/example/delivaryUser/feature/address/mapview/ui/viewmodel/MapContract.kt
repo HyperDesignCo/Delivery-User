@@ -29,6 +29,7 @@ interface MapContract {
         data class SetPlacesClient(val client: PlacesClient?): Action
         data class SetSessionToken(val token: AutocompleteSessionToken?): Action
         data class SetCurrentUserLocation(val location: LatLng?): Action
+        data class NoAreaScreenChange(val isShow : Boolean): Action
     }
 
     data class State(
@@ -39,8 +40,7 @@ interface MapContract {
         val currentLocation: LatLng? = null,
         val targetLocation: LatLng? = null,
         val detectedAddress: String? = null,
-        val showNoDeliveryDialog: Boolean = false,
-        val showDiffBranchDialog: Boolean = false,
+        val showNoAreaScreen: Boolean = false,
         val error: String? = null,
         val googleMap: GoogleMap?=null,
         val navigateFrom: String = "",
