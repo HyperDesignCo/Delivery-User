@@ -19,17 +19,21 @@ class HomeViewModel(private val useCase: GetAdsUseCase) :
                 // TODO NAVIGATE TO CHAT WITH AI SCREEN
             }
 
-            is HomeContract.Action.FastOrderClicked -> {
-                // TODO NAVIGATE TO FAST ORDER SCREEN
-            }
-
+            is HomeContract.Action.FastOrderClicked -> onFastOrderClicked()
             is HomeContract.Action.NavigateBacKClicked -> navigateBack()
             is HomeContract.Action.OnAddLocationClicked -> {
-
+                // TODO NAVIGATE TO MAP
             }
 
             is HomeContract.Action.OnLocationClicked -> {
+                // TODO NAVIGATE TO MAP
+            }
 
+            HomeContract.Action.OnNewOrderClicked -> {
+                // TODO NAVIGATE TO NEW ORDER
+            }
+            HomeContract.Action.OnPointToPointClicked -> {
+            // TODO NAVIGATE TO POINT TO POINT
             }
         }
     }
@@ -51,6 +55,11 @@ class HomeViewModel(private val useCase: GetAdsUseCase) :
         updateState { copy(ads = ads.ads.map { it.toUiState() }) }
     }
 
+    private fun onFastOrderClicked(){
+        viewModelScope.launch {
+            updateState { copy(isButtonsVisible = isButtonsVisible.not()) }
+        }
+    }
     private fun navigateBack() {
         viewModelScope.launch {
             fireNavigateUp()

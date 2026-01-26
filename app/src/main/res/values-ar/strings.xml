@@ -56,4 +56,28 @@
     <string name="we_need_your_location_to_can_access_this_screen">We need your location to can access this screen</string>
     <string name="location_permission_required">Location Permission Required</string>
     <string name="allow_permission">Allow permission</string>
+    <string name="new_order">طلب جديد</string>
+    <string name="point_to_point">من نقطة إلى نقطة</string>
+    <!--Orders -->
+    <string name="from">من</string>
+    <string name="egp">ج.م</string>
+    <string name="order_is_pending">الطلب قيد الانتظار</string>
+    <string name="order_is_accepted">لطلب مقبول</string>
+    <string name="order_is_placed">الطلب تم تقديمه</string>
+    <string name="order_is_cancelled">الطلب تم إلغاؤه</string>
+    <string name="order_is_on_the_way">الطلب في الطريق</string>
+    <string name="order_is_delivered">تم تسليم الطلب</string>
+    <string name="order_is_arrived">وصل الطلب</string>
+    <string name="order_list_empty">قائمة الطلبات فارغة</string>
+    <!--Order Details -->
+    <string name="order_details">تفاصيل الطلب</string>
+    <string name="order_number">رقم الطلب</string>
+    <string name="provider_name">اسم المزود</string>
+    <string name="client_name">اسم العميل</string>
+    <string name="delivery_name">اسم عامل  التوصيل</string>
+    <string name="delivery_number">رقم عامل  التوصيل</string>
+    <string name="order_price">سعر الطلب</string>
+    <string name="delivery">التسليم</string>
+    <string name="total">الإجمالي</string>
+    <string name="user_estimated_price">سعر الطلب المقدر من قبل المستخدم</string>
 </resources>

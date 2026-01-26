@@ -1,20 +1,31 @@
 package com.example.delivaryUser.feature.home.ui.view
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.bars.topbar.DelivaryUserTopBar
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
+import com.example.delivaryUser.common.ui.extension.clickableWithNoRipple
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import com.example.delivaryUser.feature.home.ui.components.HomeAdsSlider
 import com.example.delivaryUser.feature.home.ui.components.HomeCard
@@ -36,7 +47,8 @@ fun HomeContent(state: HomeContract.State, action: (HomeContract.Action) -> Unit
             DelivaryUserTopBar({})
         },
         contentVerticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        scrollState = rememberScrollState(),
     ) {
         HomeLocation(
             location = state.location,
@@ -55,6 +67,18 @@ fun HomeContent(state: HomeContract.State, action: (HomeContract.Action) -> Unit
             imageWidth = 98.dp,
             onCardClicked = { action(HomeContract.Action.FastOrderClicked) }
         )
+        if (state.isButtonsVisible) {
+            OrderTypeItem(
+                label = stringResource(R.string.new_order),
+                icon = painterResource(R.drawable.img_new_order),
+                onClick = { action(HomeContract.Action.OnNewOrderClicked) }
+            )
+            OrderTypeItem(
+                label = stringResource(R.string.point_to_point),
+                icon = painterResource(R.drawable.img_point_to_point),
+                onClick = { action(HomeContract.Action.OnPointToPointClicked) }
+            )
+        }
         HomeCard(
             cardColor = DelivaryUserTheme.colors.status.redAccent,
             text = stringResource(R.string.order_with_ai),
@@ -62,6 +86,44 @@ fun HomeContent(state: HomeContract.State, action: (HomeContract.Action) -> Unit
             imageHeight = 71.dp,
             imageWidth = 63.dp,
             onCardClicked = { action(HomeContract.Action.ChatWithAiClicked) }
+        )
+    }
+}
+
+@Composable
+private fun OrderTypeItem(
+    label: String,
+    icon: Painter,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        DelivaryUserTheme.colors.status.greenAccent,
+                        DelivaryUserTheme.colors.status.darkGreen
+                    )
+                ),
+                shape = RoundedCornerShape(20.dp)
+            )
+            .clickableWithNoRipple { onClick() }
+            .padding(vertical = 8.dp, horizontal = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            modifier = Modifier.padding(vertical = 8.dp),
+            text = label,
+            style = DelivaryUserTheme.typography.headline.large,
+            color = DelivaryUserTheme.colors.background.surfaceHigh
+        )
+        Image(
+            modifier = Modifier.size(34.dp),
+            painter = icon,
+            contentDescription = null
         )
     }
 }

@@ -10,11 +10,14 @@ sealed interface HomeContract {
         data object NavigateBacKClicked : Action
         data class OnLocationClicked(val location: String) : Action
         data object OnAddLocationClicked : Action
+        data object OnNewOrderClicked : Action
+        data object OnPointToPointClicked : Action
     }
 
     data class State(
         val location: String = "",
         val ads: List<AdUiState> = emptyList(),
+        val isButtonsVisible: Boolean = false,
     )
 
     data class AdUiState(
