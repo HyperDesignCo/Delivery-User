@@ -13,6 +13,7 @@ import com.example.delivaryUser.feature.orders.base.di.ordersModule
 import com.example.delivaryUser.feature.orders.orderdetails.di.orderDetailsModule
 import com.example.delivaryUser.feature.orders.orderslist.di.ordersListModule
 import com.example.delivaryUser.feature.outzonedelivery.di.outZoneDeliveryModule
+import com.example.delivaryUser.service.address.di.AddressModule
 import com.example.delivaryUser.service.user.di.userModule
 import org.koin.dsl.module
 
@@ -31,6 +32,7 @@ val featuresModule = module {
         ordersModule,
         ordersListModule,
         orderDetailsModule,
-        outZoneDeliveryModule
+        outZoneDeliveryModule,
+        AddressModule
     )
 }
