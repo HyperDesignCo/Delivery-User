@@ -49,6 +49,7 @@ class PointToPointViewModel(
             is PointToPointContract.Action.OnEstimatedPriceChange -> onEstimatedPriceChanged(action.price)
             is PointToPointContract.Action.OnCommentChange -> onCommentChanges(action.comment)
             is PointToPointContract.Action.DismissDropDownMenu -> dismissMenu()
+            is PointToPointContract.Action.OnBackClicked -> navigateBack()
         }
     }
 
@@ -189,5 +190,14 @@ class PointToPointViewModel(
 
     private fun dismissMenu() {
         updateState { copy(isExpanded = false) }
+    }
+
+    private fun navigateBack() {
+        fireNavigate(IMainGraph.Home) {
+            popUpTo(IOrderGraph.PointToPoint) {
+                inclusive = true
+                saveState = false
+            }
+        }
     }
 }

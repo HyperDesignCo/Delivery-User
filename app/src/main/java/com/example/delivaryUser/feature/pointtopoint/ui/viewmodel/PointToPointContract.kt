@@ -16,6 +16,7 @@ sealed interface PointToPointContract {
         data class OnEstimatedPriceChange(val price: String) : Action
         data class OnCommentChange(val comment: String) : Action
         data object DismissDropDownMenu : Action
+        data object OnBackClicked : Action
     }
 
     data class State(
