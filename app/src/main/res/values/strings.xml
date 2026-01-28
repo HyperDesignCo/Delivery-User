@@ -70,4 +70,21 @@
     <string name="delivery">Delivery</string>
     <string name="total">Total</string>
     <string name="user_estimated_price">User estimated order price</string>
+    <!-- Address -->
+    <string name="save">Save</string>
+    <string name="addresses">Addresses</string>
+    <string name="address_saved_successfully">Address saved successfully</string>
+    <!-- Point to Point -->
+    <string name="where_is_it_going">Where’s it going?</string>
+    <string name="choose_sender_address">Choose sender Address</string>
+    <string name="choose_recipient_Address">Choose recipient’s Address</string>
+    <string name="order_type">Order type</string>
+    <string name="estimated_price">Estimated price</string>
+    <string name="comment">Comment....</string>
+    <string name="delivery_fess">Delivery fess</string>
+    <string name="checkout">Checkout</string>
+    <string name="order_purpose_validation">Order purpose should not be empty</string>
+    <string name="sender_address_validation">Sender address should not be empty</string>
+    <string name="recipient_address_validation">Recipient address should not be empty</string>
+    <string name="estimated_price_validation">Estimated order price should not be empty</string>
 </resources>
