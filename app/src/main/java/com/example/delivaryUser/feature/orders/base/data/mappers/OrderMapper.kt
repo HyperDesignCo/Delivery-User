@@ -34,8 +34,9 @@ object OrderMapper : Mapper<OrderDto, Order, Unit>() {
         rates = RateMapper.dtoToDomain(model.rates.orEmpty()),
         deliveryPhone = model.deliveryPhone.orEmpty(),
         deliveryRate = model.deliveryRate.orEmpty(),
-        deliveryFees =model.deliveryFees.orEmpty(),
+        deliveryFees = model.deliveryFees.orEmpty(),
         totalOrderPrice = model.totalOrderPrice.orEmpty(),
-        createdAt = model.createdAt.orEmpty()
+        createdAt = model.createdAt.orEmpty(),
+        orderPurpose = model.orderPurpose.orEmpty()
     )
 }

@@ -30,6 +30,7 @@ data class Order(
     val deliveryFees: String,
     val totalOrderPrice: Double,
     val createdAt: String,
+    val orderPurpose: String
 )
 
 enum class OrderStatus(val value: String) {

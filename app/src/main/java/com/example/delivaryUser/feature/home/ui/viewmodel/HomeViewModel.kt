@@ -2,6 +2,7 @@ package com.example.delivaryUser.feature.home.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
+import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.home.domain.interactors.GetAdsUseCase
 import com.example.delivaryUser.feature.home.domain.models.Ads
@@ -33,7 +34,7 @@ class HomeViewModel(private val useCase: GetAdsUseCase) :
                 // TODO NAVIGATE TO NEW ORDER
             }
             HomeContract.Action.OnPointToPointClicked -> {
-            // TODO NAVIGATE TO POINT TO POINT
+            fireNavigate(IOrderGraph.PointToPoint)
             }
         }
     }

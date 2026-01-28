@@ -29,6 +29,7 @@ import com.example.delivaryUser.common.ui.navigation.INavigator
 import com.example.delivaryUser.common.ui.navigation.NavigationEvent
 import com.example.delivaryUser.common.ui.navigation.buildNavAuthGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavMainGraph
+import com.example.delivaryUser.common.ui.navigation.buildNavOrderGraph
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
@@ -68,6 +69,7 @@ fun DelivaryUserApp(
                 ) {
                     buildNavAuthGraph()
                     buildNavMainGraph()
+                    buildNavOrderGraph()
                 }
             }
         }
@@ -83,6 +85,7 @@ private fun ObserveMessageEvent() {
             is UIText.StringResource -> context.getString(this.id)
         }
     }
+
     val messageEvent: IEventController<IMessageEvent> = koinInject(qualifier = named("MessageEvent"))
     ObserveAsEvents(messageEvent.event) { event ->
         when (event) {
