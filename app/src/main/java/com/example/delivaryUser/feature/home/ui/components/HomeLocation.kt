@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -65,7 +66,7 @@ fun HomeLocation(
                 .padding(vertical = 8.dp)
                 .padding(start = 24.dp, end = 50.dp)
             ,
-            text = location,
+            text = location.ifEmpty { stringResource(R.string.add_new_address) },
             style = DelivaryUserTheme.typography.body.large,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis

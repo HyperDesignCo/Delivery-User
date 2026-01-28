@@ -1,16 +1,15 @@
 package com.example.delivaryUser.feature.home.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.IAddressGraph
-import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
+import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetLocationResponseUseCase
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationResponseUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
 import com.example.delivaryUser.feature.home.domain.interactors.GetAdsUseCase
 import com.example.delivaryUser.feature.home.domain.models.Ads
@@ -27,13 +26,11 @@ class HomeViewModel(
     private val useCase: GetAdsUseCase,
     private val checkLocationUseCase: CheckLocationUseCase,
     private val saveLocationUseCase: SaveLocationUseCase,
-    private val savedLocationResponseUseCase: SaveLocationResponseUseCase,
-    private val getLocationResponseUseCase: GetLocationResponseUseCase
-) :
-    BaseViewModel<HomeContract.State, HomeContract.Action>(HomeContract.State()) {
+    private val getLocationResponseUseCase: GetLocationResponseUseCase,
+    private val getSavedLocationUseCase: GetSavedLocationUseCase,
+) : BaseViewModel<HomeContract.State, HomeContract.Action>(HomeContract.State()) {
     init {
-        loadLocation()
-        getAds()
+        loadSavedLocationFirst()
     }
 
     override fun onActionTrigger(action: HomeContract.Action) {
@@ -57,8 +54,7 @@ class HomeViewModel(
             }
 
             HomeContract.Action.OnPointToPointClicked -> {
-                // TODO NAVIGATE TO POINT TO POINT
-            fireNavigate(IOrderGraph.PointToPoint)
+                fireNavigate(IOrderGraph.PointToPoint)
             }
 
             is HomeContract.Action.OnChangeLocation -> {
@@ -66,6 +62,21 @@ class HomeViewModel(
             }
         }
     }
+
+    private fun loadSavedLocationFirst() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getSavedLocationUseCase.invoke(Unit).collectResource(
+                onSuccess = { savedLatLng ->
+
+                    updateState {
+                        copy(savedLatLng = savedLatLng)
+                    }
+                    loadLocation()
+                    getAds()
+                })
+        }
+    }
+
     private fun loadLocation() {
         viewModelScope.launch(Dispatchers.IO) {
             getLocationResponseUseCase.invoke(Unit).collectResource(
@@ -75,8 +86,7 @@ class HomeViewModel(
                     } else {
                         checkLocationFromApi()
                     }
-                }
-            )
+                })
         }
     }
 
@@ -88,19 +98,15 @@ class HomeViewModel(
         updateState {
             copy(location = displayLocation)
         }
+
     }
+
     private fun checkLocationFromApi() {
         val targetLatLng = state.value.latLng
 
         if (targetLatLng == null) {
-//            fireMessage(
-//                IMessageEvent.Toast(
-//                    message = UIText.DynamicString("Location not available. Please enable location permissions.")
-//                )
-//            )
             return
         }
-
         val request = CheckLocationRequest(
             latitude = targetLatLng.latitude.toString(),
             longitude = targetLatLng.longitude.toString()
@@ -110,28 +116,33 @@ class HomeViewModel(
             checkLocationUseCase.invoke(request).collectResource(
                 onSuccess = { checkLocationResponse ->
                     handleCheckLocationResponse(
-                        checkLocation = checkLocationResponse,
-                        targetLocation = targetLatLng
+                        checkLocation = checkLocationResponse, targetLocation = targetLatLng
                     )
-                },
-            )
+                })
         }
     }
 
     private fun handleCheckLocationResponse(
-        checkLocation: CheckLocation,
-        targetLocation: LatLng
+        checkLocation: CheckLocation, targetLocation: LatLng
     ) {
+
         fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(checkLocation.message)))
+
         updateState {
             copy(checkLocationResponse = checkLocation)
         }
 
         val currentRegion = checkLocation.data?.currentRegion
         val currentArea = checkLocation.data?.currentArea
+        val savedLatLng = state.value.savedLatLng
+
+        if (savedLatLng != null && isSameLocation(savedLatLng, targetLocation)) {
+            return
+        }
 
         if (currentRegion.isNullOrEmpty() || currentArea.isNullOrEmpty()) {
-            Log.d("teeeest","tttesset")
+            saveLocation(targetLocation)
+
             fireNavigate(
                 IMainGraph.OutSideZoneDelivery(
                     lat = targetLocation.latitude.toString(),
@@ -141,10 +152,22 @@ class HomeViewModel(
             )
         } else {
             displayAndSaveLocation(checkLocation.data)
-            saveLocation(latLng = targetLocation)
+            saveLocation(targetLocation)
         }
     }
 
+    private fun isSameLocation(
+        savedLatLng: LatLng, targetLocation: LatLng
+    ): Boolean {
+        val tolerance = 0.0002
+
+        val latDiff = Math.abs(savedLatLng.latitude - targetLocation.latitude)
+        val lngDiff = Math.abs(savedLatLng.longitude - targetLocation.longitude)
+
+        val isSame = latDiff < tolerance && lngDiff < tolerance
+
+        return isSame
+    }
 
     private fun displayAndSaveLocation(data: Location) {
         val regionName = data.currentRegionName.orEmpty()
@@ -154,41 +177,36 @@ class HomeViewModel(
         updateState {
             copy(location = displayLocation)
         }
-
-        saveLocationData(data)
-    }
-
-    private fun saveLocationData(data: Location) {
-        viewModelScope.launch {
-            savedLocationResponseUseCase.invoke(body = data)
-        }
     }
 
     private fun saveLocation(latLng: LatLng) {
         viewModelScope.launch {
-            saveLocationUseCase.invoke(body = latLng).collectResource()
+            saveLocationUseCase.invoke(body = latLng).collectResource(
+                onSuccess = {
+                    updateState {
+                        copy(savedLatLng = latLng)
+                    }
+                })
         }
     }
 
     private fun changeLocation(latLng: LatLng) {
+
         updateState {
             copy(
-                latLng = latLng,
-                location = ""
+                latLng = latLng, location = ""
             )
         }
         checkLocationFromApi()
     }
+
     private fun getAds() {
         viewModelScope.launch {
-            useCase.invoke(body = Unit).collectResource(
-                onSuccess = {
-                    onGetAdsUseCaseSuccess(it)
-                },
-                onLoading = {
-                    fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
-                }
-            )
+            useCase.invoke(body = Unit).collectResource(onSuccess = {
+                onGetAdsUseCaseSuccess(it)
+            }, onLoading = {
+                fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
+            })
         }
     }
 

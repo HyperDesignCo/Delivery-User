@@ -22,6 +22,7 @@ sealed interface HomeContract {
         val ads: List<AdUiState> = emptyList(),
         val isButtonsVisible: Boolean = false,
         val latLng: LatLng? = null,
+        val savedLatLng: LatLng? =null,
         val checkLocationResponse: CheckLocation?=null
     )
 

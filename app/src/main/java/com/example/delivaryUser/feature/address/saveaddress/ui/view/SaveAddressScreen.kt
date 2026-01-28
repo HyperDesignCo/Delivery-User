@@ -44,7 +44,7 @@ fun AddUpdateAddressScreenContent(
         scrollState = scrollState, isImePaddingEnabled = true,
         header = {
             DelivaryUserTopBar(
-                onStartIconClicked = { },
+                onStartIconClicked = {onActionTrigger(SaveAddressContract.Action.OnBackClick) },
                 content = { Text(stringResource(R.string.add_new_address)) },
             )
         },

@@ -41,7 +41,7 @@ fun OutSideZoneDeliveryScreenContent(
     DelivaryUserScreen(
         header = {
             DelivaryUserTopBar(
-                onStartIconClicked = { },
+                onStartIconClicked = {action(OutZoneDeliveryContract.Action.OnBackClick) },
                 content = { Text(stringResource(R.string.add_new_address)) },
             )
         },

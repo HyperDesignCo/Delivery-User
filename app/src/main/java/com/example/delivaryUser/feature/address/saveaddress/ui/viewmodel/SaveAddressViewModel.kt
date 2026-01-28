@@ -18,6 +18,8 @@ import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedL
 import com.example.delivaryUser.feature.address.saveaddress.data.model.request.AddAddressRequest
 import com.example.delivaryUser.feature.address.saveaddress.domain.interactors.AddAddressUseCase
 import com.example.delivaryUser.feature.address.saveaddress.domain.model.SaveAddress
+import com.example.delivaryUser.feature.pointtopoint.ui.components.AddressType
+import com.example.delivaryUser.service.address.domain.interactors.SaveRecipientAddressUseCase
 import com.example.delivaryUser.service.address.domain.interactors.SaveSenderAddressUseCase
 import com.example.delivaryUser.service.address.domain.models.domain.Address
 import com.example.delivaryUser.service.user.domain.repository.local.IUserLocalDataSource
@@ -29,9 +31,13 @@ class SaveAddressViewModel(
     private val getLocationResponseUseCase: GetLocationResponseUseCase,
     private val getSavedLocationUseCase: GetSavedLocationUseCase,
     private val saveSenderAddressUseCase: SaveSenderAddressUseCase,
+    savedStateHandle: SavedStateHandle,
+    private val saveRecipientAddressUseCase: SaveRecipientAddressUseCase
 ) : BaseViewModel<SaveAddressContract.State, SaveAddressContract.Action>(
     SaveAddressContract.State()
 ) {
+
+    private val route = savedStateHandle.toRoute<IAddressGraph.SaveAddress>()
 
     init {
         getLocationResponse()
@@ -76,7 +82,18 @@ class SaveAddressViewModel(
             is SaveAddressContract.Action.OnStreetChanged -> {
                 onStreetChanged(action.street)
             }
+
+            SaveAddressContract.Action.OnBackClick -> {
+                onBackClick()
+            }
         }
+    }
+
+    private fun onBackClick() {
+        viewModelScope.launch(Dispatchers.IO) {
+            fireNavigateUp()
+        }
+
     }
 
     private fun onStreetChanged(value: String) {
@@ -146,8 +163,7 @@ class SaveAddressViewModel(
         )
         viewModelScope.launch(Dispatchers.IO) {
             addAddressUseCase.invoke(request).collectResource(
-                onSuccess = ::onAddAddressSuccess,
-                onLoading = ::onLoading
+                onSuccess = ::onAddAddressSuccess, onLoading = ::onLoading
             )
         }
 
@@ -158,7 +174,18 @@ class SaveAddressViewModel(
         updateState {
             copy()
         }
-        saveSenderAddress(saveAddressResponse.address)
+        when (route.addressType) {
+            AddressType.SENDER -> {
+                saveSenderAddress(saveAddressResponse.address)
+            }
+
+            AddressType.RECEIVER -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    saveRecipientAddressUseCase(saveAddressResponse.address)
+                }
+            }
+        }
+
         fireNavigate(destination = IMainGraph.Home, builder = {
             popUpTo(IMainGraph.Home) {
                 inclusive = false
@@ -183,7 +210,7 @@ class SaveAddressViewModel(
     private fun onPhone2Changed(value: String) {
         updateState {
             copy(
-                phone2 = phone2.copy(value = value,error = null)
+                phone2 = phone2.copy(value = value, error = null)
             )
         }
     }
@@ -191,7 +218,7 @@ class SaveAddressViewModel(
     private fun onPhone1Changed(value: String) {
         updateState {
             copy(
-                phone1 = phone1.copy(value = value,error = null)
+                phone1 = phone1.copy(value = value, error = null)
             )
         }
     }
@@ -227,6 +254,7 @@ class SaveAddressViewModel(
             )
         }
     }
+
     override fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) = updateState {
         copy(
             phone1 = phone1.copy(error = errors[ErrorKeyEnum.PHONE_NUMBER]),

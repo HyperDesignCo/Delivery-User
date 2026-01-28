@@ -111,7 +111,7 @@ private fun MapScreenContent(
     DelivaryUserScreen(
         header = {
             DelivaryUserTopBar(
-                onStartIconClicked = { },
+                onStartIconClicked = {action(MapContract.Action.OnBackClick) },
                 content = { Text(stringResource(R.string.add_new_address)) },
             )
         }) {

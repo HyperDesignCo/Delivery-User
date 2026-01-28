@@ -14,6 +14,7 @@ sealed interface SaveAddressContract {
         data class OnSpecialSignChanged(val specialSign: String) : Action
         data class OnExtraInfoChanged(val extraInfo: String) : Action
         data object OnSaveAddressClicked : Action
+        data object OnBackClick: Action
 
 
     }

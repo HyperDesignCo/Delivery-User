@@ -5,6 +5,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.delivaryUser.feature.address.saveaddress.ui.view.AddUpdateAddressScreen
 import com.example.delivaryUser.feature.address.mapview.ui.view.MapScreen
+import com.example.delivaryUser.feature.pointtopoint.ui.components.AddressType
 import kotlinx.serialization.Serializable
 
 sealed interface IAddressGraph {
@@ -15,7 +16,7 @@ sealed interface IAddressGraph {
     data object Map : IDestination
 
     @Serializable
-    data object SaveAddress : IDestination
+    data class SaveAddress(val addressType: AddressType) : IDestination
 
 
 }

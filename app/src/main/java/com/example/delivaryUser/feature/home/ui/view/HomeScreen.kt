@@ -60,25 +60,41 @@ fun HomeContent(state: HomeContract.State, action: (HomeContract.Action) -> Unit
     val context = LocalContext.current
     val permissionState = rememberMultiplePermissionsState(
         listOf(
-            Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
         )
     )
 
-    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    val fusedLocationClient = remember {
+        LocationServices.getFusedLocationProviderClient(context)
+    }
+
+    var permissionRequested by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (!permissionState.allPermissionsGranted && !permissionRequested) {
+            permissionState.launchMultiplePermissionRequest()
+            permissionRequested = true
+        }
+    }
 
     LaunchedEffect(permissionState.allPermissionsGranted) {
         if (permissionState.allPermissionsGranted) {
-            val location = fusedLocationClient.getCurrentLocation(
-                Priority.PRIORITY_HIGH_ACCURACY, null
-            ).await()
-
-            if (location != null) {
-                val userLocation = LatLng(location.latitude, location.longitude)
-
-                action(HomeContract.Action.OnChangeLocation(userLocation))
+            try {
+                val location = fusedLocationClient.getCurrentLocation(
+                    Priority.PRIORITY_HIGH_ACCURACY,
+                    null
+                ).await()
+                if (location != null) {
+                    val userLocation = LatLng(location.latitude, location.longitude)
+                    action(HomeContract.Action.OnChangeLocation(userLocation))
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
+
     DelivaryUserScreen(
         header = {
             DelivaryUserTopBar({})

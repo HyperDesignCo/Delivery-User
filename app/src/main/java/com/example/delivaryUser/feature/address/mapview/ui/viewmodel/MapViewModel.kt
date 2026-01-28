@@ -16,6 +16,7 @@ import com.example.delivaryUser.feature.address.mapview.domain.usecase.ReverseGe
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationResponseUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
 import com.example.delivaryUser.feature.outzonedelivery.domain.OpenDeliveryZone
+import com.example.delivaryUser.feature.pointtopoint.ui.components.AddressType
 import com.example.delivaryUser.service.location.data.model.request.CheckLocationRequest
 import com.example.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
 import com.example.delivaryUser.service.location.domain.model.CheckLocation
@@ -70,6 +71,13 @@ class MapViewModel(
             is MapContract.Action.SetSessionToken -> setSessionToken(action.token)
             is MapContract.Action.SetCurrentUserLocation -> setCurrentUserLocation(action.location)
             is MapContract.Action.NoAreaScreenChange -> changeNowAreaAvailable(action.isShow)
+            MapContract.Action.OnBackClick -> onBackClick()
+        }
+    }
+
+    private fun onBackClick() {
+        viewModelScope.launch(Dispatchers.IO) {
+            fireNavigateUp()
         }
     }
 
@@ -279,6 +287,7 @@ class MapViewModel(
 
     private fun chooseLocationClicked() {
         val targetLatLng = state.value.targetLocation
+
         if (targetLatLng == null) {
             fireMessage(
                 IMessageEvent.Toast(
@@ -287,7 +296,14 @@ class MapViewModel(
             )
             return
         }
+
+        // Save the location first
+        saveLocation(targetLatLng)
         reverseGeocodeLocation(targetLatLng)
+
+        // Update savedLocationToApply so it will be used when returning to map
+        savedLocationToApply = targetLatLng
+
         val request = CheckLocationRequest(
             latitude = targetLatLng.latitude.toString(),
             longitude = targetLatLng.longitude.toString()
@@ -323,8 +339,7 @@ class MapViewModel(
                 )
             )
         } else {
-            fireNavigate(IAddressGraph.SaveAddress)
-            saveLocation(targetLatLng)
+            fireNavigate(IAddressGraph.SaveAddress(addressType = AddressType.SENDER))
             saveLocationResponse(checkLocation.data)
         }
     }

@@ -7,6 +7,7 @@ sealed interface OutZoneDeliveryContract {
     sealed interface Action {
         data object OnVoteClickAction : Action
         data object OnChangeLocation : Action
+        data object OnBackClick: Action
 
     }
 
