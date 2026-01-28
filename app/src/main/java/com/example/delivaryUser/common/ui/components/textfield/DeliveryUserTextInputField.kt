@@ -22,10 +22,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.extension.autoMirror
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
-import com.example.delivaryUser.R
 
 @Composable
 fun DelivaryUserTextInputField(
@@ -37,6 +37,9 @@ fun DelivaryUserTextInputField(
     placeholder: String? = null,
     @DrawableRes leadingIconRes: Int? = null,
     @DrawableRes trailingIconRes: Int? = null,
+    readOnly : Boolean = DeliveryUserTextInputFieldDefaults.isReadOnly,
+    leadingIconColor : Color?=null,
+    trailingIconColor : Color?=null,
     supportingText: String? = null,
     isError: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -54,15 +57,20 @@ fun DelivaryUserTextInputField(
         modifier = modifier,
         enabled = enabled,
         value = value,
+        readOnly = readOnly,
         textStyle = DelivaryUserTheme.typography.body.medium,
         leadingIcon = leadingIconRes?.let {
             {
-                DelivaryUserTextInputFieldIcon(contentColor = colors.contentColor, leadingIconRes = leadingIconRes)
+                leadingIconColor?.let {
+                    DelivaryUserTextInputFieldIcon(contentColor =it , leadingIconRes = leadingIconRes)
+                }?:  DelivaryUserTextInputFieldIcon(contentColor = colors.contentColor, leadingIconRes = leadingIconRes)
             }
         },
         trailingIcon = trailingIconRes?.let {
             {
-                DelivaryUserTextInputFieldIcon(contentColor = colors.contentColor, leadingIconRes = trailingIconRes)
+                trailingIconColor?.let{
+                    DelivaryUserTextInputFieldIcon(contentColor =it, leadingIconRes = trailingIconRes)
+                } ?: DelivaryUserTextInputFieldIcon(contentColor = colors.contentColor, leadingIconRes = trailingIconRes)
 
             }
         },
@@ -97,6 +105,7 @@ fun DelivaryUserTextInputField(
             disabledBorderColor = colors.disabledBorderColor,
             unfocusedContainerColor = colors.unfocusedContainerColor,
             focusedContainerColor = colors.focusedContainerColor,
+            disabledContainerColor = colors.disabledContainerColor,
             errorContainerColor = colors.errorContainerColor,
         ),
         shape = shape,
@@ -116,6 +125,7 @@ data class DeliveryUserTextInputFieldColors(
     val disabledBorderColor: Color = Color.Unspecified,
     val focusedContainerColor: Color = Color.Unspecified,
     val unfocusedContainerColor: Color = Color.Unspecified,
+    val disabledContainerColor: Color = Color.Unspecified,
     val errorContainerColor: Color = Color.Unspecified,
     val contentColor: Color = Color.Unspecified,
 )
@@ -137,6 +147,7 @@ object DeliveryUserTextInputFieldDefaults {
     val keyboardActions: KeyboardActions = KeyboardActions.Default
     val iconSize = 20.dp
     val isEnabled = true
+    val isReadOnly = false
     val textAlign = TextAlign.Start
 
     @Composable
@@ -146,6 +157,7 @@ object DeliveryUserTextInputFieldDefaults {
         disabledBorderColor: Color = DelivaryUserTheme.colors.secondary,
         focusedContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         unfocusedContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
+        disabledContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         errorContainerColor: Color = DelivaryUserTheme.colors.status.redAccent,
         contentColor: Color = DelivaryUserTheme.colors.secondary,
     ) = DeliveryUserTextInputFieldColors(
@@ -154,6 +166,7 @@ object DeliveryUserTextInputFieldDefaults {
         disabledBorderColor = disabledBorderColor,
         focusedContainerColor = focusedContainerColor,
         unfocusedContainerColor = unfocusedContainerColor,
+        disabledContainerColor = disabledContainerColor,
         errorContainerColor = errorContainerColor,
         contentColor = contentColor
     )
