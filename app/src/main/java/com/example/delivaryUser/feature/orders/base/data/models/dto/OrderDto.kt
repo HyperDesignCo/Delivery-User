@@ -38,29 +38,31 @@ data class OrderDto(
     @SerialName("provider_name")
     val providerName: String? = null,
     @SerialName("client_name")
-    val clientName: String ?=null,
+    val clientName: String? = null,
     @SerialName("client_phone")
-    val clientPhone : String ?=null,
+    val clientPhone: String? = null,
     @SerialName("client_latitude")
-    val clientLatitude : String ?=null,
+    val clientLatitude: String? = null,
     @SerialName("client_longitude")
-    val clientLongitude : String ?=null,
+    val clientLongitude: String? = null,
     @SerialName("end_client_address")
-    val endClientAddress : String ?=null,
+    val endClientAddress: String? = null,
     @SerialName("end_client_latitude")
-    val endClientLatitude : String ?=null,
+    val endClientLatitude: String? = null,
     @SerialName("end_client_longitude")
-    val endClientLongitude : String ?=null,
+    val endClientLongitude: String? = null,
     @SerialName("delivery_latitude")
-    val deliveryLatitude : String ?=null,
+    val deliveryLatitude: String? = null,
     @SerialName("delivery_longitude")
-    val deliveryLongitude : String ?=null,
+    val deliveryLongitude: String? = null,
     @SerialName("delivery_phone")
-    val deliveryPhone : String ?=null,
+    val deliveryPhone: String? = null,
     @SerialName("chat_id")
-    val chatId : String ?=null,
+    val chatId: String? = null,
     @SerialName("cancel_reason")
-    val cancelReason : String ?=null,
+    val cancelReason: String? = null,
     @SerialName("rates")
-    val rates : List<RateDto> ?=null,
-)
+    val rates: List<RateDto>? = null,
+    @SerialName("OrderPurpose")
+    val orderPurpose: String? = null,
+    )
