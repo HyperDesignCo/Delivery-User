@@ -1,5 +1,6 @@
 package com.example.delivaryUser.feature.address.mapview.domain.repository
 
+import com.example.delivaryUser.service.location.domain.model.Location
 import com.google.android.gms.maps.model.LatLng
 
 interface IMapRepository {
@@ -27,4 +28,8 @@ interface IMapRepository {
 
 
     suspend fun setFirstLaunchComplete()
+
+    suspend fun saveLocationResponse(locationResponse: Location)
+
+    suspend fun getSavedLocationResponse(): Location?
 }

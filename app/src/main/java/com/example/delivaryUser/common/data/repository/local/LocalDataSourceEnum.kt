@@ -10,5 +10,7 @@ enum class LocalDataSourceEnum(override val keyValue: String) : ILocalDataSource
     SENDER_ADDRESS("sender_address"),
     RECIPIENT_ADDRESS("recipient_address"),
     SAVED_LOCATION("saved_location"),
-    FIRST_LAUNCH_COMPLETE("first_launch_complete")
+    FIRST_LAUNCH_COMPLETE("first_launch_complete"),
+    SAVED_LOCATION_RESPONSE("saved_location_response"),
+
 }

@@ -67,7 +67,14 @@ class OutZoneDeliveryViewModel(
             copy(addAreaRequestResponse = addAreaResponse)
         }
         fireMessage(IMessageEvent.Toast(UIText.DynamicString(value = addAreaResponse.message)))
-        fireNavigate(IMainGraph.Home)
+        fireNavigate(destination = IMainGraph.Home,builder = {
+            popUpTo(IMainGraph.Home) {
+                inclusive = false
+                saveState = false
+            }
+            launchSingleTop = true
+        })
+
     }
 
     fun loading(isLoading: Boolean) {

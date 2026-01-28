@@ -1,5 +1,6 @@
 package com.example.delivaryUser.common.di
 
+import com.example.delivaryUser.feature.address.saveaddress.di.addUpdateAddressModule
 import com.example.delivaryUser.feature.address.mapview.di.mapModule
 import com.example.delivaryUser.feature.authentication.base.di.authenticationModule
 import com.example.delivaryUser.feature.authentication.changepassword.di.changePasswordModule
@@ -33,6 +34,7 @@ val featuresModule = module {
         ordersListModule,
         orderDetailsModule,
         outZoneDeliveryModule,
-        AddressModule
+        AddressModule,
+        addUpdateAddressModule
     )
 }

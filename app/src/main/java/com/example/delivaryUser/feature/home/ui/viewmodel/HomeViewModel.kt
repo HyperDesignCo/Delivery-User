@@ -2,6 +2,7 @@ package com.example.delivaryUser.feature.home.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
+import com.example.delivaryUser.common.ui.navigation.IAddressGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.home.domain.interactors.GetAdsUseCase
 import com.example.delivaryUser.feature.home.domain.models.Ads
@@ -22,11 +23,11 @@ class HomeViewModel(private val useCase: GetAdsUseCase) :
             is HomeContract.Action.FastOrderClicked -> onFastOrderClicked()
             is HomeContract.Action.NavigateBacKClicked -> navigateBack()
             is HomeContract.Action.OnAddLocationClicked -> {
-                // TODO NAVIGATE TO MAP
+                fireNavigate(destination = IAddressGraph.Map)
             }
 
             is HomeContract.Action.OnLocationClicked -> {
-                // TODO NAVIGATE TO MAP
+                fireNavigate(destination = IAddressGraph.Map)
             }
 
             HomeContract.Action.OnNewOrderClicked -> {

@@ -12,14 +12,14 @@ import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetCurrentLocationUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.IsFirstLaunchUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.ReverseGeocodeUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationResponseUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.SetFirstLaunchCompleteUseCase
 import com.example.delivaryUser.feature.outzonedelivery.domain.OpenDeliveryZone
 import com.example.delivaryUser.service.location.data.model.request.CheckLocationRequest
 import com.example.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
 import com.example.delivaryUser.service.location.domain.model.CheckLocation
+import com.example.delivaryUser.service.location.domain.model.Location
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -34,9 +34,8 @@ class MapViewModel(
     private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
     private val reverseGeocodeUseCase: ReverseGeocodeUseCase,
     private val saveLocationUseCase: SaveLocationUseCase,
+    private val savedLocationResponseUseCase: SaveLocationResponseUseCase,
     private val getSavedLocationUseCase: GetSavedLocationUseCase,
-    private val isFirstLaunchUseCase: IsFirstLaunchUseCase,
-    private val setFirstLaunchCompleteUseCase: SetFirstLaunchCompleteUseCase,
     private val checkLocationUseCase: CheckLocationUseCase,
     private val context: Context,
 ) : BaseViewModel<MapContract.State, MapContract.Action>(
@@ -44,8 +43,10 @@ class MapViewModel(
 ) {
 
     private val defaultZoom = 15f
+    private var savedLocationToApply: LatLng? = null
 
     init {
+        getSavedLocation()
         initializePlacesApi()
     }
 
@@ -55,7 +56,6 @@ class MapViewModel(
             is MapContract.Action.MapLoaded -> mapLoaded()
             is MapContract.Action.MapClicked -> mapClicked(action.latLng)
             is MapContract.Action.ChooseLocationClicked -> chooseLocationClicked()
-            is MapContract.Action.NoDeliveryDialogDismissed -> dismissNoDeliveryDialog()
             is MapContract.Action.CameraIdleAtLocation -> cameraIdleAtLocation(action.latLng)
             is MapContract.Action.RetryLocationClicked -> retryLocationClicked()
             is MapContract.Action.ClearQueryChanged -> clearQuery()
@@ -77,7 +77,39 @@ class MapViewModel(
         updateState {
             copy(showNoAreaScreen = show)
         }
+    }
 
+    private fun getSavedLocation() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getSavedLocationUseCase.invoke(Unit).collectResource(
+                onSuccess = { savedLatLng ->
+                    if (savedLatLng != null && isValidLocation(savedLatLng)) {
+                        savedLocationToApply = savedLatLng
+                        updateState {
+                            copy(
+                                currentLocation = savedLatLng,
+                                targetLocation = savedLatLng
+                            )
+                        }
+                    } else {
+                        fetchCurrentUserLocation()
+                    }
+                }
+            )
+        }
+    }
+
+    private fun fetchCurrentUserLocation() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getCurrentLocationUseCase.invoke(body = Unit).collectResource(
+                onSuccess = { location ->
+                    location?.let { userLocationAcquired(it) }
+                },
+                onLoading = {
+                    updateState { copy(isLoadingLocation = it) }
+                },
+            )
+        }
     }
 
     private fun initializePlacesApi() {
@@ -90,10 +122,10 @@ class MapViewModel(
 
             updateState {
                 copy(
-                    placesClient = placesClient, sessionToken = sessionToken
+                    placesClient = placesClient,
+                    sessionToken = sessionToken
                 )
             }
-
         }
     }
 
@@ -143,19 +175,23 @@ class MapViewModel(
 
         googleMap.isMyLocationEnabled = true
 
-        val currentLocation = state.value.currentLocation
+        val locationToUse = when {
+            savedLocationToApply != null && isValidLocation(savedLocationToApply!!) -> {
+                savedLocationToApply!!
+            }
 
-        if (currentLocation != null) {
-            googleMap.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(currentLocation, defaultZoom)
-            )
-            reverseGeocodeLocation(currentLocation)
-        } else {
-            googleMap.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(LatLng(0.0, 0.0), 2f)
-            )
+            state.value.currentLocation != null && isValidLocation(state.value.currentLocation!!) -> {
+                state.value.currentLocation!!
+            }
+
+            else -> {
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(0.0, 0.0), 2f))
+                setupMapListeners(googleMap)
+                return
+            }
         }
-
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationToUse, defaultZoom))
+        reverseGeocodeLocation(locationToUse)
         setupMapListeners(googleMap)
     }
 
@@ -214,7 +250,9 @@ class MapViewModel(
         val googleMap = state.value.googleMap
         if (googleMap != null) {
             googleMap.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(latLng, defaultZoom), 1000, null
+                CameraUpdateFactory.newLatLngZoom(latLng, defaultZoom),
+                1000,
+                null
             )
             viewModelScope.launch {
                 delay(1000)
@@ -227,7 +265,9 @@ class MapViewModel(
         val googleMap = state.value.googleMap
         if (googleMap != null && isValidLocation(currentUserLocation)) {
             googleMap.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(currentUserLocation, defaultZoom), 1000, null
+                CameraUpdateFactory.newLatLngZoom(currentUserLocation, defaultZoom),
+                1000,
+                null
             )
             updateState { copy(targetLocation = currentUserLocation) }
             viewModelScope.launch {
@@ -263,9 +303,7 @@ class MapViewModel(
                 }
             )
         }
-
     }
-
 
     fun loading(isLoading: Boolean) {
         fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading))
@@ -284,6 +322,16 @@ class MapViewModel(
                     openDeliveryZone = OpenDeliveryZone.MAP_SCREEN
                 )
             )
+        } else {
+            fireNavigate(IAddressGraph.SaveAddress)
+            saveLocation(targetLatLng)
+            saveLocationResponse(checkLocation.data)
+        }
+    }
+
+    private fun saveLocationResponse(data: Location) {
+        viewModelScope.launch {
+            savedLocationResponseUseCase.invoke(body = data)
         }
     }
 
@@ -292,27 +340,24 @@ class MapViewModel(
             updateState { copy(targetLocation = latLng) }
             viewModelScope.launch {
                 delay(400)
-                saveLocationUseCase.invoke(body = latLng).collectResource(
-                    onSuccess = {
-                        reverseGeocodeLocation(latLng)
-                    })
+                saveLocation(latLng)
             }
         }
     }
 
-    private fun dismissNoDeliveryDialog() {
-//        updateState { copy(showNoDeliveryDialog = false) }
+    private fun saveLocation(latLng: LatLng) {
+        viewModelScope.launch {
+            saveLocationUseCase.invoke(body = latLng).collectResource(
+                onSuccess = {
+                    reverseGeocodeLocation(latLng)
+                }
+            )
+        }
     }
 
     private fun retryLocationClicked() {
         updateState { copy(error = null, isLoadingLocation = true) }
-        viewModelScope.launch {
-            getCurrentLocationUseCase.invoke(body = Unit).collectResource(onSuccess = { location ->
-                location?.let { userLocationAcquired(it) }
-            }, onLoading = {
-                updateState { copy(isLoadingLocation = it) }
-            })
-        }
+        fetchCurrentUserLocation()
     }
 
     private fun isValidLocation(latLng: LatLng): Boolean {

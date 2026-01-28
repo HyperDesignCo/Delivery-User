@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.delivaryUser.feature.address.mapview.domain.repository.IMapRepository
 import com.example.delivaryUser.feature.address.mapview.domain.repository.local.IMapLocalDataSource
 import com.example.delivaryUser.feature.address.mapview.ui.helper.buildAddressString
+import com.example.delivaryUser.service.location.domain.model.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
@@ -102,4 +103,11 @@ class MapRepository(
         local.setFirstLaunchComplete()
 
     }
+
+    override suspend fun saveLocationResponse(locationResponse: Location) {
+        local.saveLocationResponse(locationResponse)
+    }
+
+    override suspend fun getSavedLocationResponse(): Location? =
+        local.getSavedLocationResponse()
 }

@@ -35,7 +35,6 @@
     <string name="forget_password">Forget Password</string>
     <string name="please_enter_phone_number_to_send_code">Please enter your email or phone number to receive a verification code</string>
     <string name="send_otp">Send OTP</string>
-
     <!--change password-->
     <string name="confirmation_password_does_not_match">Confirmation password does not match</string>
     <string name="new_password">New Password</string>
@@ -43,19 +42,20 @@
     <string name="create_new_password">Create New Password</string>
     <string name="new_password_must_be_different">New password must be different from previously used password</string>
     <string name="send">Send</string>
-    <!--Home -->
-    <string name="fast_order">Fast order</string>
-    <string name="order_with_ai">Order With Ai</string>
+    <!--map-->
     <string name="please_select_a_location_on_the_map">Please select a location on the map</string>
     <string name="choose_location">Choose Location</string>
-    <string name="add_new_address">إضافة عنوان جديد</string>
-    <string name="please_wait">يرجى الانتظار قليلاً</string>
     <string name="search_for_a_location">Search for a location</string>
-    <string name="your_location_is_being_determined">جاري تحديد موقعك...</string>
+    <string name="your_location_is_being_determined">Your location is being determined...</string>
     <string name="selected_address">Selected Address:</string>
     <string name="we_need_your_location_to_can_access_this_screen">We need your location to can access this screen</string>
     <string name="location_permission_required">Location Permission Required</string>
     <string name="allow_permission">Allow permission</string>
+    <string name="please_wait">Please wait a moment</string>
+    <!--Home -->
+    <string name="fast_order">Fast order</string>
+    <string name="order_with_ai">Order With Ai</string>
+    <string name="add_new_address">Add New Address</string>
     <string name="new_order">New Order</string>
     <string name="point_to_point">Point to Point</string>
     <!--Orders -->
@@ -80,8 +80,21 @@
     <string name="delivery">Delivery</string>
     <string name="total">Total</string>
     <string name="user_estimated_price">User estimated order price</string>
+    <!--Out Zone Delivery -->
     <string name="outside_delivery_zone">Outside delivery zone</string>
     <string name="dont_deliver_to_your_area_yet">We don\'t deliver to your area yet, but you can vote for it to help us prioritize expanding our service. Your feedback helps us improve!</string>
     <string name="vote_for_this_location">Vote for this location</string>
     <string name="change_location">Change Location</string>
+    <!--Save Address -->
+    <string name="governorate">Governorate</string>
+    <string name="area">Area</string>
+    <string name="phone1">Phone 1</string>
+    <string name="phone2">Phone 2</string>
+    <string name="street">Street</string>
+    <string name="building_number">Building number</string>
+    <string name="floor_number">Floor number</string>
+    <string name="apartment_number">Apartment number</string>
+    <string name="special_sign">Special sign</string>
+    <string name="extra_info">Extra info</string>
+    <string name="save">Save</string>
 </resources>

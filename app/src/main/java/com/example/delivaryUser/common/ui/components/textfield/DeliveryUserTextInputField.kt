@@ -98,6 +98,7 @@ fun DelivaryUserTextInputField(
             unfocusedContainerColor = colors.unfocusedContainerColor,
             focusedContainerColor = colors.focusedContainerColor,
             errorContainerColor = colors.errorContainerColor,
+            disabledContainerColor = colors.disabledContainerColor,
         ),
         shape = shape,
         minLines = minLines,
@@ -118,6 +119,7 @@ data class DeliveryUserTextInputFieldColors(
     val unfocusedContainerColor: Color = Color.Unspecified,
     val errorContainerColor: Color = Color.Unspecified,
     val contentColor: Color = Color.Unspecified,
+    val disabledContainerColor: Color = Color.Unspecified,
 )
 
 object DeliveryUserTextInputFieldDefaults {
@@ -148,6 +150,7 @@ object DeliveryUserTextInputFieldDefaults {
         unfocusedContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         errorContainerColor: Color = DelivaryUserTheme.colors.status.redAccent,
         contentColor: Color = DelivaryUserTheme.colors.secondary,
+        disabledContainerColor: Color = DelivaryUserTheme.colors.background.disable,
     ) = DeliveryUserTextInputFieldColors(
         focusedBorderColor = focusedBorderColor,
         unfocusedBorderColor = unfocusedBorderColor,
@@ -155,7 +158,8 @@ object DeliveryUserTextInputFieldDefaults {
         focusedContainerColor = focusedContainerColor,
         unfocusedContainerColor = unfocusedContainerColor,
         errorContainerColor = errorContainerColor,
-        contentColor = contentColor
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
     )
 }
 

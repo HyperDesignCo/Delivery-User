@@ -7,9 +7,11 @@ import com.example.delivaryUser.feature.address.mapview.domain.repository.IMapRe
 import com.example.delivaryUser.feature.address.mapview.domain.repository.local.IMapLocalDataSource
 import com.example.delivaryUser.feature.address.mapview.domain.repository.remote.IMapRemoteDataSource
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetCurrentLocationUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetLocationResponseUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.IsFirstLaunchUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.ReverseGeocodeUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationResponseUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SetFirstLaunchCompleteUseCase
 import com.example.delivaryUser.feature.address.mapview.ui.viewmodel.MapViewModel
@@ -34,6 +36,8 @@ val mapModule = module {
     factoryOf(::IsFirstLaunchUseCase)
     factoryOf(::ReverseGeocodeUseCase)
     factoryOf(::SaveLocationUseCase)
+    factoryOf(::GetLocationResponseUseCase)
+    factoryOf(::SaveLocationResponseUseCase)
     factoryOf(::SetFirstLaunchCompleteUseCase)
     viewModelOf(::MapViewModel)
 }

@@ -1,6 +1,5 @@
 package com.example.delivaryUser.service.address.di
 
-import com.example.delivaryUser.feature.addresslist.ui.viewmodel.AddressListViewModel
 import com.example.delivaryUser.service.address.data.repository.AddressRepository
 import com.example.delivaryUser.service.address.data.repository.local.AddressLocalDataSource
 import com.example.delivaryUser.service.address.data.repository.remote.AddressRemoteDataSource
@@ -14,7 +13,6 @@ import com.example.delivaryUser.service.address.domain.repository.local.IAddress
 import com.example.delivaryUser.service.address.domain.repository.remote.IAddressRemoteDataSource
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
-import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -27,5 +25,4 @@ val AddressModule = module {
     factoryOf(::GetRecipientUseCase)
     factoryOf(::SaveSenderAddressUseCase)
     factoryOf(::SaveRecipientAddressUseCase)
-    viewModelOf(::AddressListViewModel)
 }

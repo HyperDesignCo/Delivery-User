@@ -3,6 +3,7 @@ package com.example.delivaryUser.feature.address.mapview.data.repository.local
 import com.example.delivaryUser.common.data.repository.local.LocalDataSourceEnum
 import com.example.delivaryUser.common.domain.local.ILocalDataSourceProvider
 import com.example.delivaryUser.feature.address.mapview.domain.repository.local.IMapLocalDataSource
+import com.example.delivaryUser.service.location.domain.model.Location
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -37,6 +38,29 @@ class MapLocalDataSource(
         val latLngData = json.decodeFromString(LatLngData.serializer(), jsonString)
         return LatLng(latLngData.latitude, latLngData.longitude)
 
+    }
+
+    override suspend fun saveLocationResponse(locationResponse: Location) {
+        val locationData = Location(
+            currentArea = locationResponse.currentArea,
+            currentRegion = locationResponse.currentRegion,
+            currentAreaName = locationResponse.currentAreaName,
+            currentRegionName = locationResponse.currentRegionName,
+        )
+        val locationJsonString = json.encodeToString(Location.serializer(), locationData)
+        localProvider.save(
+            key = LocalDataSourceEnum.SAVED_LOCATION_RESPONSE, value = locationJsonString, type = String::class.java
+        )
+    }
+
+    override suspend fun getSavedLocationResponse(): Location? {
+        val jsonString = localProvider.read(
+            key = LocalDataSourceEnum.SAVED_LOCATION_RESPONSE, defaultValue = "", type = String::class.java
+        )
+        if (jsonString.isEmpty()) return null
+
+        val locationData = json.decodeFromString(Location.serializer(), jsonString)
+        return locationData
     }
 
     override suspend fun setFirstLaunchComplete() {

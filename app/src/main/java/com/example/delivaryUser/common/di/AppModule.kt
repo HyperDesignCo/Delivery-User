@@ -26,7 +26,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val appModule = module {
-    single<INavigator> { Navigator(startGraph = IAddressGraph.AddressGraph) }
+    single<INavigator> { Navigator(startGraph = IAuthGraph.AuthGraph) }
     single<IEventController<IMessageEvent>>(qualifier = named("MessageEvent")) { EventController() }
     single<IEventController<ILoadingEvent>>(qualifier = named("LoadingEvent")) { EventController() }
     single<Json> {

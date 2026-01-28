@@ -17,7 +17,6 @@ interface MapContract {
 
         data object ClearQueryChanged : Action
         data object ChooseLocationClicked : Action
-        data object NoDeliveryDialogDismissed : Action
         data class CameraIdleAtLocation(val latLng: LatLng) : Action
         data class GoogleMapChanged(val googleMap: GoogleMap): Action
         data class AnimateCameraToLocation(val latLng: LatLng): Action
