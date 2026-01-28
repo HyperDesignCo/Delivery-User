@@ -5,7 +5,7 @@ import com.example.delivaryUser.service.address.data.repository.AddressRepositor
 import com.example.delivaryUser.service.address.data.repository.local.AddressLocalDataSource
 import com.example.delivaryUser.service.address.data.repository.remote.AddressRemoteDataSource
 import com.example.delivaryUser.service.address.domain.interactors.GetAddressesUseCase
-import com.example.delivaryUser.service.address.domain.interactors.GetRecipientUseCase
+import com.example.delivaryUser.service.address.domain.interactors.GetRecipientAddressUseCase
 import com.example.delivaryUser.service.address.domain.interactors.GetSenderAddress
 import com.example.delivaryUser.service.address.domain.interactors.SaveRecipientAddressUseCase
 import com.example.delivaryUser.service.address.domain.interactors.SaveSenderAddressUseCase
@@ -18,13 +18,13 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val AddressModule = module {
+val addressModule = module {
     singleOf(::AddressRepository) bind IAddressRepository::class
     singleOf(::AddressRemoteDataSource) bind IAddressRemoteDataSource::class
     singleOf(::AddressLocalDataSource) bind IAddressLocalDataSource::class
     factoryOf(::GetAddressesUseCase)
     factoryOf(::GetSenderAddress)
-    factoryOf(::GetRecipientUseCase)
+    factoryOf(::GetRecipientAddressUseCase)
     factoryOf(::SaveSenderAddressUseCase)
     factoryOf(::SaveRecipientAddressUseCase)
     viewModelOf(::AddressListViewModel)
