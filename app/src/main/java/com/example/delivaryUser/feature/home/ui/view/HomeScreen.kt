@@ -1,5 +1,6 @@
 package com.example.delivaryUser.feature.home.ui.view
 
+import android.Manifest
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,11 +13,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,11 +33,18 @@ import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.example.delivaryUser.common.ui.extension.clickableWithNoRipple
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
+import com.example.delivaryUser.feature.address.mapview.ui.viewmodel.MapContract
 import com.example.delivaryUser.feature.home.ui.components.HomeAdsSlider
 import com.example.delivaryUser.feature.home.ui.components.HomeCard
 import com.example.delivaryUser.feature.home.ui.components.HomeLocation
 import com.example.delivaryUser.feature.home.ui.viewmodel.HomeContract
 import com.example.delivaryUser.feature.home.ui.viewmodel.HomeViewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -40,8 +53,32 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
     HomeContent(state = state, action = viewModel::onActionTrigger)
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomeContent(state: HomeContract.State, action: (HomeContract.Action) -> Unit) {
+
+    val context = LocalContext.current
+    val permissionState = rememberMultiplePermissionsState(
+        listOf(
+            Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    )
+
+    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+
+    LaunchedEffect(permissionState.allPermissionsGranted) {
+        if (permissionState.allPermissionsGranted) {
+            val location = fusedLocationClient.getCurrentLocation(
+                Priority.PRIORITY_HIGH_ACCURACY, null
+            ).await()
+
+            if (location != null) {
+                val userLocation = LatLng(location.latitude, location.longitude)
+
+                action(HomeContract.Action.OnChangeLocation(userLocation))
+            }
+        }
+    }
     DelivaryUserScreen(
         header = {
             DelivaryUserTopBar({})

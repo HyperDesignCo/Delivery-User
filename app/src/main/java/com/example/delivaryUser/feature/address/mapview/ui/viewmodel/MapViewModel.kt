@@ -246,7 +246,7 @@ class MapViewModel(
         }
     }
 
-    fun animateCameraToLocation(latLng: LatLng) {
+    private fun animateCameraToLocation(latLng: LatLng) {
         val googleMap = state.value.googleMap
         if (googleMap != null) {
             googleMap.animateCamera(
@@ -261,7 +261,7 @@ class MapViewModel(
         }
     }
 
-    fun resetMapToUserLocation(currentUserLocation: LatLng) {
+    private fun resetMapToUserLocation(currentUserLocation: LatLng) {
         val googleMap = state.value.googleMap
         if (googleMap != null && isValidLocation(currentUserLocation)) {
             googleMap.animateCamera(
@@ -305,11 +305,11 @@ class MapViewModel(
         }
     }
 
-    fun loading(isLoading: Boolean) {
+    private fun loading(isLoading: Boolean) {
         fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading))
     }
 
-    fun getResponseOfCheckLocation(checkLocation: CheckLocation, targetLatLng: LatLng) {
+    private fun getResponseOfCheckLocation(checkLocation: CheckLocation, targetLatLng: LatLng) {
         fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(checkLocation.message)))
         updateState {
             copy(checkLocationResponse = checkLocation)
