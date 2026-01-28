@@ -16,11 +16,21 @@ class AddressLocalDataSource(private val provider: ILocalDataSourceProvider, pri
         )
     }
 
-    override suspend fun getSenderAddress(): AddressEntity = json.decodeFromString(
-        string = provider.read(
-            key = LocalDataSourceEnum.SENDER_ADDRESS, defaultValue = "", type = String::class.java
-        ), deserializer = AddressEntity.serializer()
-    )
+    override suspend fun getSenderAddress(): AddressEntity {
+        val jsonString = provider.read(
+            key = LocalDataSourceEnum.SENDER_ADDRESS,
+            defaultValue = "",
+            type = String::class.java
+        )
+        return if (jsonString.isNotEmpty()) {
+            json.decodeFromString(
+                deserializer = AddressEntity.serializer(),
+                string = jsonString
+            )
+        } else {
+            AddressEntity()
+        }
+    }
 
 
     override suspend fun saveRecipientAddress(address: AddressEntity) {
@@ -31,9 +41,20 @@ class AddressLocalDataSource(private val provider: ILocalDataSourceProvider, pri
         )
     }
 
-    override suspend fun getRecipientAddress(): AddressEntity = json.decodeFromString(
-        string = provider.read(
-            key = LocalDataSourceEnum.RECIPIENT_ADDRESS, defaultValue = "", type = String::class.java
-        ), deserializer = AddressEntity.serializer()
-    )
+    override suspend fun getRecipientAddress(): AddressEntity {
+        val jsonString = provider.read(
+            key = LocalDataSourceEnum.RECIPIENT_ADDRESS,
+            defaultValue = "",
+            type = String::class.java
+        )
+
+        return if (jsonString.isNotEmpty()) {
+            json.decodeFromString(
+                deserializer = AddressEntity.serializer(),
+                string = jsonString
+            )
+        } else {
+            AddressEntity()
+        }
+    }
 }

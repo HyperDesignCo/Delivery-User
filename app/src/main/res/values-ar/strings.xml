@@ -97,4 +97,21 @@
     <string name="special_sign">علامة مميزة</string>
     <string name="extra_info">معلومات إضافية</string>
     <string name="save">حفظ</string>
+    <!-- Address -->
+    <string name="save">حفظ</string>
+    <string name="addresses">العناوين</string>
+    <string name="address_saved_successfully">تم حفظ العنوان بنجاح</string>
+    <!-- Point to Point -->
+    <string name="where_is_it_going">لى أين سيتم إرساله؟</string>
+    <string name="choose_sender_address">اختر عنوان المرسل</string>
+    <string name="choose_recipient_Address">ختر عنوان المستلم</string>
+    <string name="order_type">نوع الطلب</string>
+    <string name="estimated_price">السعر التقديري</string>
+    <string name="comment">تعليق....</string>
+    <string name="delivery_fess">رسوم التوصيل</string>
+    <string name="checkout">الدفع</string>
+    <string name="order_purpose_validation">غرض الطلب يجب ألا يكون فارغًا</string>
+    <string name="sender_address_validation">يجب ألا يكون عنوان المرسل فارغًا</string>
+    <string name="recipient_address_validation">يجب ألا يكون عنوان المستلم فارغًا</string>
+    <string name="estimated_price_validation">يجب ألا يكون سعر الطلب المقدر فارغًا</string>
 </resources>

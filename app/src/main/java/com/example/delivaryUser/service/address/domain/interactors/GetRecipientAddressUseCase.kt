@@ -6,7 +6,7 @@ import com.example.delivaryUser.service.address.domain.models.domain.Address
 import com.example.delivaryUser.service.address.domain.repository.IAddressRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetRecipientUseCase(private val repository: IAddressRepository) :
+class GetRecipientAddressUseCase(private val repository: IAddressRepository) :
     BaseUseCase<Flow<Resource<Address>>, Unit>() {
     override suspend fun invoke(body: Unit): Flow<Resource<Address>> = flowExecute {
         repository.getRecipientAddress()
