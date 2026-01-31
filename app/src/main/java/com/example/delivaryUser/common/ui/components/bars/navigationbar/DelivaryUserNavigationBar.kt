@@ -3,27 +3,34 @@ package com.example.delivaryUser.common.ui.components.bars.navigationbar
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -38,7 +45,6 @@ fun DelivaryUserNavigationBar(
     navController: NavHostController,
     destinations: List<DelivaryUserNavigationBarItemState>,
     modifier: Modifier = Modifier,
-    shape: RoundedCornerShape = DalivaryUserNavigationBarDefaults.shape,
     containerColor: Color = DalivaryUserNavigationBarDefaults.containerColor,
     elevation: Dp = DalivaryUserNavigationBarDefaults.elevation,
     onFloatingButtonClick: () -> Unit,
@@ -63,7 +69,6 @@ fun DelivaryUserNavigationBar(
         currentDestination = currentDestination,
         onClick = navController::navigateToBottomDestination,
         modifier = modifier,
-        shape = shape,
         containerColor = containerColor,
         item = item,
         onFloatingButtonClick = onFloatingButtonClick,
@@ -79,7 +84,6 @@ private fun DelivaryUserNavigationBar(
     onClick: (DelivaryUserNavigationBarItemState) -> Unit,
     onFloatingButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    shape: RoundedCornerShape = DalivaryUserNavigationBarDefaults.shape,
     containerColor: Color = DalivaryUserNavigationBarDefaults.containerColor,
     elevation: Dp = DalivaryUserNavigationBarDefaults.elevation,
     item: @Composable RowScope.(
@@ -94,22 +98,58 @@ private fun DelivaryUserNavigationBar(
         enter = slideInVertically(initialOffsetY = { it }),
         exit = slideOutVertically(targetOffsetY = { it })
     ) {
-        BottomAppBar(
-            modifier = Modifier
-                .shadow(
-                    elevation = elevation,
-                    clip = false
-                ),
-            containerColor = containerColor,
-            actions = {
-                destinations.fastForEach { destination ->
-                    val isSelected =
-                        currentDestination?.hierarchy?.any { it.hasRoute(destination.route::class) } == true
-                    item(isSelected, destination, onClick)
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(80.dp)
+                    .shadow(
+                        elevation = elevation,
+                        shape = ArcNavigationBarShape(
+                            arcWidth = 76.dp,
+                            arcHeight = 40.dp,
+                            cornerRadius = 0.dp
+                        ),
+                        clip = false
+                    ),
+                color = containerColor,
+                shape = ArcNavigationBarShape(
+                    arcWidth = 68.dp,
+                    arcHeight = 32.dp,
+                    cornerRadius = 0.dp
+                )
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    val halfSize = destinations.size / 2
+                    destinations.take(halfSize).fastForEach { destination ->
+                        val isSelected =
+                            currentDestination?.hierarchy?.any { it.hasRoute(destination.route::class) } == true
+                        item(isSelected, destination, onClick)
+                    }
+                    Spacer(modifier = Modifier.width(80.dp))
+                    destinations.drop(halfSize).fastForEach { destination ->
+                        val isSelected =
+                            currentDestination?.hierarchy?.any { it.hasRoute(destination.route::class) } == true
+                        item(isSelected, destination, onClick)
+                    }
                 }
             }
-
-        )
+            Box(
+                modifier = Modifier
+                    .offset(y = (-50).dp)
+                    .zIndex(1f)
+            ) {
+                DelivaryUserFloatingActionButton(onClick = onFloatingButtonClick)
+            }
+        }
     }
 }
 
@@ -119,15 +159,20 @@ private fun DelivaryUserFloatingActionButton(
 ) {
     Box(
         modifier = Modifier
-            .clickableWithNoRipple() {
-                onClick()
-            }
-            .background(color = DelivaryUserTheme.colors.status.greenAccent, shape = CircleShape)) {
-        Icon(
-            modifier = Modifier.padding(18.dp),
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_add),
+            .size(60.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = CircleShape,
+                clip = false
+            )
+            .background(color = DelivaryUserTheme.colors.primary, shape = CircleShape)
+            .clickableWithNoRipple { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            modifier = Modifier.size(28.dp),
+            painter = painterResource(id = R.drawable.img_order_with_ai),
             contentDescription = null,
-            tint = DelivaryUserTheme.colors.background.surface
         )
     }
 }
@@ -141,16 +186,14 @@ private fun NavHostController.navigateToBottomDestination(state: DelivaryUserNav
 }
 
 object DalivaryUserNavigationBarDefaults {
-    val shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
-    val elevation = 3.dp
-
+    val elevation = 8.dp
     val containerColor @Composable get() = DelivaryUserTheme.colors.background.surfaceHigh
 }
 
 @Composable
 @Preview
 private fun DelivaryUserNavigationBarPreview() = DelivaryUserTheme {
-    val bottomDestinations = List(3) { PreviewNavigationItem() }
+    val bottomDestinations = List(4) { PreviewNavigationItem() }
     DelivaryUserNavigationBar(
         navigationBarState = true,
         currentDestination = null,

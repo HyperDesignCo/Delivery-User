@@ -11,4 +11,6 @@ interface IUserLocalDataSource {
     suspend fun getRememberMe(): Boolean
     suspend fun saveIsVerified(isVerified: Boolean)
     suspend fun getIsVerified(): Boolean
+    suspend fun saveIsAuthenticated(isAuthenticated: Boolean)
+    suspend fun getIsAuthenticated(): Boolean
 }

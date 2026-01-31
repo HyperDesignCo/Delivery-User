@@ -43,7 +43,7 @@ val appModule = module {
         }
     }
     singleOf(::LocalDataSourceProvider) bind ILocalDataSourceProvider::class
-    single<ApiService> { ApiService(provideHttpClient(get())) }
+    single<ApiService> { ApiService(provideHttpClient(get(), get())) }
     singleOf(::RemoteDataSourceProvider) bind IRemoteDataSourceProvider::class
     includes(featuresModule)
 }
