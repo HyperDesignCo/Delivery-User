@@ -1,6 +1,8 @@
 package com.example.delivaryUser.common.data.repository.remote
 
 import com.example.delivaryUser.common.data.DelivaryUserException
+import com.example.delivaryUser.common.domain.Resource
+import com.example.delivaryUser.service.language.domain.usecase.GetLanguageUseCase
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.HttpResponseValidator
@@ -19,9 +21,19 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 
-fun provideHttpClient(json: Json) = HttpClient(Android) {
+@OptIn(DelicateCoroutinesApi::class)
+fun provideHttpClient(json: Json, language: GetLanguageUseCase) = HttpClient(Android) {
+    val lang = runBlocking {
+        when (val resource = language.invoke(Unit).first()) {
+            is Resource.Success -> resource
+            else -> "en"
+        }
+    }
     expectSuccess = true
     install(ContentNegotiation) {
         json()
@@ -38,7 +50,7 @@ fun provideHttpClient(json: Json) = HttpClient(Android) {
     defaultRequest {
         url("https://delivery-online.com/api/user/")
         contentType(ContentType.Application.Json)
-        header("Accept-Language", "en")
+        header("Accept-Language", lang)
     }
     HttpResponseValidator {
         handleResponseExceptionWithRequest { exception, request ->
@@ -48,6 +60,7 @@ fun provideHttpClient(json: Json) = HttpClient(Android) {
             )
         }
     }
+
 }
 
 private suspend fun handleResponseException(
@@ -64,7 +77,8 @@ private suspend fun handleResponseException(
                 )
             )
         }
-        HttpStatusCode.NotFound.value ->{
+
+        HttpStatusCode.NotFound.value -> {
             val responseBodyText = response.bodyAsText()
             return responseValidationMapping(
                 json.decodeFromString<APIErrorResponse>(

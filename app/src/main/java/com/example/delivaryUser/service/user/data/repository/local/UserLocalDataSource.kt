@@ -39,6 +39,21 @@ class UserLocalDataSource(private val localProvider: ILocalDataSourceProvider, p
             key = LocalDataSourceEnum.IS_VERIFIED, value = isVerified, type = Boolean::class.java
         )
     }
+
     override suspend fun getIsVerified(): Boolean =
         localProvider.read(key = LocalDataSourceEnum.IS_VERIFIED, defaultValue = false, type = Boolean::class.java)
+
+    override suspend fun saveIsAuthenticated(isAuthenticated: Boolean) {
+        localProvider.save(
+            key = LocalDataSourceEnum.IS_AUTHENTICATED,
+            value = isAuthenticated,
+            type = Boolean::class.java
+        )
+    }
+
+    override suspend fun getIsAuthenticated(): Boolean = localProvider.read(
+        key = LocalDataSourceEnum.IS_AUTHENTICATED,
+        defaultValue = false,
+        type = Boolean::class.java
+    )
 }
