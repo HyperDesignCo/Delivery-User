@@ -14,7 +14,7 @@ class SplashScreenViewModel(
     private val getLanguage: GetLanguageUseCase,
     private val addLanguage: AddLanguageUseCase,
     private val getIsAuthenticatedUseCase: GetIsAuthenticatedUseCase,
-) : BaseViewModel<SplashScreenContract.State, SplashScreenContract.Action>(SplashScreenContract.State()) {
+) : BaseViewModel<Unit, SplashScreenContract.Action>(Unit) {
     init {
         onActionTrigger(SplashScreenContract.Action.Init)
     }
