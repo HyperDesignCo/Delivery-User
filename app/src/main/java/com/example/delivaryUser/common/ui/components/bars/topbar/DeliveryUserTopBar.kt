@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,7 +43,6 @@ fun DelivaryUserTopBar(
             .fillMaxWidth()
             .height(DeliveryUserTopBarDefaults.height)
             .background(color = colors.containerColor)
-            .statusBarsPadding()
             .padding(start = DeliveryUserTopBarDefaults.startPadding, end = DeliveryUserTopBarDefaults.endPadding),
         verticalAlignment = DeliveryUserTopBarDefaults.verticalAlignment,
         horizontalArrangement = DeliveryUserTopBarDefaults.horizontalArrangement
@@ -111,5 +109,6 @@ object DeliveryUserTopBarDefaults {
 @PreviewAllVariants
 private fun DelivaryUserTopBarPreview() = DelivaryUserTheme {
     DelivaryUserTopBar(
-        onStartIconClicked = {},)
+        onStartIconClicked = {},
+    )
 }

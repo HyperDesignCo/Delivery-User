@@ -13,7 +13,7 @@ class LanguageLocalDataSource(private val provider: ILocalDataSourceProvider) : 
 
     override suspend fun getLanguage(): String = provider.read(
         LocalDataSourceEnum.LANGUAGE,
-        "",
+        "en",
         String::class.java
     )
 }

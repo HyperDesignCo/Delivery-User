@@ -6,6 +6,7 @@ import androidx.navigation.navigation
 import com.example.delivaryUser.feature.authentication.forgetpassword.ui.view.ForgetPasswordScreen
 import com.example.delivaryUser.feature.authentication.login.ui.view.LoginScreen
 import com.example.delivaryUser.feature.authentication.register.ui.view.RegisterScreen
+import com.example.delivaryUser.feature.authentication.splash.ui.view.SplashScreen
 import com.example.delivaryUser.feature.authentication.verifyOtp.ui.view.VerifyOtpScreen
 import kotlinx.serialization.Serializable
 
@@ -24,13 +25,17 @@ sealed interface IAuthGraph {
 
     @Serializable
     data object ForgetPassword : IDestination
+
+    @Serializable
+    data object Splash : IDestination
 }
 
 fun NavGraphBuilder.buildNavAuthGraph() {
-    navigation<IAuthGraph.AuthGraph>(startDestination = IAuthGraph.Login) {
+    navigation<IAuthGraph.AuthGraph>(startDestination = IAuthGraph.Splash) {
         composable<IAuthGraph.Login> { LoginScreen() }
         composable<IAuthGraph.Register> { RegisterScreen() }
         composable<IAuthGraph.VerifyOtp> { VerifyOtpScreen() }
         composable<IAuthGraph.ForgetPassword> { ForgetPasswordScreen() }
+        composable<IAuthGraph.Splash> { SplashScreen() }
     }
 }
