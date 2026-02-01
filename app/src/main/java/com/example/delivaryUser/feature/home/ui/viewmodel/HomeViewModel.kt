@@ -13,7 +13,6 @@ import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedL
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
 import com.example.delivaryUser.feature.home.domain.interactors.GetAdsUseCase
 import com.example.delivaryUser.feature.home.domain.models.Ads
-import com.example.delivaryUser.feature.outzonedelivery.domain.OpenDeliveryZone
 import com.example.delivaryUser.service.location.data.model.request.CheckLocationRequest
 import com.example.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
 import com.example.delivaryUser.service.location.domain.model.CheckLocation
@@ -144,10 +143,9 @@ class HomeViewModel(
             saveLocation(targetLocation)
 
             fireNavigate(
-                IMainGraph.OutSideZoneDelivery(
-                    lat = targetLocation.latitude.toString(),
-                    lng = targetLocation.longitude.toString(),
-                    openDeliveryZone = OpenDeliveryZone.HOME_SCREEN
+                IMainGraph.DeliveryOutZone(
+                    latitude = targetLocation.latitude,
+                    longitude = targetLocation.longitude,
                 )
             )
         } else {

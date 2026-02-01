@@ -23,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -55,7 +54,7 @@ fun SearchLocationBar(
         },
         leadingIcon = {
             Icon(
-                painter = painterResource(R.drawable.mark),
+                painter = painterResource(R.drawable.ic_map_mark),
                 contentDescription = "Search",
                 tint = DelivaryUserTheme.colors.primary,
                 modifier = Modifier.size(20.dp)
@@ -106,7 +105,7 @@ fun SearchResultsList(
                         .clickable { onPredictionClick(prediction) }
                         .padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        painter = painterResource(R.drawable.mark),
+                        painter = painterResource(R.drawable.ic_map_mark),
                         contentDescription = null,
                         modifier = Modifier.size(18.dp),
                         tint = DelivaryUserTheme.colors.secondary

@@ -15,7 +15,6 @@ import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedL
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.ReverseGeocodeUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationResponseUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
-import com.example.delivaryUser.feature.outzonedelivery.domain.OpenDeliveryZone
 import com.example.delivaryUser.feature.pointtopoint.ui.components.AddressType
 import com.example.delivaryUser.service.location.data.model.request.CheckLocationRequest
 import com.example.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
@@ -332,10 +331,9 @@ class MapViewModel(
         }
         if (checkLocation.data?.currentRegion.isNullOrEmpty() || checkLocation.data.currentArea.isNullOrEmpty()) {
             fireNavigate(
-                IMainGraph.OutSideZoneDelivery(
-                    lat = targetLatLng.latitude.toString(),
-                    lng = targetLatLng.longitude.toString(),
-                    openDeliveryZone = OpenDeliveryZone.MAP_SCREEN
+                IMainGraph.DeliveryOutZone(
+                    latitude = targetLatLng.latitude,
+                    longitude = targetLatLng.longitude,
                 )
             )
         } else {

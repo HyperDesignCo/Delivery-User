@@ -1,6 +1,6 @@
 package com.example.delivaryUser.common.di
 
-import com.example.delivaryUser.feature.address.saveaddress.di.addUpdateAddressModule
+import com.example.delivaryUser.feature.address.saveaddress.di.saveAddressModule
 import com.example.delivaryUser.feature.address.mapview.di.mapModule
 import com.example.delivaryUser.feature.authentication.base.di.authenticationModule
 import com.example.delivaryUser.feature.authentication.changepassword.di.changePasswordModule
@@ -17,7 +17,7 @@ import com.example.delivaryUser.feature.orders.orderslist.di.ordersListModule
 import com.example.delivaryUser.feature.pointtopoint.di.pointToPointModule
 import com.example.delivaryUser.service.address.di.addressModule
 import com.example.delivaryUser.service.language.di.languageModule
-import com.example.delivaryUser.feature.outzonedelivery.di.outZoneDeliveryModule
+import com.example.delivaryUser.feature.deliveryoutzone.di.deliveryOutZoneModule
 import com.example.delivaryUser.service.user.di.userModule
 import org.koin.dsl.module
 
@@ -40,7 +40,7 @@ val featuresModule = module {
         splashModule,
         mapModule,
         locationModule,
-        outZoneDeliveryModule,
-        addUpdateAddressModule,
+        deliveryOutZoneModule,
+        saveAddressModule,
     )
 }

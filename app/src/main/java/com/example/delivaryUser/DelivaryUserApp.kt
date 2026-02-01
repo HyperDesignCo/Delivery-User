@@ -69,9 +69,9 @@ fun DelivaryUserApp(
                     startDestination = navigator.startGraph,
                 ) {
                     buildNavAuthGraph()
-                    buildNavAddressGraph()
                     buildNavMainGraph()
                     buildNavOrderGraph()
+                    buildNavAddressGraph()
                 }
             }
         }

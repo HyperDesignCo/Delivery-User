@@ -2,7 +2,6 @@ package com.example.delivaryUser.feature.address.mapview.ui.view
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -138,7 +137,7 @@ private fun MapScreenContent(
                 )
 
                     Icon(
-                        painter = painterResource(R.drawable.mark),
+                        painter = painterResource(R.drawable.ic_map_mark),
                         contentDescription = "Location pin",
                         modifier = Modifier.size(28.dp),
                         tint = DelivaryUserTheme.colors.primary
@@ -231,7 +230,7 @@ private fun MapScreenContent(
                         modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd
                     ) {
                         Image(
-                            painter = painterResource(R.drawable.reset_location),
+                            painter = painterResource(R.drawable.ic_reset_location),
                             contentDescription = "Reset Location Button",
                             modifier = Modifier
                                 .size(40.dp)

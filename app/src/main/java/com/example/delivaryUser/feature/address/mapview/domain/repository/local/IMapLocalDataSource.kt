@@ -13,7 +13,7 @@ interface IMapLocalDataSource {
 
     suspend fun saveLocationResponse(locationResponse: Location)
 
-    suspend fun getSavedLocationResponse(): Location?
+    suspend fun getSavedLocationResponse(): Location
 
 
     suspend fun setFirstLaunchComplete()

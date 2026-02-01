@@ -4,6 +4,5 @@ import com.example.delivaryUser.service.location.data.model.request.CheckLocatio
 import com.example.delivaryUser.service.location.domain.model.CheckLocation
 
 interface ILocationRepository {
-
     suspend fun checkLocation(request: CheckLocationRequest): CheckLocation
 }

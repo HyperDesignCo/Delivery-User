@@ -18,7 +18,6 @@ class MapLocalDataSource(
     )
 
     override suspend fun saveLocation(latLng: LatLng) {
-
         val latLngData = LatLngData(
             latitude = latLng.latitude, longitude = latLng.longitude
         )
@@ -53,12 +52,10 @@ class MapLocalDataSource(
         )
     }
 
-    override suspend fun getSavedLocationResponse(): Location? {
+    override suspend fun getSavedLocationResponse(): Location {
         val jsonString = localProvider.read(
             key = LocalDataSourceEnum.SAVED_LOCATION_RESPONSE, defaultValue = "", type = String::class.java
         )
-        if (jsonString.isEmpty()) return null
-
         val locationData = json.decodeFromString(Location.serializer(), jsonString)
         return locationData
     }

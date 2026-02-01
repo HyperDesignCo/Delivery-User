@@ -108,6 +108,6 @@ class MapRepository(
         local.saveLocationResponse(locationResponse)
     }
 
-    override suspend fun getSavedLocationResponse(): Location? =
+    override suspend fun getSavedLocationResponse(): Location =
         local.getSavedLocationResponse()
 }

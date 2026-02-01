@@ -8,12 +8,9 @@ import com.example.delivaryUser.service.location.domain.repository.ILocationRepo
 import kotlinx.coroutines.flow.Flow
 
 class CheckLocationUseCase(
-    private val repository: ILocationRepository
+    private val repository: ILocationRepository,
 ) : BaseUseCase<Flow<Resource<CheckLocation>>, CheckLocationRequest>() {
-
-    override suspend fun invoke(body: CheckLocationRequest): Flow<Resource<CheckLocation>> =
-        flowExecute {
+    override suspend fun invoke(body: CheckLocationRequest): Flow<Resource<CheckLocation>> = flowExecute {
             repository.checkLocation(body)
         }
-
 }

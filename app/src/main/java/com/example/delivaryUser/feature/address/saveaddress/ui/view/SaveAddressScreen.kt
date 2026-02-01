@@ -21,6 +21,7 @@ import com.example.delivaryUser.common.ui.components.buttons.DelivaryUserButtonP
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.example.delivaryUser.common.ui.components.textfield.DelivaryUserTextInputField
+import com.example.delivaryUser.common.ui.components.textfield.DeliveryUserTextInputFieldDefaults
 import com.example.delivaryUser.common.ui.extension.asString
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import com.example.delivaryUser.feature.address.saveaddress.ui.viewmodel.SaveAddressContract
@@ -28,173 +29,134 @@ import com.example.delivaryUser.feature.address.saveaddress.ui.viewmodel.SaveAdd
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AddUpdateAddressScreen(viewModel: SaveAddressViewModel= koinViewModel()) {
+fun SaveAddressScreen(viewModel: SaveAddressViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-
-    AddUpdateAddressScreenContent(state = state, onActionTrigger = viewModel::onActionTrigger)
+    SaveAddressContent(state = state, onActionTrigger = viewModel::onActionTrigger)
 }
 
 @Composable
-fun AddUpdateAddressScreenContent(
+fun SaveAddressContent(
     state: SaveAddressContract.State,
-    onActionTrigger: (SaveAddressContract.Action) -> Unit
+    onActionTrigger: (SaveAddressContract.Action) -> Unit,
 ) {
-    val scrollState = rememberScrollState()
     DelivaryUserScreen(
-        scrollState = scrollState, isImePaddingEnabled = true,
+        scrollState = rememberScrollState(), isImePaddingEnabled = true,
         header = {
             DelivaryUserTopBar(
-                onStartIconClicked = {onActionTrigger(SaveAddressContract.Action.OnBackClick) },
-                content = { Text(stringResource(R.string.add_new_address)) },
+                onStartIconClicked = { onActionTrigger(SaveAddressContract.Action.OnBackClick) },
+                content = {
+                    Text(
+                        stringResource(R.string.add_new_address),
+                        style = DelivaryUserTheme.typography.headline.large,
+                        color = DelivaryUserTheme.colors.background.surfaceHigh
+                    )
+                },
             )
         },
+        contentHorizontalAlignment = Alignment.Start,
         contentPadding = PaddingValues(16.dp),
-        contentHorizontalAlignment = Alignment.Start
     ) {
-
-        Text(
-            text = stringResource(R.string.governorate),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary
-        )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.region.value,
-            enabled = false,
-            onValueChange = {},
-        )
-        Text(
-            modifier = Modifier.padding(top = 5.dp),
-            text = stringResource(R.string.area),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary
-        )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.area.value,
-            enabled = false,
-            onValueChange = {},
-        )
-        Text(
-            modifier = Modifier.padding(top = 5.dp),
-            text = stringResource(R.string.phone1),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary
-        )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.phone1.value,
-            onValueChange = {onActionTrigger(SaveAddressContract.Action.OnPhone1Changed(it))},
-            keyboardOptions = KeyboardOptions(
+        AddAddressTextFiled(label = stringResource(R.string.governorate), value = state.region.value, isEnabled = false)
+        AddAddressTextFiled(label = stringResource(R.string.area), value = state.area.value, isEnabled = false)
+        AddAddressTextFiled(
+            label = stringResource(R.string.first_phone_number),
+            value = state.firstPhone.value,
+            keyOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
             ),
-            supportingText = state.phone1.error.asString()
+            supportingText = state.firstPhone.error.asString(),
+            onValueChange = { onActionTrigger(SaveAddressContract.Action.OnFirstPhoneChanged(it)) }
         )
-        Text(
-            modifier = Modifier.padding(top = 5.dp),
-            text = stringResource(R.string.phone2),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary
-        )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.phone2.value,
-            onValueChange = {onActionTrigger(SaveAddressContract.Action.OnPhone2Changed(it)) },
-            keyboardOptions = KeyboardOptions(
+        AddAddressTextFiled(
+            label = stringResource(R.string.second_phone_number),
+            value = state.secondPhone.value,
+            keyOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
             ),
-            supportingText = state.phone2.error.asString()
+            supportingText = state.secondPhone.error.asString(),
+            onValueChange = { onActionTrigger(SaveAddressContract.Action.OnSecondPhoneChanged(it)) }
         )
-        Text(
-            modifier = Modifier.padding(top = 5.dp),
-            text = stringResource(R.string.street),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary
-        )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
+        AddAddressTextFiled(
+            label = stringResource(R.string.street),
             value = state.street.value,
             onValueChange = { onActionTrigger(SaveAddressContract.Action.OnStreetChanged(it)) },
-        )
-        Text(
-            modifier = Modifier.padding(top = 5.dp),
-            text = stringResource(R.string.building_number),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary
-        )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
+            )
+        AddAddressTextFiled(
+            label = stringResource(R.string.building_number),
             value = state.buildingNumber.value,
-            onValueChange = {onActionTrigger(SaveAddressContract.Action.OnBuildingNumberChanged(it)) },
+            keyOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            ),
+            onValueChange = { onActionTrigger(SaveAddressContract.Action.OnBuildingNumberChanged(it)) },
         )
-        Text(
-            modifier = Modifier.padding(top = 5.dp),
-            text = stringResource(R.string.floor_number),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary,
-        )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
+        AddAddressTextFiled(
+            label = stringResource(R.string.floor_number),
             value = state.floorNumber.value,
+            keyOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            ),
             onValueChange = { onActionTrigger(SaveAddressContract.Action.OnFloorNumberChanged(it)) },
-            keyboardOptions = KeyboardOptions(
+        )
+        AddAddressTextFiled(
+            label = stringResource(R.string.apartment_number),
+            value = state.apartmentNumber.value,
+            keyOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
-            )
+            ),
+            onValueChange = { onActionTrigger(SaveAddressContract.Action.OnApartmentNumberChanged(it)) },
         )
-
-        Text(
-            modifier = Modifier.padding(top = 5.dp),
-            text = stringResource(R.string.apartment_number),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary
+        AddAddressTextFiled(
+            label = stringResource(R.string.special_sign),
+            value =  state.specialSign.value,
+            onValueChange = { onActionTrigger(SaveAddressContract.Action.OnSpecialSignChanged(it)) },
         )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
-            value =state.apartmentNumber.value,
-            onValueChange = {onActionTrigger(SaveAddressContract.Action.OnApartmentNumberChanged(it)) },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Next
-            )
-        )
-
-        Text(
-            modifier = Modifier.padding(top = 5.dp),
-            text = stringResource(R.string.special_sign),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary
-        )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.specialSign.value,
-            onValueChange = {onActionTrigger(SaveAddressContract.Action.OnSpecialSignChanged(it)) },
-        )
-
-        Text(
-            modifier = Modifier.padding(top = 5.dp),
-            text = stringResource(R.string.extra_info),
-            style = DelivaryUserTheme.typography.title.large,
-            color = DelivaryUserTheme.colors.secondary
-        )
-        DelivaryUserTextInputField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.extraInfo.value,
-            onValueChange = {onActionTrigger(SaveAddressContract.Action.OnExtraInfoChanged(it)) },
+        AddAddressTextFiled(
+            label = stringResource(R.string.extra_info),
+            value =  state.specialSign.value,
+            onValueChange = { onActionTrigger(SaveAddressContract.Action.OnExtraInfoChanged(it)) },
         )
 
         DelivaryUserButtonPrimary(
             label = stringResource(R.string.save),
+            isEnabled = state.firstPhone.error == null && state.secondPhone.error == null,
             modifier = Modifier.fillMaxWidth(),
-            onClick = { onActionTrigger(SaveAddressContract.Action.OnSaveAddressClicked)})
-
+            onClick = { onActionTrigger(SaveAddressContract.Action.OnSaveAddressClicked) })
     }
 }
 
 @Composable
+private fun AddAddressTextFiled(
+    label: String,
+    value: String,
+    isEnabled: Boolean = true,
+    keyOptions: KeyboardOptions = DeliveryUserTextInputFieldDefaults.keyboardOptions,
+    onValueChange: (String) -> Unit = {},
+    supportingText: String ="",
+) {
+    Text(
+        text = label,
+        style = DelivaryUserTheme.typography.title.extraLarge,
+        color = DelivaryUserTheme.colors.secondary
+    )
+    DelivaryUserTextInputField(
+        modifier = Modifier
+            .padding(top = 4.dp)
+            .fillMaxWidth(),
+        value = value,
+        enabled = isEnabled,
+        keyboardOptions = keyOptions,
+        onValueChange = { onValueChange(it) },
+        supportingText = supportingText
+    )
+}
+
+@Composable
 @PreviewAllVariants
-private fun AddUpdateAddressScreenPreview() = DelivaryUserTheme {
-    AddUpdateAddressScreenContent(state = SaveAddressContract.State(), onActionTrigger = {})
+private fun SaveAddressPreview() = DelivaryUserTheme {
+    SaveAddressContent(state = SaveAddressContract.State(), onActionTrigger = {})
 }

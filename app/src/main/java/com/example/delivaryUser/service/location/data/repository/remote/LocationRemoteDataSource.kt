@@ -6,24 +6,18 @@ import com.example.delivaryUser.service.location.data.model.request.CheckLocatio
 import com.example.delivaryUser.service.location.domain.repository.remote.ILocationRemoteDataSource
 
 class LocationRemoteDataSource(
-    private val provider: IRemoteDataSourceProvider
+    private val provider: IRemoteDataSourceProvider,
 ) : ILocationRemoteDataSource {
-
     override suspend fun checkLocation(
         request: CheckLocationRequest,
     ): CheckLocationDto =
         provider.post(
             endpoint = CHECK_LOCATION_ENDPOINT,
             serializer = CheckLocationDto.serializer(),
-            requestBody = request
+            requestBody = CheckLocationRequest(latitude = "30.10", longitude = "31.34")
         )
 
     companion object {
         const val CHECK_LOCATION_ENDPOINT = "checkLocation"
     }
-
-
 }
-
-
-

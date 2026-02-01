@@ -16,4 +16,3 @@ object CheckLocationMapper: Mapper<CheckLocationDto, CheckLocation, CheckLocatio
     override fun entityToDomain(model: CheckLocationEntity): CheckLocation =
         CheckLocation(message = model.message, data = model.data.let { AddressMapper.entityToDomain(it) })
 }
-

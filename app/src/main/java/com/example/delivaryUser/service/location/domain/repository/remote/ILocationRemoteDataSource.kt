@@ -5,5 +5,4 @@ import com.example.delivaryUser.service.location.data.model.request.CheckLocatio
 
 interface ILocationRemoteDataSource {
     suspend fun checkLocation(request: CheckLocationRequest): CheckLocationDto
-
 }
