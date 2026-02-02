@@ -55,11 +55,12 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.koinViewModel
+
 @SuppressLint("MissingPermission")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MapScreen(
-    viewModel: MapViewModel = koinViewModel()
+    viewModel: MapViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     MapScreenContent(
@@ -71,7 +72,7 @@ fun MapScreen(
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun MapScreenContent(
-    state: MapContract.State, action: (MapContract.Action) -> Unit
+    state: MapContract.State, action: (MapContract.Action) -> Unit,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -110,8 +111,14 @@ private fun MapScreenContent(
     DelivaryUserScreen(
         header = {
             DelivaryUserTopBar(
-                onStartIconClicked = {action(MapContract.Action.OnBackClick) },
-                content = { Text(stringResource(R.string.add_new_address)) },
+                onStartIconClicked = { action(MapContract.Action.OnBackClick) },
+                content = {
+                    Text(
+                        stringResource(R.string.add_new_address),
+                        style = DelivaryUserTheme.typography.headline.large,
+                        color = DelivaryUserTheme.colors.background.surfaceHigh
+                    )
+                },
             )
         }) {
 
@@ -136,12 +143,12 @@ private fun MapScreenContent(
                     }, modifier = Modifier.fillMaxSize()
                 )
 
-                    Icon(
-                        painter = painterResource(R.drawable.ic_map_mark),
-                        contentDescription = "Location pin",
-                        modifier = Modifier.size(28.dp),
-                        tint = DelivaryUserTheme.colors.primary
-                    )
+                Icon(
+                    painter = painterResource(R.drawable.ic_map_mark),
+                    contentDescription = "Location pin",
+                    modifier = Modifier.size(28.dp),
+                    tint = DelivaryUserTheme.colors.primary
+                )
 
                 Column(
                     modifier = Modifier
