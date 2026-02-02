@@ -14,8 +14,8 @@ sealed interface AddressListContract {
         val selectedAddress: AddressUiState = AddressUiState(
             address = Address(
                 id = 0,
-                phone1 = "",
-                phone2 = "",
+                firstPhone = "",
+                secondPhone = "",
                 street = "",
                 buildingNumber = "",
                 floorNumber = "",
@@ -25,9 +25,9 @@ sealed interface AddressListContract {
                 longitude = "",
                 user = "",
                 area = "",
-                areaId = 0,
+                areaId = "0",
                 region = "",
-                regionId = 0,
+                regionId = "0",
                 countryId = ""
             ),
         ),
@@ -36,8 +36,8 @@ sealed interface AddressListContract {
     data class AddressUiState(
         val address: Address = Address(
             id = 0,
-            phone1 = "",
-            phone2 = "",
+            firstPhone = "",
+            secondPhone = "",
             street = "",
             buildingNumber = "",
             floorNumber = "",
@@ -47,9 +47,9 @@ sealed interface AddressListContract {
             longitude = "",
             user = "",
             area = "",
-            areaId = 0,
+            areaId = "0",
             region = "",
-            regionId = 0,
+            regionId = "0",
             countryId = ""
         ),
         val isSelected: Boolean = false,

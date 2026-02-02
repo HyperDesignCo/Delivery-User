@@ -8,9 +8,9 @@ data class AddressDto(
     @SerialName("id")
     val id: Int? = null,
     @SerialName("phone1")
-    val phone1: String? = null,
+    val firstPhone: String? = null,
     @SerialName("phone2")
-    val phone2: String? = null,
+    val secondPhone: String? = null,
     @SerialName("street")
     val street: String? = null,
     @SerialName("building_number")
@@ -30,11 +30,11 @@ data class AddressDto(
     @SerialName("area")
     val area: String? = null,
     @SerialName("area_id")
-    val areaId: Int? = null,
+    val areaId: String? = null,
     @SerialName("region")
     val region: String? = null,
     @SerialName("region_id")
-    val regionId: Int? = null,
+    val regionId: String? = null,
     @SerialName("country_id")
     val countryId: String? = null,
 )

@@ -197,7 +197,7 @@ private fun OrderDetailsItem(label: String, value: String, modifier: Modifier = 
 
 @Composable
 private fun OrderTotalPrice(
-    totalPrice: Double,
+    totalPrice: String,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -230,6 +230,6 @@ private fun OrderDetailsPreview() = DelivaryUserTheme {
             deliveryNumber = "011111111111",
             orderPrice = "400.0",
             deliveryPrice = "25.00",
-            totalPrice = 25.00
+            totalPrice = "25.00"
         ), action = {})
 }

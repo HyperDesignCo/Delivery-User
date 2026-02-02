@@ -28,7 +28,7 @@ data class Order(
     val rates: List<Rate>,
     val deliveryRate: String,
     val deliveryFees: String,
-    val totalOrderPrice: Double,
+    val totalOrderPrice: String,
     val createdAt: String,
     val orderPurpose: String
 )
