@@ -1,5 +1,6 @@
 package com.example.delivaryUser.common.data.repository.remote
 
+import com.example.delivaryUser.common.domain.remote.IFile
 import com.example.delivaryUser.common.domain.remote.IRemoteDataSourceProvider
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
@@ -58,6 +59,24 @@ class RemoteDataSourceProvider(private val ktorApiService: ApiService, private v
     ): ResponseBody {
         val result = ktorApiService.delete(
             endPoint = endpoint, params = params, headers = headers ?: emptyMap()
+        )
+        return handleResponse(result, serializer)
+    }
+
+    override suspend fun <ResponseBody> postWithFile(
+        endpoint: String,
+        params: Map<String, Any>?,
+        headers: Map<String, Any>?,
+        files: List<Pair<String, IFile>>,
+        requestBody: Map<String, Any>?,
+        serializer: KSerializer<ResponseBody>,
+    ): ResponseBody {
+        val result = ktorApiService.postWithFile(
+            endPoint = endpoint,
+            params = params,
+            headers = headers,
+            files = files,
+            requestBody = requestBody ?: emptyMap()
         )
         return handleResponse(result, serializer)
     }
