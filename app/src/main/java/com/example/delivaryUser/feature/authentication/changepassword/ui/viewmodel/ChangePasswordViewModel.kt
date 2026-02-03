@@ -36,6 +36,7 @@ class ChangePasswordViewModel(private val useCase: ChangePasswordUseCase) :
             useCase.invoke(body = request).collectResource(
                 onSuccess = {
                     fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(it.message)))
+                    fireNavigateUp()
                 },
                 onLoading = {
                     fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
