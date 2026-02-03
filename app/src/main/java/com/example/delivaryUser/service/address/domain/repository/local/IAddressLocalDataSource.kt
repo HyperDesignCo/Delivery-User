@@ -7,4 +7,6 @@ interface IAddressLocalDataSource {
     suspend fun getSenderAddress(): AddressEntity
     suspend fun saveRecipientAddress(address: AddressEntity)
     suspend fun getRecipientAddress(): AddressEntity
+    suspend fun deleteSenderAddress()
+    suspend fun deleteRecipientAddress()
 }
