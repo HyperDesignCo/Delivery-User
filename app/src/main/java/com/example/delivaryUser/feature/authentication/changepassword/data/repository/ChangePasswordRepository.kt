@@ -13,6 +13,7 @@ class ChangePasswordRepository(private val remote: IChangePasswordRemoteDataSour
         val token = local.getToken()
         val user = local.getUser()
         val result = remote.changePassword(request.copy(phone = user.phone), token)
+        local.savePassword(password = request.password)
         return AuthenticationMapper.dtoToDomain(model = result)
     }
 }
