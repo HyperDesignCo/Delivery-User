@@ -87,4 +87,17 @@
     <string name="sender_address_validation">يجب ألا يكون عنوان المرسل فارغًا</string>
     <string name="recipient_address_validation">يجب ألا يكون عنوان المستلم فارغًا</string>
     <string name="estimated_price_validation">يجب ألا يكون سعر الطلب المقدر فارغًا</string>
+    <!-- Account -->
+    <string name="edit_account">تعديل الملف الشخصي</string>
+    <string name="my_orders">طلباتي</string>
+    <string name="get_help">احصل على المساعدة</string>
+    <string name="account_info">معلومات الحساب</string>
+    <string name="saved_location">الموقع المحفوظ</string>
+    <string name="language">اللغة</string>
+    <string name="english">الإنجليزية</string>
+    <string name="arabic">العربية</string>
+    <string name="logout">تسجيل الخروج</string>
+    <!-- Edit Account -->
+    <string name="edit">تعديل</string>
+    <string name="save_changes">حفظ التغييرات</string>
 </resources>
