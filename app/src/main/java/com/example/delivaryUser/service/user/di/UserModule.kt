@@ -3,6 +3,8 @@ package com.example.delivaryUser.service.user.di
 import com.example.delivaryUser.service.user.data.repository.UserRepository
 import com.example.delivaryUser.service.user.data.repository.local.UserLocalDataSource
 import com.example.delivaryUser.service.user.domain.interactors.GetIsAuthenticatedUseCase
+import com.example.delivaryUser.service.user.domain.interactors.GetPasswordUseCase
+import com.example.delivaryUser.service.user.domain.interactors.GetUserUseCase
 import com.example.delivaryUser.service.user.domain.interactors.SaveIsAuthenticatedUseCase
 import com.example.delivaryUser.service.user.domain.repository.IUserRepository
 import com.example.delivaryUser.service.user.domain.repository.local.IUserLocalDataSource
@@ -16,4 +18,6 @@ val userModule = module {
     singleOf(::UserRepository) bind IUserRepository::class
     factoryOf(::GetIsAuthenticatedUseCase)
     factoryOf(::SaveIsAuthenticatedUseCase)
+    factoryOf(::GetUserUseCase)
+    factoryOf(::GetPasswordUseCase)
 }
