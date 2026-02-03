@@ -27,6 +27,7 @@ import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.BottomDestination
 import com.example.delivaryUser.common.ui.navigation.INavigator
 import com.example.delivaryUser.common.ui.navigation.NavigationEvent
+import com.example.delivaryUser.common.ui.navigation.buildNavAccountGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavAuthGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavMainGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavOrderGraph
@@ -70,6 +71,7 @@ fun DelivaryUserApp(
                     buildNavAuthGraph()
                     buildNavMainGraph()
                     buildNavOrderGraph()
+                    buildNavAccountGraph()
                 }
             }
         }
