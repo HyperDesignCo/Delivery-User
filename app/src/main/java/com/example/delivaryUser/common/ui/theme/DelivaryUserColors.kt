@@ -8,8 +8,10 @@ val LocalDelivaryUserColors = staticCompositionLocalOf<DelivaryUserColors> { err
 data class DelivaryUserColors(
     val primary: Color,
     val secondary: Color,
+    val secondaryGray : Color,
     val primaryVariant: Color,
-    val shadow : Color,
+    val secondaryVariant: Color,
+    val shadow: Color,
     val background: BackgroundColors,
     val status: StatusColors,
 )
@@ -30,9 +32,10 @@ data class StatusColors(
     val greenAccent: Color,
     val blueAccent: Color,
     val grayAccent: Color,
-    val darkGreen : Color,
+    val darkGreen: Color,
     val orangeAccent: Color,
-    val accentColor : Color,
+    val accentColor: Color,
+    val darkBlueAccent: Color,
 )
 
 val backgroundLightColors = BackgroundColors(
@@ -52,7 +55,8 @@ val statusLightColors = StatusColors(
     grayAccent = Color(0x1A0973BA),
     orangeAccent = Color(0XFFFFF5BC),
     accentColor = Color(0xFFFEB249),
-    darkGreen =  Color(0xFF309449)
+    darkGreen = Color(0xFF309449),
+    darkBlueAccent = Color(0xFF0095DF)
 )
 val delivaryUserLightColors = DelivaryUserColors(
     primary = Color(0XFFE41F28),
@@ -60,7 +64,9 @@ val delivaryUserLightColors = DelivaryUserColors(
     primaryVariant = Color(0XFFEE1E25),
     background = backgroundLightColors,
     status = statusLightColors,
-    shadow = Color(0x0D000000)
+    shadow = Color(0x0D000000),
+    secondaryVariant = Color(0xB34E4E4E),
+    secondaryGray =  Color(0x1A4E4E4E)
 )
 
 val backgroundDarkColors = BackgroundColors(
@@ -80,7 +86,8 @@ val statusDarkColors = StatusColors(
     grayAccent = Color(0XFF42A5F5),
     orangeAccent = Color(0XFFFFD088),
     accentColor = Color(0xFFFEB249),
-    darkGreen =  Color(0xFF309449)
+    darkGreen = Color(0xFF309449),
+    darkBlueAccent = Color(0xFF0095DF)
 )
 val delivaryUserDarkColors = DelivaryUserColors(
     primary = Color(0XFFFF3B43),
@@ -88,5 +95,7 @@ val delivaryUserDarkColors = DelivaryUserColors(
     primaryVariant = Color(0XFFE0E0E0),
     background = backgroundDarkColors,
     status = statusDarkColors,
-    shadow = Color(0x0D000000)
+    shadow = Color(0x0D000000),
+    secondaryVariant = Color(0XFFE0E0E0),
+    secondaryGray =  Color(0x1A4E4E4E)
 )
