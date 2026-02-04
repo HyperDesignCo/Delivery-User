@@ -22,7 +22,6 @@ import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 fun DelivaryUserScreen(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
-    scrollState: ScrollState? = null,
     contentScrollState: ScrollState? = null,
     isImePaddingEnabled: Boolean = true,
     contentVerticalArrangement: Arrangement.Vertical = Arrangement.Top,
@@ -30,9 +29,11 @@ fun DelivaryUserScreen(
     header: @Composable () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val scrollModifier = if (scrollState != null) Modifier.verticalScroll(scrollState) else Modifier
-    val contentScrollModifier =
-        if (contentScrollState != null && scrollState == null) Modifier.verticalScroll(contentScrollState) else Modifier
+    val contentScrollModifier = if (contentScrollState != null) {
+        Modifier.verticalScroll(contentScrollState)
+    } else {
+        Modifier
+    }
 
     val imePaddingModifier = if (isImePaddingEnabled) Modifier.imePadding() else Modifier
 
@@ -40,7 +41,6 @@ fun DelivaryUserScreen(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .then(scrollModifier)
             .then(modifier)
             .background(color = DelivaryUserTheme.colors.background.surfaceHigh),
         verticalArrangement = Arrangement.Top,
@@ -62,7 +62,6 @@ fun DelivaryUserScreen(
             content = content
         )
     }
-
 }
 
 @PreviewAllVariants

@@ -40,7 +40,7 @@ fun SaveAddressContent(
     onActionTrigger: (SaveAddressContract.Action) -> Unit,
 ) {
     DelivaryUserScreen(
-        scrollState = rememberScrollState(), isImePaddingEnabled = true,
+         isImePaddingEnabled = true,
         header = {
             DelivaryUserTopBar(
                 onStartIconClicked = { onActionTrigger(SaveAddressContract.Action.OnBackClick) },
@@ -55,6 +55,7 @@ fun SaveAddressContent(
         },
         contentHorizontalAlignment = Alignment.Start,
         contentPadding = PaddingValues(16.dp),
+        contentScrollState = rememberScrollState()
     ) {
         AddAddressTextFiled(label = stringResource(R.string.governorate), value = state.region.value, isEnabled = false)
         AddAddressTextFiled(label = stringResource(R.string.area), value = state.area.value, isEnabled = false)
