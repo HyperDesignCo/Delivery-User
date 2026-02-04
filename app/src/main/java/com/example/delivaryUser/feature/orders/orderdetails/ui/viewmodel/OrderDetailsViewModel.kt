@@ -49,11 +49,8 @@ private val route = savedStateHandle.toRoute<IMainGraph.OrderDetails>()
     }
 
     private fun navigateBack() {
-        fireNavigate(IMainGraph.Home) {
-            popUpTo(IMainGraph.OrderDetails) {
-                inclusive = true
-                saveState = false
-            }
+        viewModelScope.launch {
+            fireNavigateUp()
         }
     }
 }

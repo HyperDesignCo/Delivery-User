@@ -8,18 +8,13 @@ interface IMapLocalDataSource {
 
     suspend fun saveLocation(latLng: LatLng)
 
-
     suspend fun getSavedLocation(): LatLng?
 
     suspend fun saveLocationResponse(locationResponse: Location)
 
     suspend fun getSavedLocationResponse(): Location
 
-
     suspend fun setFirstLaunchComplete()
-
-
     suspend fun isFirstLaunch(): Boolean
-
     suspend fun clearMapData()
 }

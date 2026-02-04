@@ -33,7 +33,6 @@ import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.example.delivaryUser.common.ui.extension.clickableWithNoRipple
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
-import com.example.delivaryUser.feature.address.mapview.ui.viewmodel.MapContract
 import com.example.delivaryUser.feature.home.ui.components.HomeAdsSlider
 import com.example.delivaryUser.feature.home.ui.components.HomeCard
 import com.example.delivaryUser.feature.home.ui.components.HomeLocation

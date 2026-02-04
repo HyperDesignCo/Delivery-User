@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 class GetCurrentLocationUseCase(
     private val repository: IMapRepository
 ) : BaseUseCase<Flow<Resource<LatLng?>>, Unit>() {
-
     override suspend fun invoke(body: Unit): Flow<Resource<LatLng?>> = flowExecute {
         var location: LatLng? = null
         repository.requestCurrentLocation { latLng ->

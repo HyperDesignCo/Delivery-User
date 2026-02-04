@@ -47,7 +47,7 @@ class ForgetPasswordViewModel(private val useCase: ForgetPasswordUseCase) :
     override fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) {
         super.onRequestValidation(errors)
         errors.forEach { (_, errorMessage) ->
-            fireMessage(IMessageEvent.Toast(message = errorMessage))
+            fireMessage(IMessageEvent.Snackbar(message = errorMessage, messageType = MessageType.ERROR))
         }
     }
 }

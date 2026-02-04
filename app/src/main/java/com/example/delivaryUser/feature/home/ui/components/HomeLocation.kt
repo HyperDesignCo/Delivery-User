@@ -66,7 +66,7 @@ fun HomeLocation(
                 .padding(vertical = 8.dp)
                 .padding(start = 24.dp, end = 50.dp)
             ,
-            text = location.ifEmpty { stringResource(R.string.add_new_address) },
+            text = location.ifBlank { stringResource(R.string.add_new_address) },
             style = DelivaryUserTheme.typography.body.large,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis

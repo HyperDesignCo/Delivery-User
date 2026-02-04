@@ -14,7 +14,7 @@ class LocationRemoteDataSource(
         provider.post(
             endpoint = CHECK_LOCATION_ENDPOINT,
             serializer = CheckLocationDto.serializer(),
-            requestBody = CheckLocationRequest(latitude = "30.10", longitude = "31.34")
+            requestBody = request
         )
 
     companion object {

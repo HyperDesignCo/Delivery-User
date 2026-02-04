@@ -54,10 +54,18 @@ class MapLocalDataSource(
 
     override suspend fun getSavedLocationResponse(): Location {
         val jsonString = localProvider.read(
-            key = LocalDataSourceEnum.SAVED_LOCATION_RESPONSE, defaultValue = "", type = String::class.java
+            key = LocalDataSourceEnum.SAVED_LOCATION_RESPONSE,
+            defaultValue = "",
+            type = String::class.java
         )
-        val locationData = json.decodeFromString(Location.serializer(), jsonString)
-        return locationData
+        return if (jsonString.isNotEmpty()) {
+            json.decodeFromString(
+                deserializer = Location.serializer(),
+                string = jsonString
+            )
+        } else {
+            Location()
+        }
     }
 
     override suspend fun setFirstLaunchComplete() {

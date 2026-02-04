@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 class SaveLocationResponseUseCase(
     private val repository: IMapRepository
 ): BaseUseCase<Unit, Location>() {
-
     override suspend fun invoke(body: Location){
         nonFlowExecute {
             repository.saveLocationResponse(body)

@@ -1,9 +1,11 @@
 package com.example.delivaryUser.feature.address.mapview.data.repository
 
+import android.Manifest
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.util.Log
+import androidx.annotation.RequiresPermission
 import com.example.delivaryUser.feature.address.mapview.domain.repository.IMapRepository
 import com.example.delivaryUser.feature.address.mapview.domain.repository.local.IMapLocalDataSource
 import com.example.delivaryUser.feature.address.mapview.ui.helper.buildAddressString
@@ -28,6 +30,7 @@ class MapRepository(
     private val geocoder by lazy { Geocoder(context, arabicLocale) }
     private val geocoderEnglish by lazy { Geocoder(context, Locale.ENGLISH) }
 
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     override suspend fun requestCurrentLocation(callback: (LatLng?) -> Unit) {
 
         val location = fusedLocationProviderClient.getCurrentLocation(
@@ -72,7 +75,6 @@ class MapRepository(
 
                 return@withContext formattedAddress
             } else {
-                Log.w("MapRepository", ">>> No addresses found from Geocoder")
                 return@withContext "الموقع: ${latLng.latitude}, ${latLng.longitude}"
             }
 

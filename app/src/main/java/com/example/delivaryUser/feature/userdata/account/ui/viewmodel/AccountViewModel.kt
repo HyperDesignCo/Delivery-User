@@ -61,7 +61,7 @@ class AccountViewModel(private val user: GetUserUseCase, private val logout: Log
     }
 
     private fun onMyOrdersClicked() {
-        fireNavigate(destination = IMainGraph.OrderDetails(id = state.value.id))
+        fireNavigate(destination = IMainGraph.Orders)
     }
 
     private fun onSavedLocationClicked() {

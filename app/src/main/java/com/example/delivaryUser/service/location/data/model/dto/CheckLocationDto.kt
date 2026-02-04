@@ -13,6 +13,7 @@ data class CheckLocationDto(
 data class LocationDto(
     @SerialName("current_area") val currentArea: String? = null,
     @SerialName("current_area_name") val currentAreaName: String? = null,
+    @SerialName("current_area_delivery_cost") val currentAreaCost: String? = null,
     @SerialName("current_Region") val currentRegion: String? = null,
     @SerialName("current_Region_name") val currentRegionName: String? = null,
 )

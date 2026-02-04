@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 class IsFirstLaunchUseCase(
     private val repository: IMapRepository
 ) : BaseUseCase<Flow<Resource<Boolean>>, Unit>() {
-
     override suspend fun invoke(body: Unit): Flow<Resource<Boolean>> = flowExecute {
         repository.isFirstLaunch()
     }

@@ -34,23 +34,12 @@ class HomeViewModel(
     override fun onActionTrigger(action: HomeContract.Action) {
         when (action) {
             is HomeContract.Action.ChatWithAiClicked -> {}
-
             is HomeContract.Action.FastOrderClicked -> onFastOrderClicked()
             is HomeContract.Action.NavigateBacKClicked -> navigateBack()
-            is HomeContract.Action.OnAddLocationClicked -> {
-                fireNavigate(destination = IOrderGraph.Map())
-            }
-
-            is HomeContract.Action.OnLocationClicked -> {
-                fireNavigate(destination = IOrderGraph.Map())
-            }
-
+            is HomeContract.Action.OnAddLocationClicked -> { fireNavigate(destination = IOrderGraph.Map()) }
+            is HomeContract.Action.OnLocationClicked -> { fireNavigate(destination = IOrderGraph.Map()) }
             HomeContract.Action.OnNewOrderClicked -> {}
-
-            HomeContract.Action.OnPointToPointClicked -> {
-                fireNavigate(IOrderGraph.PointToPoint)
-            }
-
+            HomeContract.Action.OnPointToPointClicked -> { fireNavigate(IOrderGraph.PointToPoint) }
             is HomeContract.Action.OnChangeLocation -> {
                 changeLocation(action.latLng)
             }
@@ -61,7 +50,6 @@ class HomeViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             getSavedLocationUseCase.invoke(Unit).collectResource(
                 onSuccess = { savedLatLng ->
-
                     updateState {
                         copy(savedLatLng = savedLatLng)
                     }
@@ -88,7 +76,6 @@ class HomeViewModel(
         val regionName = savedLocation.currentRegionName.orEmpty()
         val areaName = savedLocation.currentAreaName.orEmpty()
         val displayLocation = "$regionName,$areaName"
-
         updateState {
             copy(location = displayLocation)
         }
@@ -116,9 +103,6 @@ class HomeViewModel(
     private fun handleCheckLocationResponse(
         checkLocation: CheckLocation, targetLocation: LatLng
     ) {
-
-        fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(checkLocation.message)))
-
         updateState {
             copy(checkLocationResponse = checkLocation)
         }
@@ -183,9 +167,7 @@ class HomeViewModel(
     private fun changeLocation(latLng: LatLng) {
 
         updateState {
-            copy(
-                latLng = latLng, location = ""
-            )
+            copy(latLng = latLng)
         }
         checkLocationFromApi()
     }

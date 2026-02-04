@@ -9,6 +9,7 @@ import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.message.MessageType
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
@@ -294,8 +295,9 @@ class MapViewModel(
 
         if (targetLatLng == null) {
             fireMessage(
-                IMessageEvent.Toast(
-                    message = UIText.StringResource(R.string.please_select_a_location_on_the_map)
+                IMessageEvent.Snackbar(
+                    message = UIText.StringResource(R.string.please_select_a_location_on_the_map),
+                    messageType = MessageType.ERROR
                 )
             )
             return
@@ -330,7 +332,6 @@ class MapViewModel(
     }
 
     private fun getResponseOfCheckLocation(checkLocation: CheckLocation, targetLatLng: LatLng) {
-        fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(checkLocation.message)))
         updateState {
             copy(checkLocationResponse = checkLocation)
         }

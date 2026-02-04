@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Delivary_User_Android</string>
+    <string name="app_name" translatable="false">DelivaryUser</string>
 
     <!-- General -->
     <string name="unknown_error">Unknown error occurred</string>
