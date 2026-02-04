@@ -1,14 +1,16 @@
 package com.example.delivaryUser.feature.address.mapview.ui.viewmodel
 
 import android.content.Context
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.delivaryUser.BuildConfig
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
-import com.example.delivaryUser.common.ui.navigation.IAddressGraph
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
+import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetCurrentLocationUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
@@ -38,9 +40,12 @@ class MapViewModel(
     private val getSavedLocationUseCase: GetSavedLocationUseCase,
     private val checkLocationUseCase: CheckLocationUseCase,
     private val context: Context,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MapContract.State, MapContract.Action>(
     state = MapContract.State()
 ) {
+
+    private val route = savedStateHandle.toRoute<IOrderGraph.Map>()
 
     private val defaultZoom = 15f
     private var savedLocationToApply: LatLng? = null
@@ -337,7 +342,17 @@ class MapViewModel(
                 )
             )
         } else {
-            fireNavigate(IAddressGraph.SaveAddress(addressType = AddressType.SENDER))
+            when (route.addressType) {
+                AddressType.SENDER -> {
+                    fireNavigate(IOrderGraph.SaveAddress(addressType = AddressType.SENDER))
+
+                }
+
+                AddressType.RECEIVER -> {
+                    fireNavigate(IOrderGraph.SaveAddress(addressType = AddressType.RECEIVER))
+
+                }
+            }
             saveLocationResponse(checkLocation.data)
         }
     }

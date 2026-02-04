@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
-import com.example.delivaryUser.common.ui.navigation.IAddressGraph
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
@@ -39,11 +38,11 @@ class HomeViewModel(
             is HomeContract.Action.FastOrderClicked -> onFastOrderClicked()
             is HomeContract.Action.NavigateBacKClicked -> navigateBack()
             is HomeContract.Action.OnAddLocationClicked -> {
-                fireNavigate(destination = IAddressGraph.Map)
+                fireNavigate(destination = IOrderGraph.Map())
             }
 
             is HomeContract.Action.OnLocationClicked -> {
-                fireNavigate(destination = IAddressGraph.Map)
+                fireNavigate(destination = IOrderGraph.Map())
             }
 
             HomeContract.Action.OnNewOrderClicked -> {}

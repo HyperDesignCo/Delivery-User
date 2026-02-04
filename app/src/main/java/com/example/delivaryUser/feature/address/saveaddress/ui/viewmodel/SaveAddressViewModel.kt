@@ -7,8 +7,8 @@ import com.example.delivaryUser.common.data.repository.remote.ErrorKeyEnum
 import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
-import com.example.delivaryUser.common.ui.navigation.IAddressGraph
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
+import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetLocationResponseUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
@@ -32,7 +32,7 @@ class SaveAddressViewModel(
     SaveAddressContract.State()
 ) {
 
-    private val route = savedStateHandle.toRoute<IAddressGraph.SaveAddress>()
+    private val route = savedStateHandle.toRoute<IOrderGraph.SaveAddress>()
 
     init {
         getLocationResponse()

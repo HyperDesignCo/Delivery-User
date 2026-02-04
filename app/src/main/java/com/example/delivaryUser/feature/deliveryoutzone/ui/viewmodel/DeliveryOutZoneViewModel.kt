@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
-import com.example.delivaryUser.common.ui.navigation.IAddressGraph
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
+import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
 import com.example.delivaryUser.feature.deliveryoutzone.data.model.request.AddAreaRequest
@@ -34,8 +34,8 @@ class DeliveryOutZoneViewModel(
     }
 
     private fun onChangeLocationClicked() {
-        fireNavigate(destination = IAddressGraph.Map, builder = {
-            popUpTo(IAddressGraph.Map) {
+        fireNavigate(destination = IOrderGraph.Map(), builder = {
+            popUpTo(IOrderGraph.Map()) {
                 inclusive = true
             }
         })

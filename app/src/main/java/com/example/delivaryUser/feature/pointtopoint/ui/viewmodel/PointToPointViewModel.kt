@@ -110,11 +110,11 @@ class PointToPointViewModel(
         state.value.senderAddress.address.id != 0 && state.value.receiverAddress.address.id != 0
 
     private fun addReceiverAddress() {
-        // TODO NAVIGATE TO MAP
+        fireNavigate(IOrderGraph.Map(AddressType.RECEIVER))
     }
 
     private fun addSenderAddress() {
-        // TODO NAVIGATE TO MAP
+        fireNavigate(IOrderGraph.Map(AddressType.SENDER))
     }
 
     private fun chooseReceiverAddress() {
