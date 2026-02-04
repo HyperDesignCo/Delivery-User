@@ -5,6 +5,7 @@ import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.message.MessageType
 import com.example.delivaryUser.common.ui.navigation.IAuthGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.authentication.forgetpassword.data.model.request.ForgetPasswordRequest
@@ -30,8 +31,11 @@ class ForgetPasswordViewModel(private val useCase: ForgetPasswordUseCase) :
         viewModelScope.launch {
             useCase.invoke(body = request).collectResource(
                 onSuccess = {
-                    fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(it.message)))
-                    fireNavigate(IAuthGraph.VerifyOtp)
+                    fireMessage(IMessageEvent.Snackbar(
+                        UIText.DynamicString(it.message),
+                        messageType = MessageType.SUCCESS
+                    ))
+                    fireNavigate(IAuthGraph.VerifyOtp(phone = state.value.phone.value))
                 },
                 onLoading = {
                     fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))

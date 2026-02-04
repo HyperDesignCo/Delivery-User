@@ -47,7 +47,7 @@ class RegisterViewModel(private val useCase: RegisterUseCase) :
         viewModelScope.launch {
             useCase.invoke(body = request).collectResource(
                 onSuccess = {
-                    fireNavigate(IAuthGraph.VerifyOtp)
+                    fireNavigate(IAuthGraph.VerifyOtp(phone = state.value.phone.value))
                 },
                 onLoading = {
                     fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))

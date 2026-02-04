@@ -1,11 +1,13 @@
 package com.example.delivaryUser.feature.authentication.changepassword.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.example.delivaryUser.R
 import com.example.delivaryUser.common.data.repository.remote.ErrorKeyEnum
 import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.message.MessageType
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.authentication.changepassword.data.model.request.ChangePasswordRequest
 import com.example.delivaryUser.feature.authentication.changepassword.domain.interactors.ChangePasswordUseCase
@@ -35,7 +37,12 @@ class ChangePasswordViewModel(private val useCase: ChangePasswordUseCase) :
         viewModelScope.launch {
             useCase.invoke(body = request).collectResource(
                 onSuccess = {
-                    fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(it.message)))
+                    fireMessage(
+                        IMessageEvent.Snackbar(
+                            UIText.StringResource(R.string.password_changed_successfully),
+                            messageType = MessageType.SUCCESS
+                        )
+                    )
                     fireNavigateUp()
                 },
                 onLoading = {

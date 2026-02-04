@@ -7,17 +7,15 @@ import com.example.delivaryUser.feature.authentication.verifyOtp.data.models.req
 import com.example.delivaryUser.feature.authentication.verifyOtp.domain.repository.remote.IVerifyOtpRemoteDataSource
 
 class VerifyOtpRemoteDataSource(val remoteProvider: IRemoteDataSourceProvider) : IVerifyOtpRemoteDataSource {
-    override suspend fun verifyOtp(request: VerifyOtpRequest, token : String): OtpDto = remoteProvider.post(
+    override suspend fun verifyOtp(request: VerifyOtpRequest): OtpDto = remoteProvider.post(
         endpoint = VERIFY_OTP_ENDPOINT,
         requestBody = request,
-        headers = mapOf("Authorization" to "Bearer $token"),
         serializer = OtpDto.serializer()
     )
 
-    override suspend fun resendCode(request: ResendOtpRequest,  token : String): OtpDto = remoteProvider.post(
+    override suspend fun resendCode(request: ResendOtpRequest): OtpDto = remoteProvider.post(
         endpoint = RESEND_CODE,
         requestBody = request,
-        headers = mapOf("Authorization" to "Bearer $token"),
         serializer = OtpDto.serializer()
     )
 

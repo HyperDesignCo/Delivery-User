@@ -1,5 +1,6 @@
 package com.example.delivaryUser.common.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavOptionsBuilder
@@ -13,6 +14,7 @@ import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.language.ILanguageEvent
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.message.MessageType
 import com.example.delivaryUser.common.ui.navigation.IDestination
 import com.example.delivaryUser.common.ui.navigation.INavigator
 import kotlinx.coroutines.flow.Flow
@@ -107,12 +109,16 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
 
     open fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) {}
 
-    private fun handleExceptionMessages(message: String?) = fireMessage(
-        messageType = IMessageEvent.Toast(
-            message = message?.let { UIText.DynamicString(it) }
-                ?: UIText.StringResource(R.string.something_wrong)
+    private fun handleExceptionMessages(message: String?)  {
+        Log.d("TAG", "handleExceptionMessages: $message")
+        fireMessage(
+            messageType = IMessageEvent.Snackbar(
+                message = message?.let { UIText.DynamicString(it) }
+                    ?: UIText.StringResource(R.string.something_wrong),
+                messageType = MessageType.ERROR
+            )
         )
-    )
+    }
 
     companion object {
         private val requestErrorMap = mapOf<RequestErrorKeyValues, UIText>(

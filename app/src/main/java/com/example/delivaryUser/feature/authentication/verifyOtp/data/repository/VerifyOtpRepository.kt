@@ -11,18 +11,15 @@ import com.example.delivaryUser.service.user.domain.repository.local.IUserLocalD
 class VerifyOtpRepository(val remote: IVerifyOtpRemoteDataSource, val local: IUserLocalDataSource) :
     IVerifyOtpRepository {
     override suspend fun verifyOtp(request: VerifyOtpRequest): Otp {
-        val token = local.getToken()
-        val user = local.getUser()
-        val result = remote.verifyOtp(request.copy(phone = user.phone), token)
+        val result = remote.verifyOtp(request)
         local.saveIsVerified(true)
         return VerifyOtpMapper.dtoToDomain(model = result)
     }
 
     override suspend fun resendCode(): Otp {
-        val token = local.getToken()
         val user = local.getUser()
         val request = ResendOtpRequest(user.phone)
-        val result = remote.resendCode(request, token)
+        val result = remote.resendCode(request)
         local.saveIsVerified(true)
         return VerifyOtpMapper.dtoToDomain(model = result)
     }

@@ -2,10 +2,13 @@ package com.example.delivaryUser.feature.userdata.editaccount.ui.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.viewModelScope
+import com.example.delivaryUser.R
 import com.example.delivaryUser.common.data.repository.remote.ErrorKeyEnum
 import com.example.delivaryUser.common.data.repository.remote.File
 import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.ui.extension.UIText
+import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.message.MessageType
 import com.example.delivaryUser.common.ui.navigation.IAccountGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.userdata.editaccount.data.model.request.EditAccountRequest
@@ -33,6 +36,7 @@ class EditAccountViewModel(
                 imageUri = action.imageUri,
                 imageFile = action.imageFile
             )
+
             is EditAccountContract.Action.OnSaveClicked -> onSaveClicked()
             is EditAccountContract.Action.OnBackClicked -> navigateBack()
         }
@@ -104,7 +108,15 @@ class EditAccountViewModel(
             image = state.value.imageFile
         )
         viewModelScope.launch {
-            editAccount.invoke(request).collectResource(onSuccess = { navigateBack() })
+            editAccount.invoke(request).collectResource(onSuccess = {
+                fireMessage(
+                    IMessageEvent.Snackbar(
+                        UIText.StringResource(R.string.account_updated_successfully),
+                        messageType = MessageType.SUCCESS
+                    )
+                )
+                navigateBack()
+            })
         }
     }
 

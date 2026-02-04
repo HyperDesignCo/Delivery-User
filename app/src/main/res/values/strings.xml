@@ -19,6 +19,7 @@
     <string name="remember_me">Remember me</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="login">Login</string>
+    <string name="welcome_back">Welcome back</string>
     <string name="do_not_have_and_account">Don\'t have an account?</string>
     <string name="register">Register</string>
     <string name="phone_number">Phone number</string>
@@ -26,6 +27,7 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="have_account">Already has an account?</string>
+    <string name="registered_successfully">You have been successfully registered!</string>
     <!--verify Otp -->
     <string name="verify_otp">Verify OTP</string>
     <string name="please_enter_the_otp_sent_to_your_phone_number">Please enter 4 digit code sent to your email or phone number</string>
@@ -35,7 +37,6 @@
     <string name="forget_password">Forget Password</string>
     <string name="please_enter_phone_number_to_send_code">Please enter your email or phone number to receive a verification code</string>
     <string name="send_otp">Send OTP</string>
-
     <!--change password-->
     <string name="confirmation_password_does_not_match">Confirmation password does not match</string>
     <string name="new_password">New Password</string>
@@ -43,6 +44,7 @@
     <string name="create_new_password">Create New Password</string>
     <string name="new_password_must_be_different">New password must be different from previously used password</string>
     <string name="send">Send</string>
+    <string name="password_changed_successfully">Password successfully changed</string>
     <!--Home -->
     <string name="fast_order">Fast order</string>
     <string name="order_with_ai">Order With Ai</string>
@@ -87,6 +89,7 @@
     <string name="sender_address_validation">Sender address should not be empty</string>
     <string name="recipient_address_validation">Recipient address should not be empty</string>
     <string name="estimated_price_validation">Estimated order price should not be empty</string>
+    <string name="we_received_order">We’ve received your order.</string>
     <!-- Account -->
     <string name="edit_account">Edit Profile</string>
     <string name="my_orders">My Orders</string>
@@ -100,6 +103,7 @@
     <!-- Edit Account -->
     <string name="edit">Edit</string>
     <string name="save_changes">Save Changes</string>
+    <string name="account_updated_successfully">Profile updated successfully</string>
     <!-- Language -->
     <string name="apply">Apply</string>
 </resources>
