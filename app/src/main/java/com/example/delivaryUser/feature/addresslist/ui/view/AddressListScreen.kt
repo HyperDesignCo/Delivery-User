@@ -126,9 +126,9 @@ private fun AddressListScreenPreview() = DelivaryUserTheme {
                         longitude = "31.2357",
                         user = "1",
                         area = "Dokki",
-                        areaId = 1,
+                        areaId = "1",
                         region = "Giza",
-                        regionId = 1,
+                        regionId = "1",
                         countryId = "1"
                     ),
                     isSelected = true
@@ -148,9 +148,9 @@ private fun AddressListScreenPreview() = DelivaryUserTheme {
                             longitude = "31.2497",
                             user = "1",
                             area = "Mohandessin",
-                            areaId = 2,
+                            areaId = "2",
                             region = "Giza",
-                            regionId = 1,
+                            regionId = "1",
                             countryId = "1"
                         )
                 ),
@@ -169,9 +169,9 @@ private fun AddressListScreenPreview() = DelivaryUserTheme {
                             longitude = "31.2394",
                             user = "1",
                             area = "Zamalek",
-                            areaId = 3,
+                            areaId = "3",
                             region = "Cairo",
-                            regionId = 2,
+                            regionId = "2",
                             countryId = "1"
                         )
                 )
@@ -191,9 +191,9 @@ private fun AddressListScreenPreview() = DelivaryUserTheme {
                         longitude = "31.2497",
                         user = "1",
                         area = "Mohandessin",
-                        areaId = 2,
+                        areaId = "2",
                         region = "Giza",
-                        regionId = 1,
+                        regionId = "1",
                         countryId = "1"
                     )
                 )

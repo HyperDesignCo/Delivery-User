@@ -44,9 +44,9 @@ sealed interface PointToPointContract {
             longitude = "",
             user = "",
             area = "",
-            areaId = 0,
+            areaId = "0",
             region = "",
-            regionId = 0,
+            regionId = "0",
             countryId = ""
         ),
     ) {

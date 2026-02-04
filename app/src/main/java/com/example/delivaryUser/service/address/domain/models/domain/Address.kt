@@ -16,8 +16,8 @@ data class Address(
     val longitude: String,
     val user: String,
     val area: String,
-    val areaId: Int,
+    val areaId: String,
     val region: String,
-    val regionId: Int,
+    val regionId: String,
     val countryId: String,
 )

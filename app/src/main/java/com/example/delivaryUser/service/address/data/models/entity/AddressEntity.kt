@@ -16,8 +16,8 @@ data class AddressEntity(
     val longitude: String= "",
     val user: String= "",
     val area: String= "",
-    val areaId: Int=0,
+    val areaId: String="",
     val region: String= "",
-    val regionId: Int= 0,
+    val regionId: String= "",
     val countryId: String= "",
 )

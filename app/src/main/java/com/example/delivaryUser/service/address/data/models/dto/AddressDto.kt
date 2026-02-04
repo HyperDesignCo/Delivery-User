@@ -30,11 +30,11 @@ data class AddressDto(
     @SerialName("area")
     val area: String? = null,
     @SerialName("area_id")
-    val areaId: Int? = null,
+    val areaId: String? = null,
     @SerialName("region")
     val region: String? = null,
     @SerialName("region_id")
-    val regionId: Int? = null,
+    val regionId: String? = null,
     @SerialName("country_id")
     val countryId: String? = null,
 )

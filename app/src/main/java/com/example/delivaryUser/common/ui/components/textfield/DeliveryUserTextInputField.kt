@@ -152,14 +152,14 @@ object DeliveryUserTextInputFieldDefaults {
 
     @Composable
     fun color(
-        focusedBorderColor: Color = DelivaryUserTheme.colors.secondary,
+         focusedBorderColor: Color = DelivaryUserTheme.colors.secondary,
         unfocusedBorderColor: Color = DelivaryUserTheme.colors.secondary,
         disabledBorderColor: Color = DelivaryUserTheme.colors.secondary,
         focusedContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         unfocusedContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         disabledContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         errorContainerColor: Color = DelivaryUserTheme.colors.status.redAccent,
-        contentColor: Color = DelivaryUserTheme.colors.secondary,
+        contentColor: Color =DelivaryUserTheme.colors.secondary,
     ) = DeliveryUserTextInputFieldColors(
         focusedBorderColor = focusedBorderColor,
         unfocusedBorderColor = unfocusedBorderColor,

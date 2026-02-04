@@ -8,4 +8,6 @@ interface IAddressRepository {
     suspend fun getSenderAddress(): Address
     suspend fun saveRecipientAddress(address: Address)
     suspend fun getRecipientAddress(): Address
+    suspend fun deleteSenderAddress()
+    suspend fun deleteRecipientAddress()
 }

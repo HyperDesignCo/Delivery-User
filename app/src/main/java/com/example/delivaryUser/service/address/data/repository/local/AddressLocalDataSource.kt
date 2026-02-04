@@ -57,4 +57,14 @@ class AddressLocalDataSource(private val provider: ILocalDataSourceProvider, pri
             AddressEntity()
         }
     }
+
+    override suspend fun deleteSenderAddress() = provider.delete<String>(
+        key = LocalDataSourceEnum.SENDER_ADDRESS,
+        type = String::class.java
+    )
+
+    override suspend fun deleteRecipientAddress() = provider.delete<String>(
+        key = LocalDataSourceEnum.RECIPIENT_ADDRESS,
+        type = String::class.java
+    )
 }

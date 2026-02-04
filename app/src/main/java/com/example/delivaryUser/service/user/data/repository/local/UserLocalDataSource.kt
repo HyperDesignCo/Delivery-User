@@ -56,4 +56,22 @@ class UserLocalDataSource(private val localProvider: ILocalDataSourceProvider, p
         defaultValue = false,
         type = Boolean::class.java
     )
+
+    override suspend fun deleteToken() =
+        localProvider.delete<String>(key = LocalDataSourceEnum.ACCESS_TOKEN, type = String::class.java)
+
+    override suspend fun deleteUser() =
+        localProvider.delete<UserEntity>(key = LocalDataSourceEnum.USER, type = String::class.java)
+
+    override suspend fun deleteRememberMe() =
+        localProvider.delete<Boolean>(key = LocalDataSourceEnum.REMEMBER_ME, type = Boolean::class.java)
+
+    override suspend fun deleteIsAuthenticated() =
+        localProvider.delete<Boolean>(key = LocalDataSourceEnum.IS_AUTHENTICATED, type = Boolean::class.java)
+
+    override suspend fun savePassword(password: String) =
+        localProvider.save(key = LocalDataSourceEnum.PASSWORD, value = password, type = String::class.java)
+
+    override suspend fun getPassword(): String =
+        localProvider.read(key = LocalDataSourceEnum.PASSWORD, defaultValue = "", type = String::class.java)
 }

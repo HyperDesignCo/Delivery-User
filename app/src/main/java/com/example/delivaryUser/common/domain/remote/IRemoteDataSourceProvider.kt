@@ -57,4 +57,13 @@ interface IRemoteDataSourceProvider {
         headers: Map<String, Any>? = null,
         serializer: KSerializer<ResponseBody>,
     ): ResponseBody
+
+    suspend fun <ResponseBody> postWithFile(
+        endpoint: String,
+        params: Map<String, Any>? = null,
+        headers: Map<String, Any>? = null,
+        files: List<Pair<String, IFile>>,
+        requestBody: Map<String, Any>? = null,
+        serializer: KSerializer<ResponseBody>,
+    ): ResponseBody
 }
