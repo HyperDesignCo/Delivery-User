@@ -34,9 +34,7 @@ class HomeViewModel(
 
     override fun onActionTrigger(action: HomeContract.Action) {
         when (action) {
-            is HomeContract.Action.ChatWithAiClicked -> {
-                // TODO NAVIGATE TO CHAT WITH AI SCREEN
-            }
+            is HomeContract.Action.ChatWithAiClicked -> {}
 
             is HomeContract.Action.FastOrderClicked -> onFastOrderClicked()
             is HomeContract.Action.NavigateBacKClicked -> navigateBack()
@@ -48,9 +46,7 @@ class HomeViewModel(
                 fireNavigate(destination = IAddressGraph.Map)
             }
 
-            HomeContract.Action.OnNewOrderClicked -> {
-                // TODO NAVIGATE TO NEW ORDER
-            }
+            HomeContract.Action.OnNewOrderClicked -> {}
 
             HomeContract.Action.OnPointToPointClicked -> {
                 fireNavigate(IOrderGraph.PointToPoint)
@@ -101,11 +97,8 @@ class HomeViewModel(
     }
 
     private fun checkLocationFromApi() {
-        val targetLatLng = state.value.latLng
+        val targetLatLng = state.value.latLng ?: return
 
-        if (targetLatLng == null) {
-            return
-        }
         val request = CheckLocationRequest(
             latitude = targetLatLng.latitude.toString(),
             longitude = targetLatLng.longitude.toString()

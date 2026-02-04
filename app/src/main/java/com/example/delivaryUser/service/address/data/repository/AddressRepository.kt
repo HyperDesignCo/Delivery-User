@@ -22,7 +22,6 @@ class AddressRepository(
     override suspend fun saveSenderAddress(address: Address) =
         addressLocal.saveSenderAddress(AddressMapper.domainToEntity(address))
 
-
     override suspend fun getSenderAddress(): Address =
         AddressMapper.entityToDomain(addressLocal.getSenderAddress())
 
@@ -30,14 +29,12 @@ class AddressRepository(
     override suspend fun saveRecipientAddress(address: Address) =
         addressLocal.saveRecipientAddress(AddressMapper.domainToEntity(address))
 
-
     override suspend fun getRecipientAddress(): Address =
         AddressMapper.entityToDomain(addressLocal.getRecipientAddress())
 
     override suspend fun deleteSenderAddress() = addressLocal.deleteSenderAddress()
 
     override suspend fun deleteRecipientAddress() = addressLocal.deleteRecipientAddress()
-        AddressMapper.entityToDomain(addressLocalDataSource.getRecipientAddress())
 
     override suspend fun saveAddress(request: AddAddressRequest): Address {
         val token = localUser.getToken()
