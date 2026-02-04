@@ -100,4 +100,6 @@
     <!-- Edit Account -->
     <string name="edit">Edit</string>
     <string name="save_changes">Save Changes</string>
+    <!-- Language -->
+    <string name="apply">Apply</string>
 </resources>

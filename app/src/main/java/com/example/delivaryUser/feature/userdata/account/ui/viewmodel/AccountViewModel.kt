@@ -18,8 +18,8 @@ class AccountViewModel(private val user: GetUserUseCase, private val logout: Log
         when (action) {
             is AccountScreenContract.Action.OnAccountInfoClicked -> onAccountInfoClicked()
             is AccountScreenContract.Action.OnEditProfileClicked -> onEditClicked()
-            is AccountScreenContract.Action.OnGetHelpClicked -> { }
-            is AccountScreenContract.Action.OnLanguageClicked -> TODO()
+            is AccountScreenContract.Action.OnGetHelpClicked -> {}
+            is AccountScreenContract.Action.OnLanguageClicked -> onLanguageClicked()
             is AccountScreenContract.Action.OnLogoutClicked -> onLogOutClicked()
             is AccountScreenContract.Action.OnMyOrdersClicked -> onMyOrdersClicked()
             is AccountScreenContract.Action.OnSavedLocationClicked -> onSavedLocationClicked()
@@ -36,18 +36,22 @@ class AccountViewModel(private val user: GetUserUseCase, private val logout: Log
     private fun onGetUserSuccess(user: User) {
         updateState { copy(name = user.name, image = user.image, id = user.id) }
     }
-    private fun onEditClicked(){
+
+    private fun onEditClicked() {
         fireNavigate(IAccountGraph.EditAccount)
     }
-    private fun onAccountInfoClicked(){
+
+    private fun onAccountInfoClicked() {
         fireNavigate(destination = IAccountGraph.AccountInfo)
     }
-    private fun onLogOutClicked(){
+
+    private fun onLogOutClicked() {
         viewModelScope.launch {
             logout.invoke(body = Unit).collectResource(onSuccess = { onLogOutSuccess() })
         }
     }
-    private fun onLogOutSuccess(){
+
+    private fun onLogOutSuccess() {
         fireNavigate(destination = IAuthGraph.Login, {
             popUpTo(0) {
                 inclusive = true
@@ -62,5 +66,9 @@ class AccountViewModel(private val user: GetUserUseCase, private val logout: Log
 
     private fun onSavedLocationClicked() {
         fireNavigate(destination = IOrderGraph.AddressList(addressType = AddressType.SENDER))
+    }
+
+    private fun onLanguageClicked() {
+        viewModelScope.launch { fireNavigate(IAccountGraph.Language) }
     }
 }

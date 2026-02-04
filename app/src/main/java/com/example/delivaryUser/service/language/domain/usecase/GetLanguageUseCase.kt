@@ -6,7 +6,7 @@ import com.example.delivaryUser.service.language.domain.repository.ILanguageRepo
 import kotlinx.coroutines.flow.Flow
 
 class GetLanguageUseCase(private val repository: ILanguageRepository) :
-    BaseUseCase<Flow<Resource<String?>>, Unit>() {
+    BaseUseCase<Flow<Resource<String>>, Unit>() {
     override suspend fun invoke(body: Unit): Flow<Resource<String>> = flowExecute {
         repository.getLanguage()
     }

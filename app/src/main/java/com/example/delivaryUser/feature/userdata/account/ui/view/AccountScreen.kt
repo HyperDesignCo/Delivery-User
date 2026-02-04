@@ -20,6 +20,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -166,6 +167,7 @@ private fun AccountMainData(
         AsyncImage(
             modifier = Modifier
                 .size(90.dp)
+                .clip(shape = CircleShape)
                 .background(
                     shape = CircleShape, color = Color.Transparent
                 ),
@@ -173,7 +175,7 @@ private fun AccountMainData(
             contentDescription = null,
             error = painterResource(R.drawable.img_default_user_account),
             placeholder = painterResource(R.drawable.img_default_user_account),
-            contentScale = ContentScale.Fit
+            contentScale = ContentScale.Crop
         )
         Text(
             modifier = Modifier,

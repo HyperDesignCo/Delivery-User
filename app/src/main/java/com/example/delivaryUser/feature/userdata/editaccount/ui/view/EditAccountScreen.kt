@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -25,6 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -151,6 +153,7 @@ private fun AccountImage(imageField: TextFieldState, openFile: (imageFile: File,
         AsyncImage(
             modifier = Modifier
                 .size(90.dp)
+                .clip(shape = CircleShape)
                 .background(
                     shape = CircleShape, color = Color.Transparent
                 )
@@ -163,13 +166,15 @@ private fun AccountImage(imageField: TextFieldState, openFile: (imageFile: File,
             contentDescription = null,
             error = painterResource(R.drawable.img_default_user_account),
             placeholder = painterResource(R.drawable.img_default_user_account),
-            contentScale = ContentScale.Fit
+            contentScale = ContentScale.Crop
         )
         Box(
             modifier = Modifier
-                .padding(top = 12.dp, start = 2.dp)
-                .background(color = DelivaryUserTheme.colors.primary, shape = CircleShape)
                 .align(Alignment.CenterEnd)
+                .offset(x= 4.dp)
+                .padding(top = 12.dp)
+                .background(color = DelivaryUserTheme.colors.primary, shape = CircleShape)
+
         ) {
             Icon(
                 modifier = Modifier

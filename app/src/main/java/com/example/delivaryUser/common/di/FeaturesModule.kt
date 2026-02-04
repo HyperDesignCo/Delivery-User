@@ -15,6 +15,7 @@ import com.example.delivaryUser.feature.pointtopoint.di.pointToPointModule
 import com.example.delivaryUser.feature.userdata.account.di.accountModule
 import com.example.delivaryUser.feature.userdata.accountinfo.di.accountInfoModule
 import com.example.delivaryUser.feature.userdata.editaccount.di.editAccountModule
+import com.example.delivaryUser.feature.userdata.selectlanguage.di.selectLanguageModule
 import com.example.delivaryUser.service.address.di.addressModule
 import com.example.delivaryUser.service.language.di.languageModule
 import com.example.delivaryUser.service.user.di.userModule
@@ -39,6 +40,7 @@ val featuresModule = module {
         splashModule,
         accountInfoModule,
         accountModule,
-        editAccountModule
+        editAccountModule,
+        selectLanguageModule
     )
 }

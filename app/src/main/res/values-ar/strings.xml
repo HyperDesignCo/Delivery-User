@@ -75,7 +75,7 @@
     <string name="addresses">العناوين</string>
     <string name="address_saved_successfully">تم حفظ العنوان بنجاح</string>
     <!-- Point to Point -->
-    <string name="where_is_it_going">لى أين سيتم إرساله؟</string>
+    <string name="where_is_it_going">الى أين سيتم إرساله؟</string>
     <string name="choose_sender_address">اختر عنوان المرسل</string>
     <string name="choose_recipient_Address">ختر عنوان المستلم</string>
     <string name="order_type">نوع الطلب</string>
@@ -100,4 +100,6 @@
     <!-- Edit Account -->
     <string name="edit">تعديل</string>
     <string name="save_changes">حفظ التغييرات</string>
+    <!-- Language -->
+    <string name="apply">طبق</string>
 </resources>
