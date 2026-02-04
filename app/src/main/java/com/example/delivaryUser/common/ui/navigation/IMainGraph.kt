@@ -9,6 +9,7 @@ import com.example.delivaryUser.feature.deliveryoutzone.ui.view.DeliveryOutZoneS
 import com.example.delivaryUser.feature.home.ui.view.HomeScreen
 import com.example.delivaryUser.feature.orders.orderdetails.ui.view.OrderDetailsScreen
 import com.example.delivaryUser.feature.orders.orderslist.ui.view.OrdersScreen
+import com.example.delivaryUser.feature.userdata.account.ui.view.AccountScreen
 import kotlinx.serialization.Serializable
 
 sealed interface IMainGraph : IDestination {
@@ -38,9 +39,8 @@ fun NavGraphBuilder.buildNavMainGraph() {
     navigation<IMainGraph.RootGraph>(startDestination = IMainGraph.Home) {
         composable<IMainGraph.Home> { HomeScreen() }
         composable<IMainGraph.Orders> { OrdersScreen() }
-        composable<IMainGraph.OrderDetails> {
-            OrderDetailsScreen()
-        }
+        composable<IMainGraph.OrderDetails> { OrderDetailsScreen() }
+        composable<IMainGraph.Account> {  AccountScreen() }
         composable<IMainGraph.DeliveryOutZone> { DeliveryOutZoneScreen() }
     }
 }

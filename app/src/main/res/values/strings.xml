@@ -88,6 +88,21 @@
     <string name="sender_address_validation">Sender address should not be empty</string>
     <string name="recipient_address_validation">Recipient address should not be empty</string>
     <string name="estimated_price_validation">Estimated order price should not be empty</string>
+    <!-- Account -->
+    <string name="edit_account">Edit Profile</string>
+    <string name="my_orders">My Orders</string>
+    <string name="get_help">Get help</string>
+    <string name="account_info">Account info</string>
+    <string name="saved_location">Saved Location</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="logout">Log out</string>
+    <!-- Edit Account -->
+    <string name="edit">Edit</string>
+    <string name="save_changes">Save Changes</string>
+    <!-- Language -->
+    <string name="apply">Apply</string>
     <!--map-->
     <string name="please_select_a_location_on_the_map">Please select a location on the map</string>
     <string name="choose_location">Choose Location</string>

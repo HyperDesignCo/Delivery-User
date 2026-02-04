@@ -13,6 +13,7 @@ data class User(
     val countryId: String,
     val regionId: String,
     val areaId: String,
+    val password: String= "",
 )
 
 @Serializable

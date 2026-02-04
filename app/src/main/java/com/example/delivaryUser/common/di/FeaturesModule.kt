@@ -15,6 +15,10 @@ import com.example.delivaryUser.feature.orders.base.di.ordersModule
 import com.example.delivaryUser.feature.orders.orderdetails.di.orderDetailsModule
 import com.example.delivaryUser.feature.orders.orderslist.di.ordersListModule
 import com.example.delivaryUser.feature.pointtopoint.di.pointToPointModule
+import com.example.delivaryUser.feature.userdata.account.di.accountModule
+import com.example.delivaryUser.feature.userdata.accountinfo.di.accountInfoModule
+import com.example.delivaryUser.feature.userdata.editaccount.di.editAccountModule
+import com.example.delivaryUser.feature.userdata.selectlanguage.di.selectLanguageModule
 import com.example.delivaryUser.service.address.di.addressModule
 import com.example.delivaryUser.service.language.di.languageModule
 import com.example.delivaryUser.feature.deliveryoutzone.di.deliveryOutZoneModule
@@ -37,6 +41,11 @@ val featuresModule = module {
         addressModule,
         pointToPointModule,
         languageModule,
+        splashModule,
+        accountInfoModule,
+        accountModule,
+        editAccountModule,
+        selectLanguageModule,
         splashModule,
         mapModule,
         locationModule,

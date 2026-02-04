@@ -10,6 +10,7 @@ import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.domain.exceptions.RequestErrorKeyValues
 import com.example.delivaryUser.common.ui.eventcontroller.IEventController
 import com.example.delivaryUser.common.ui.extension.UIText
+import com.example.delivaryUser.common.ui.language.ILanguageEvent
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.IDestination
@@ -29,7 +30,7 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
     private val navigator: INavigator by inject()
     private val messageEvent: IEventController<IMessageEvent> by inject(named("MessageEvent"))
     private val loadingEvent: IEventController<ILoadingEvent> by inject(named("LoadingEvent"))
-
+    private val languageEvent: IEventController<ILanguageEvent> by inject(named("LanguageEvent"))
     abstract fun onActionTrigger(action: Action)
     fun updateState(update: State.() -> State) {
         _state.update { it.update() }
@@ -45,7 +46,11 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
     suspend fun fireNavigateUp() {
         navigator.navigateUp()
     }
-
+    fun fireLanguageEvent(language: String) {
+        viewModelScope.launch {
+            languageEvent.emit(ILanguageEvent.ChangeLanguage(language))
+        }
+    }
     fun <Result> Flow<Resource<Result>>.collectResource(
         onSuccess: suspend (Result) -> Unit = {},
         onFailure: suspend (DelivaryUserException) -> Unit = {},

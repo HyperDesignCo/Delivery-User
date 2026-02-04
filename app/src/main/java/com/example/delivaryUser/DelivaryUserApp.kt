@@ -1,7 +1,11 @@
 package com.example.delivaryUser
 
+import android.app.LocaleManager
+import android.os.Build
+import android.os.LocaleList
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
@@ -14,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.os.LocaleListCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -22,11 +27,13 @@ import com.example.delivaryUser.common.ui.components.dialogs.DelivaryUserLoading
 import com.example.delivaryUser.common.ui.eventcontroller.IEventController
 import com.example.delivaryUser.common.ui.extension.ObserveAsEvents
 import com.example.delivaryUser.common.ui.extension.UIText
+import com.example.delivaryUser.common.ui.language.ILanguageEvent
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.BottomDestination
 import com.example.delivaryUser.common.ui.navigation.INavigator
 import com.example.delivaryUser.common.ui.navigation.NavigationEvent
+import com.example.delivaryUser.common.ui.navigation.buildNavAccountGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavAddressGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavAuthGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavMainGraph
@@ -43,6 +50,7 @@ fun DelivaryUserApp(
     navHostController: NavHostController = rememberNavController(),
 ) {
     DelivaryUserTheme {
+        ObserveLanguageEvent()
         ObserveMessageEvent()
         ObserveLoadingEvent()
         ObserveAsEvents(navigator.navigationEvent) { event ->
@@ -71,6 +79,7 @@ fun DelivaryUserApp(
                     buildNavAuthGraph()
                     buildNavMainGraph()
                     buildNavOrderGraph()
+                    buildNavAccountGraph()
                     buildNavAddressGraph()
                 }
             }
@@ -109,4 +118,26 @@ private fun ObserveLoadingEvent() {
         }
     }
     if (isLoading) DelivaryUserLoadingDialog()
+}
+@Composable
+fun ObserveLanguageEvent() {
+    val context = LocalContext.current
+    val languageEvent: IEventController<ILanguageEvent> =
+        koinInject(qualifier = named("LanguageEvent"))
+
+    ObserveAsEvents(languageEvent.event) { event ->
+        when (event) {
+            is ILanguageEvent.ChangeLanguage -> {
+                val compatLocales =
+                    LocaleListCompat.forLanguageTags(event.languageCode)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    val localeManager = context.getSystemService(LocaleManager::class.java)
+                    val platformLocales = compatLocales.unwrap()
+                    localeManager.applicationLocales = platformLocales as LocaleList
+                } else {
+                    AppCompatDelegate.setApplicationLocales(compatLocales)
+                }
+            }
+        }
+    }
 }

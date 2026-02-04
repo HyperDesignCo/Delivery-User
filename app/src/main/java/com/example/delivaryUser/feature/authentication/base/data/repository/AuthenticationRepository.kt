@@ -18,6 +18,7 @@ class AuthenticationRepository(val remote: IAuthenticationRemoteDataSource, val 
         local.saveToken(token = result.accessToken.orEmpty())
         local.saveRememberMe(request.rememberMe)
         local.saveIsAuthenticated(true)
+        local.savePassword(request.password)
         return AuthenticationMapper.dtoToDomain(model = result)
     }
 
@@ -26,6 +27,7 @@ class AuthenticationRepository(val remote: IAuthenticationRemoteDataSource, val 
         local.saveUser(user = UserMapper.dtoToEntity(model = result.user ?: UserDto()))
         local.saveToken(token = result.accessToken.orEmpty())
         local.saveIsAuthenticated(true)
+        local.savePassword(request.password)
         return AuthenticationMapper.dtoToDomain(model = result)
     }
 }

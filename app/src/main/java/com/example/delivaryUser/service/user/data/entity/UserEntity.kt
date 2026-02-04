@@ -18,4 +18,5 @@ data class UserEntity(
     val areaId: String = "",
     val deviceToken: String = "",
     val deviceType: String = "",
+    val password : String = ""
 )

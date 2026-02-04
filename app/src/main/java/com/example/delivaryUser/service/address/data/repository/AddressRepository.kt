@@ -11,32 +11,37 @@ import com.example.delivaryUser.service.user.domain.repository.local.IUserLocalD
 
 class AddressRepository(
     private val remote: IAddressRemoteDataSource,
-    private val local: IUserLocalDataSource,
-    private val addressLocalDataSource: IAddressLocalDataSource,
+    private val localUser: IUserLocalDataSource,
+    private val addressLocal: IAddressLocalDataSource,
 ) : IAddressRepository {
     override suspend fun getAddresses(): List<Address> {
-        val token = local.getToken()
+        val token = localUser.getToken()
         return remote.getAddresses(token).address?.map { AddressMapper.dtoToDomain(it) } ?: emptyList()
     }
 
     override suspend fun saveSenderAddress(address: Address) =
-        addressLocalDataSource.saveSenderAddress(AddressMapper.domainToEntity(address))
+        addressLocal.saveSenderAddress(AddressMapper.domainToEntity(address))
 
 
     override suspend fun getSenderAddress(): Address =
-        AddressMapper.entityToDomain(addressLocalDataSource.getSenderAddress())
+        AddressMapper.entityToDomain(addressLocal.getSenderAddress())
 
 
     override suspend fun saveRecipientAddress(address: Address) =
-        addressLocalDataSource.saveRecipientAddress(AddressMapper.domainToEntity(address))
+        addressLocal.saveRecipientAddress(AddressMapper.domainToEntity(address))
 
 
     override suspend fun getRecipientAddress(): Address =
+        AddressMapper.entityToDomain(addressLocal.getRecipientAddress())
+
+    override suspend fun deleteSenderAddress() = addressLocal.deleteSenderAddress()
+
+    override suspend fun deleteRecipientAddress() = addressLocal.deleteRecipientAddress()
         AddressMapper.entityToDomain(addressLocalDataSource.getRecipientAddress())
 
     override suspend fun saveAddress(request: AddAddressRequest): Address {
-        val token = local.getToken()
-        val user = local.getUser()
+        val token = localUser.getToken()
+        val user = localUser.getUser()
         return AddressMapper.dtoToDomain(
             remote.saveAddress(
                 request = request.copy(name = user.name),

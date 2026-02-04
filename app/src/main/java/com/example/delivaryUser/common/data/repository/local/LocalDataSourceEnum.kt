@@ -11,6 +11,7 @@ enum class LocalDataSourceEnum(override val keyValue: String) : ILocalDataSource
     RECIPIENT_ADDRESS("recipient_address"),
     LANGUAGE("language"),
     IS_AUTHENTICATED("is_authenticated"),
+    PASSWORD("password"),
     SAVED_LOCATION("saved_location"),
     FIRST_LAUNCH_COMPLETE("first_launch_complete"),
     SAVED_LOCATION_RESPONSE("saved_location_response")
