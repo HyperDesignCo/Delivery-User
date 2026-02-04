@@ -28,6 +28,7 @@ sealed interface PointToPointContract {
         val comment: TextFieldState = TextFieldState(),
         val deliveryFees: Double = 0.0,
         val isExpanded: Boolean = false,
+        val isCheckOutEnabled: Boolean= false
     )
 
     data class AddressUiState(

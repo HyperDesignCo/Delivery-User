@@ -9,6 +9,7 @@ import com.example.delivaryUser.feature.authentication.verifyOtp.domain.reposito
 import com.example.delivaryUser.feature.authentication.verifyOtp.ui.viewmodel.VerifyOtpViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -17,5 +18,5 @@ val verifyOtpModule = module {
     singleOf(::VerifyOtpRemoteDataSource) bind IVerifyOtpRemoteDataSource::class
     factoryOf(::VerifyOtpUseCase)
     factoryOf(::ResendCodeUseCase)
-    factoryOf(::VerifyOtpViewModel)
+    viewModelOf(::VerifyOtpViewModel)
 }

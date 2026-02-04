@@ -1,10 +1,15 @@
 package com.example.delivaryUser.feature.authentication.verifyOtp.ui.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
+import com.example.delivaryUser.R
 import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.message.MessageType
+import com.example.delivaryUser.common.ui.navigation.IAuthGraph
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.authentication.verifyOtp.data.models.request.VerifyOtpRequest
@@ -13,11 +18,13 @@ import com.example.delivaryUser.feature.authentication.verifyOtp.domain.interact
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class VerifyOtpViewModel(private val verify: VerifyOtpUseCase, private val resend: ResendCodeUseCase) :
+class VerifyOtpViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val verify: VerifyOtpUseCase, private val resend: ResendCodeUseCase) :
     BaseViewModel<VerifyOtpContract.State, VerifyOtpContract.Action>(
         state = VerifyOtpContract.State()
     ) {
-
+    val route = savedStateHandle.toRoute<IAuthGraph.VerifyOtp>()
     init {
         startTimer()
     }
@@ -47,12 +54,16 @@ class VerifyOtpViewModel(private val verify: VerifyOtpUseCase, private val resen
 
     private fun verifyClicked() {
         val request = VerifyOtpRequest(
+            phone = route.phone,
             code = state.value.code
         )
         viewModelScope.launch {
             verify.invoke(body = request).collectResource(
                 onSuccess = {
-                    fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(it.message)))
+                    fireMessage(IMessageEvent.Snackbar(
+                        UIText.StringResource(R.string.registered_successfully),
+                        messageType = MessageType.SUCCESS
+                    ))
                     startTimer()
                     navigateToHome()
                 },

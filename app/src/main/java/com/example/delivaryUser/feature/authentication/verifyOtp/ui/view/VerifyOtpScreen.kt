@@ -28,10 +28,10 @@ import com.example.delivaryUser.common.ui.extension.clickableWithNoRipple
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import com.example.delivaryUser.feature.authentication.verifyOtp.ui.viewmodel.VerifyOtpContract
 import com.example.delivaryUser.feature.authentication.verifyOtp.ui.viewmodel.VerifyOtpViewModel
-import org.koin.compose.koinInject
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun VerifyOtpScreen(viewModel: VerifyOtpViewModel = koinInject()) {
+fun VerifyOtpScreen(viewModel: VerifyOtpViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     VerifyOtpContent(state = state, action = viewModel::onActionTrigger)
 }
