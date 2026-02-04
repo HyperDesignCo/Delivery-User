@@ -9,12 +9,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,6 +26,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.delivaryUser.common.ui.components.bars.navigationbar.DelivaryUserNavigationBar
 import com.example.delivaryUser.common.ui.components.dialogs.DelivaryUserLoadingDialog
+import com.example.delivaryUser.common.ui.components.snackbar.DeliveryUserSnackBarHost
+import com.example.delivaryUser.common.ui.components.snackbar.showSnackbar
 import com.example.delivaryUser.common.ui.eventcontroller.IEventController
 import com.example.delivaryUser.common.ui.extension.ObserveAsEvents
 import com.example.delivaryUser.common.ui.extension.UIText
@@ -38,6 +42,8 @@ import com.example.delivaryUser.common.ui.navigation.buildNavAuthGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavMainGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavOrderGraph
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -47,10 +53,15 @@ val LocalPadding = compositionLocalOf<PaddingValues> { PaddingValues() }
 fun DelivaryUserApp(
     navigator: INavigator = koinInject(),
     navHostController: NavHostController = rememberNavController(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
     DelivaryUserTheme {
         ObserveLanguageEvent()
-        ObserveMessageEvent()
+        ObserveMessageEvent(
+            snackbarHostState = snackbarHostState,
+            coroutineScope = coroutineScope
+        )
         ObserveLoadingEvent()
         ObserveAsEvents(navigator.navigationEvent) { event ->
             when (event) {
@@ -63,6 +74,9 @@ fun DelivaryUserApp(
         }
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            snackbarHost = {
+                DeliveryUserSnackBarHost(SnackbarHostState = snackbarHostState)
+            },
             bottomBar = {
                 DelivaryUserNavigationBar(
                     navController = navHostController, destinations = BottomDestination.destinations,
@@ -86,7 +100,7 @@ fun DelivaryUserApp(
 }
 
 @Composable
-private fun ObserveMessageEvent() {
+private fun ObserveMessageEvent(snackbarHostState: SnackbarHostState, coroutineScope: CoroutineScope,) {
     val context = LocalContext.current
     fun UIText.toMessageString(): String {
         return when (this) {
@@ -94,12 +108,15 @@ private fun ObserveMessageEvent() {
             is UIText.StringResource -> context.getString(this.id)
         }
     }
-
     val messageEvent: IEventController<IMessageEvent> = koinInject(qualifier = named("MessageEvent"))
-    ObserveAsEvents(messageEvent.event) { event ->
+    ObserveAsEvents(messageEvent.event, ) { event ->
         when (event) {
             is IMessageEvent.Toast -> {
                 Toast.makeText(context, event.message.toMessageString(), Toast.LENGTH_LONG).show()
+            }
+
+            is IMessageEvent.Snackbar -> {
+                coroutineScope.launch { snackbarHostState.showSnackbar(context = context, event = event) }
             }
         }
     }

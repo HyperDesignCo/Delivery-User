@@ -21,7 +21,7 @@ sealed interface IAuthGraph {
     data object Register : IDestination
 
     @Serializable
-    data object VerifyOtp : IDestination
+    data class VerifyOtp(val phone: String) : IDestination
 
     @Serializable
     data object ForgetPassword : IDestination

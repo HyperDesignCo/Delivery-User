@@ -1,6 +1,10 @@
 package com.example.delivaryUser.feature.pointtopoint.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.example.delivaryUser.R
+import com.example.delivaryUser.common.ui.extension.UIText
+import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.message.MessageType
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
@@ -162,6 +166,11 @@ class PointToPointViewModel(
         )
         viewModelScope.launch {
             addPointToPointOrderUseCase.invoke(body = request).collectResource(onSuccess = {
+                fireMessage(
+                    IMessageEvent.Snackbar(
+                    UIText.StringResource(R.string.we_received_order),
+                    messageType = MessageType.SUCCESS
+                ))
                 fireNavigate(destination = IMainGraph.Home)
             })
         }

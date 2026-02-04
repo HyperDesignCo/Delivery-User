@@ -80,7 +80,8 @@ private fun PointToPointContent(state: PointToPointContract.State, action: (Poin
         DelivaryUserButtonPrimary(
             modifier = Modifier.padding(horizontal = 16.dp),
             label = stringResource(R.string.checkout),
-            onClick = { action(PointToPointContract.Action.OnCheckOutClicked) }
+            onClick = { action(PointToPointContract.Action.OnCheckOutClicked) },
+            isEnabled = state.senderAddress.addressName.isNotBlank() && state.receiverAddress.addressName.isNotBlank() && state.selectedOrderType.value.isNotBlank()
         )
         Spacer(modifier = Modifier.weight(1f))
     }

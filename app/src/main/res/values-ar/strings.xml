@@ -20,6 +20,7 @@
     <string name="remember_me">تذكرني</string>
     <string name="forgot_password">نسيت كلمة المرور؟</string>
     <string name="login">تسجيل الدخول</string>
+    <string name="welcome_back">مرحباً بعودتك</string>
     <string name="do_not_have_and_account">ليس لديك حساب؟</string>
     <string name="register">التسجيل</string>
     <string name="phone_number">رقم الهاتف</string>
@@ -27,6 +28,8 @@
     <string name="name">اسم المستخدم</string>
     <string name="email">البريد الالكتروني</string>
     <string name="have_account">لديك حساب بالفعل؟</string>
+    <string name="registered_successfully">تم التسجيل بنجاح!</string>
+    <string name="password_changed_successfully">تم تغيير كلمة المرور بنجاح</string>
     <!--verify Otp -->
     <string name="verify_otp">تحقق من OTP</string>
     <string name="please_enter_the_otp_sent_to_your_phone_number">يرجى إدخال الرمز المكون من 4 أرقام الذي تم إرساله إلى بريدك الإلكتروني أو رقم هاتفك</string>
@@ -88,6 +91,7 @@
     <string name="sender_address_validation">يجب ألا يكون عنوان المرسل فارغًا</string>
     <string name="recipient_address_validation">يجب ألا يكون عنوان المستلم فارغًا</string>
     <string name="estimated_price_validation">يجب ألا يكون سعر الطلب المقدر فارغًا</string>
+    <string name="we_received_order">لقد تلقينا طلبك.</string>
     <!-- Account -->
     <string name="edit_account">تعديل الملف الشخصي</string>
     <string name="my_orders">طلباتي</string>
@@ -101,6 +105,7 @@
     <!-- Edit Account -->
     <string name="edit">تعديل</string>
     <string name="save_changes">حفظ التغييرات</string>
+    <string name="account_updated_successfully">تم تحديث الملف الشخصي بنجاح</string>
     <!-- Language -->
     <string name="apply">طبق</string>
     <!--map-->

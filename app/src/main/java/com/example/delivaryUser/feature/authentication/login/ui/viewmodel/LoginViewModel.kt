@@ -7,6 +7,7 @@ import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
+import com.example.delivaryUser.common.ui.message.MessageType
 import com.example.delivaryUser.common.ui.navigation.IAuthGraph
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
@@ -43,7 +44,10 @@ class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginCon
         viewModelScope.launch {
             useCase.invoke(body = request).collectResource(
                 onSuccess = {
-                    fireMessage(IMessageEvent.Toast(UIText.StringResource(R.string.login)))
+                    fireMessage(IMessageEvent.Snackbar(
+                        UIText.StringResource(R.string.welcome_back),
+                        messageType = MessageType.SUCCESS
+                    ))
                     navigateToHome()
                 },
                 onLoading = {
