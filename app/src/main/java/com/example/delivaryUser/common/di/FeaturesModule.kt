@@ -22,6 +22,7 @@ import com.example.delivaryUser.feature.userdata.selectlanguage.di.selectLanguag
 import com.example.delivaryUser.service.address.di.addressModule
 import com.example.delivaryUser.service.language.di.languageModule
 import com.example.delivaryUser.feature.deliveryoutzone.di.deliveryOutZoneModule
+import com.example.delivaryUser.feature.fastorder.di.fastOrderModule
 import com.example.delivaryUser.service.user.di.userModule
 import org.koin.dsl.module
 
@@ -51,5 +52,6 @@ val featuresModule = module {
         locationModule,
         deliveryOutZoneModule,
         saveAddressModule,
+        fastOrderModule,
     )
 }
