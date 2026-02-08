@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
 data class OrderResponseDto(
     @SerialName("message")
     val message: String,
-    @SerialName("order")
+    @SerialName("orders")
     val order: OrderDto,
 )

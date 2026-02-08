@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
@@ -18,12 +19,15 @@ android {
         versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "MAPS_API_KEY", "\"${project.findProperty("MAPS_API_KEY") ?: ""}\"")
+        buildConfigField("String", "PLACES_API_KEY", "\"${project.findProperty("PLACES_API_KEY") ?: ""}\"")
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -34,6 +38,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
 }
@@ -95,4 +100,16 @@ dependencies {
 
     //Datastore
     implementation(libs.androidx.datastore.preferences)
+
+    // Google Play Services & Maps
+    implementation(libs.google.play.services.location)
+    implementation(libs.google.play.services.maps)
+    implementation(libs.google.maps.compose)
+    implementation(libs.google.places)
+
+    //Accompanist
+    implementation(libs.accompanist.permissions)
+
+    //Security
+    implementation(libs.androidx.security.crypto)
 }

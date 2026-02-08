@@ -34,8 +34,8 @@ sealed interface PointToPointContract {
     data class AddressUiState(
         val address: Address = Address(
             id = 0,
-            phone1 = "",
-            phone2 = "",
+            firstPhone = "",
+            secondPhone = "",
             street = "",
             buildingNumber = "",
             floorNumber = "",

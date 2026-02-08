@@ -1,5 +1,6 @@
 package com.example.delivaryUser.service.address.domain.repository
 
+import com.example.delivaryUser.service.address.data.models.request.AddAddressRequest
 import com.example.delivaryUser.service.address.domain.models.domain.Address
 
 interface IAddressRepository {
@@ -10,4 +11,5 @@ interface IAddressRepository {
     suspend fun getRecipientAddress(): Address
     suspend fun deleteSenderAddress()
     suspend fun deleteRecipientAddress()
+    suspend fun saveAddress(request: AddAddressRequest): Address
 }

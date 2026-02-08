@@ -30,9 +30,9 @@ import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DelivaryUserTopBar(
-    onStartIconClicked: () -> Unit,
+    onStartIconClicked: () -> Unit ={},
     modifier: Modifier = Modifier,
-    @DrawableRes startIcon: Int? = null,
+    @DrawableRes startIcon: Int? = R.drawable.ic_back,
     content: (@Composable () -> Unit)? = null,
     @DrawableRes endIcon: Int? = null,
     onEndIconClicked: () -> Unit = {},
@@ -48,12 +48,14 @@ fun DelivaryUserTopBar(
         horizontalArrangement = DeliveryUserTopBarDefaults.horizontalArrangement
     ) {
         IconButton(modifier = Modifier.size(DeliveryUserTopBarDefaults.iconSize), onClick = { onStartIconClicked() }) {
-            Icon(
-                modifier = Modifier.autoMirror(),
-                imageVector = ImageVector.vectorResource(startIcon ?: R.drawable.ic_back),
-                tint = colors.contentColor,
-                contentDescription = null
-            )
+            startIcon?.let {
+                Icon(
+                    modifier = Modifier.autoMirror(),
+                    imageVector = ImageVector.vectorResource(startIcon),
+                    tint = colors.contentColor,
+                    contentDescription = null
+                )
+            }
         }
         Box(
             modifier = Modifier.weight(1f),

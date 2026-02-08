@@ -26,7 +26,7 @@ data class OrderDto(
     @SerialName("delivery_fees")
     val deliveryFees: String? = null,
     @SerialName("total_order_price")
-    val totalOrderPrice: Double? = null,
+    val totalOrderPrice: String? = null,
     @SerialName("created_at")
     val createdAt: String? = null,
     @SerialName("delivery_price")

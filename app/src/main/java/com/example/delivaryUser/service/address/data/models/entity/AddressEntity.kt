@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AddressEntity(
     val id: Int = 0,
-    val phone1: String= "",
-    val phone2: String= "",
+    val firstPhone: String= "",
+    val secondPhone: String= "",
     val street: String= "",
     val buildingNumber: String= "",
     val floorNumber: String= "",

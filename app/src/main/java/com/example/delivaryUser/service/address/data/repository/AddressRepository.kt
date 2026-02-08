@@ -1,6 +1,8 @@
 package com.example.delivaryUser.service.address.data.repository
 
 import com.example.delivaryUser.service.address.data.mappers.AddressMapper
+import com.example.delivaryUser.service.address.data.models.dto.AddressDto
+import com.example.delivaryUser.service.address.data.models.request.AddAddressRequest
 import com.example.delivaryUser.service.address.domain.models.domain.Address
 import com.example.delivaryUser.service.address.domain.repository.IAddressRepository
 import com.example.delivaryUser.service.address.domain.repository.local.IAddressLocalDataSource
@@ -20,7 +22,6 @@ class AddressRepository(
     override suspend fun saveSenderAddress(address: Address) =
         addressLocal.saveSenderAddress(AddressMapper.domainToEntity(address))
 
-
     override suspend fun getSenderAddress(): Address =
         AddressMapper.entityToDomain(addressLocal.getSenderAddress())
 
@@ -28,11 +29,21 @@ class AddressRepository(
     override suspend fun saveRecipientAddress(address: Address) =
         addressLocal.saveRecipientAddress(AddressMapper.domainToEntity(address))
 
-
     override suspend fun getRecipientAddress(): Address =
         AddressMapper.entityToDomain(addressLocal.getRecipientAddress())
 
     override suspend fun deleteSenderAddress() = addressLocal.deleteSenderAddress()
 
     override suspend fun deleteRecipientAddress() = addressLocal.deleteRecipientAddress()
+
+    override suspend fun saveAddress(request: AddAddressRequest): Address {
+        val token = localUser.getToken()
+        val user = localUser.getUser()
+        return AddressMapper.dtoToDomain(
+            remote.saveAddress(
+                request = request.copy(name = user.name),
+                token = token
+            ).address ?: AddressDto()
+        )
+    }
 }

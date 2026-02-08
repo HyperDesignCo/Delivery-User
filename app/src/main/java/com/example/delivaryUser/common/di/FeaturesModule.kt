@@ -1,5 +1,7 @@
 package com.example.delivaryUser.common.di
 
+import com.example.delivaryUser.feature.address.saveaddress.di.saveAddressModule
+import com.example.delivaryUser.feature.address.mapview.di.mapModule
 import com.example.delivaryUser.feature.authentication.base.di.authenticationModule
 import com.example.delivaryUser.feature.authentication.changepassword.di.changePasswordModule
 import com.example.delivaryUser.feature.authentication.forgetpassword.di.forgetPasswordModule
@@ -8,6 +10,7 @@ import com.example.delivaryUser.feature.authentication.register.di.registerModul
 import com.example.delivaryUser.feature.authentication.splash.di.splashModule
 import com.example.delivaryUser.feature.authentication.verifyOtp.di.verifyOtpModule
 import com.example.delivaryUser.feature.home.di.homeModule
+import com.example.delivaryUser.service.location.di.locationModule
 import com.example.delivaryUser.feature.orders.base.di.ordersModule
 import com.example.delivaryUser.feature.orders.orderdetails.di.orderDetailsModule
 import com.example.delivaryUser.feature.orders.orderslist.di.ordersListModule
@@ -18,6 +21,7 @@ import com.example.delivaryUser.feature.userdata.editaccount.di.editAccountModul
 import com.example.delivaryUser.feature.userdata.selectlanguage.di.selectLanguageModule
 import com.example.delivaryUser.service.address.di.addressModule
 import com.example.delivaryUser.service.language.di.languageModule
+import com.example.delivaryUser.feature.deliveryoutzone.di.deliveryOutZoneModule
 import com.example.delivaryUser.service.user.di.userModule
 import org.koin.dsl.module
 
@@ -41,6 +45,11 @@ val featuresModule = module {
         accountInfoModule,
         accountModule,
         editAccountModule,
-        selectLanguageModule
+        selectLanguageModule,
+        splashModule,
+        mapModule,
+        locationModule,
+        deliveryOutZoneModule,
+        saveAddressModule,
     )
 }

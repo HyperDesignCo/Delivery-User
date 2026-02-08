@@ -23,5 +23,11 @@ enum class ErrorKeyEnum : IErrorKeyEnum {
 
     @SerialName("confirmationPassword")
     CONFIRMATION_PASSWORD,
+
+    @SerialName("phone1")
+    ADDRESS_FIRST_PHONE,
+
+    @SerialName("phone2")
+    ADDRESS_SECOND_PHONE,
     UNKNOWN;
 }

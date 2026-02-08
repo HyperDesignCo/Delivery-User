@@ -15,7 +15,7 @@ sealed interface OrderDetailsContract {
         val deliveryNumber: String="",
         val deliveryPrice: String="",
         val orderPrice: String= "",
-        val totalPrice : Double  = 0.0 ,
+        val totalPrice : String  = "0.0" ,
         val estimatedPrice : String = "",
     )
 }

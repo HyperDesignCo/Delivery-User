@@ -20,11 +20,13 @@ import kotlinx.coroutines.launch
 
 class VerifyOtpViewModel(
     savedStateHandle: SavedStateHandle,
-    private val verify: VerifyOtpUseCase, private val resend: ResendCodeUseCase) :
+    private val verify: VerifyOtpUseCase, private val resend: ResendCodeUseCase,
+) :
     BaseViewModel<VerifyOtpContract.State, VerifyOtpContract.Action>(
         state = VerifyOtpContract.State()
     ) {
     val route = savedStateHandle.toRoute<IAuthGraph.VerifyOtp>()
+
     init {
         startTimer()
     }
@@ -60,10 +62,12 @@ class VerifyOtpViewModel(
         viewModelScope.launch {
             verify.invoke(body = request).collectResource(
                 onSuccess = {
-                    fireMessage(IMessageEvent.Snackbar(
-                        UIText.StringResource(R.string.registered_successfully),
-                        messageType = MessageType.SUCCESS
-                    ))
+                    fireMessage(
+                        IMessageEvent.Snackbar(
+                            UIText.StringResource(R.string.registered_successfully),
+                            messageType = MessageType.SUCCESS
+                        )
+                    )
                     startTimer()
                     navigateToHome()
                 },
@@ -78,7 +82,12 @@ class VerifyOtpViewModel(
         viewModelScope.launch {
             resend.invoke(body = Unit).collectResource(
                 onSuccess = {
-                    fireMessage(IMessageEvent.Toast(message = UIText.DynamicString(it.message)))
+                    fireMessage(
+                        IMessageEvent.Snackbar(
+                            message = UIText.DynamicString(it.message),
+                            messageType = MessageType.SUCCESS
+                        )
+                    )
                 },
                 onLoading = {
                     fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
@@ -112,7 +121,7 @@ class VerifyOtpViewModel(
     override fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) {
         super.onRequestValidation(errors)
         errors.forEach { (_, errorMessage) ->
-            fireMessage(IMessageEvent.Toast(message = errorMessage))
+            fireMessage(IMessageEvent.Snackbar(message = errorMessage, messageType = MessageType.ERROR))
             startTimer()
         }
     }

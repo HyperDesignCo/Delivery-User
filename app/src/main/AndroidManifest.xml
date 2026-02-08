@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.delivaryUser">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -16,6 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Delivary_User_Android"
         tools:targetApi="33">
+        android:theme="@style/Theme.Delivary_User_Android">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

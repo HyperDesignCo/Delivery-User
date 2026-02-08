@@ -10,8 +10,8 @@ import com.example.delivaryUser.service.address.domain.models.domain.Address
 object AddressMapper : Mapper<AddressDto, Address, AddressEntity>() {
     override fun dtoToDomain(model: AddressDto): Address = Address(
         id = model.id.orEmpty(),
-        phone1 = model.phone1.orEmpty(),
-        phone2 = model.phone2.orEmpty(),
+        firstPhone = model.firstPhone.orEmpty(),
+        secondPhone = model.secondPhone.orEmpty(),
         street = model.street.orEmpty(),
         buildingNumber = model.buildingNumber.orEmpty(),
         floorNumber = model.floorNumber.orEmpty(),
@@ -29,8 +29,8 @@ object AddressMapper : Mapper<AddressDto, Address, AddressEntity>() {
 
     override fun domainToEntity(model: Address): AddressEntity = AddressEntity(
         id = model.id,
-        phone1 = model.phone1,
-        phone2 = model.phone2,
+        firstPhone = model.firstPhone,
+        secondPhone = model.secondPhone,
         street = model.street,
         buildingNumber = model.buildingNumber,
         floorNumber = model.floorNumber,
@@ -48,8 +48,8 @@ object AddressMapper : Mapper<AddressDto, Address, AddressEntity>() {
 
     override fun entityToDomain(model: AddressEntity): Address = Address(
         id = model.id.orEmpty(),
-        phone1 = model.phone1,
-        phone2 = model.phone2,
+        firstPhone = model.firstPhone,
+        secondPhone = model.secondPhone,
         street = model.street,
         buildingNumber = model.buildingNumber,
         floorNumber = model.floorNumber,
