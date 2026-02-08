@@ -65,4 +65,14 @@ data class OrderDto(
     val rates: List<RateDto>? = null,
     @SerialName("OrderPurpose")
     val orderPurpose: String? = null,
-    )
+    @SerialName("cancel_user_type")
+    val cancelUserType: Int? = null,
+    @SerialName("cancel_image")
+    val cancelImage: String? = null,
+    @SerialName("delivery_time")
+    val deliveryTime: String? = null,
+    @SerialName("delivery_id")
+    val deliveryId: String? = null,
+    @SerialName("images")
+    val images: List<OrderImageDto>? = null,
+)

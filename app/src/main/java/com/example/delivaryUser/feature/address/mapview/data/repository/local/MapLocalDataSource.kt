@@ -45,6 +45,7 @@ class MapLocalDataSource(
             currentRegion = locationResponse.currentRegion,
             currentAreaName = locationResponse.currentAreaName,
             currentRegionName = locationResponse.currentRegionName,
+            currentAreaDeliveryCost = locationResponse.currentAreaDeliveryCost,
         )
         val locationJsonString = json.encodeToString(Location.serializer(), locationData)
         localProvider.save(
@@ -64,7 +65,13 @@ class MapLocalDataSource(
                 string = jsonString
             )
         } else {
-            Location()
+            Location(
+                currentArea = "",
+                currentAreaName = "",
+                currentAreaDeliveryCost = "",
+                currentRegion = "",
+                currentRegionName = ""
+            )
         }
     }
 

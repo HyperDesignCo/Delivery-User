@@ -1,7 +1,7 @@
 package com.example.delivaryUser.feature.pointtopoint.data.repository.remote
 
 import com.example.delivaryUser.common.domain.remote.IRemoteDataSourceProvider
-import com.example.delivaryUser.feature.orders.base.data.models.dto.CheckOutOrderResponseDto
+import com.example.delivaryUser.feature.orders.base.data.models.dto.NewOrderResponseDto
 import com.example.delivaryUser.feature.pointtopoint.data.models.dto.DeliveryCostResponseDto
 import com.example.delivaryUser.feature.pointtopoint.data.models.dto.OrderPurposesResponseDto
 import com.example.delivaryUser.feature.pointtopoint.data.models.request.DeliveryCostRequest
@@ -25,11 +25,11 @@ class PointToPointRemoteDataSource(private val provider: IRemoteDataSourceProvid
         serializer = DeliveryCostResponseDto.serializer(),
     )
 
-    override suspend fun addNewOrder(token: String, request: PointToPointRequest): CheckOutOrderResponseDto = provider.post(
+    override suspend fun addNewOrder(token: String, request: PointToPointRequest): NewOrderResponseDto = provider.post(
         endpoint = ADD_NEW_ORDER_ENDPOINT,
         headers = mapOf("Authorization" to "Bearer $token"),
         requestBody = request,
-        serializer = CheckOutOrderResponseDto.serializer(),
+        serializer = NewOrderResponseDto.serializer(),
     )
 
     companion object {

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CheckLocationEntity(
     val message: String = "",
-    val data: LocationEntity
+    val data: LocationEntity,
 )
 
 
@@ -14,5 +14,6 @@ data class LocationEntity(
     val currentArea: String = "",
     val currentAreaName: String = "",
     val currentRegion: String = "",
-    val currentRegionName: String = ""
+    val currentAreaDeliveryCost: String = "",
+    val currentRegionName: String = "",
 )

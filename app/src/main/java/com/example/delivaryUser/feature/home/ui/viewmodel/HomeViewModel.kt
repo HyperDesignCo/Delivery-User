@@ -36,10 +36,22 @@ class HomeViewModel(
             is HomeContract.Action.ChatWithAiClicked -> {}
             is HomeContract.Action.FastOrderClicked -> onFastOrderClicked()
             is HomeContract.Action.NavigateBacKClicked -> navigateBack()
-            is HomeContract.Action.OnAddLocationClicked -> { fireNavigate(destination = IOrderGraph.Map()) }
-            is HomeContract.Action.OnLocationClicked -> { fireNavigate(destination = IOrderGraph.Map()) }
-            HomeContract.Action.OnNewOrderClicked -> {}
-            HomeContract.Action.OnPointToPointClicked -> { fireNavigate(IOrderGraph.PointToPoint) }
+            is HomeContract.Action.OnAddLocationClicked -> {
+                fireNavigate(destination = IOrderGraph.Map())
+            }
+
+            is HomeContract.Action.OnLocationClicked -> {
+                fireNavigate(destination = IOrderGraph.Map())
+            }
+
+            is HomeContract.Action.OnNewOrderClicked -> {
+                fireNavigate(destination = IOrderGraph.FastOrder)
+            }
+
+            HomeContract.Action.OnPointToPointClicked -> {
+                fireNavigate(IOrderGraph.PointToPoint)
+            }
+
             is HomeContract.Action.OnChangeLocation -> {
                 changeLocation(action.latLng)
             }
@@ -79,7 +91,6 @@ class HomeViewModel(
         updateState {
             copy(location = displayLocation)
         }
-
     }
 
     private fun checkLocationFromApi() {
@@ -101,7 +112,7 @@ class HomeViewModel(
     }
 
     private fun handleCheckLocationResponse(
-        checkLocation: CheckLocation, targetLocation: LatLng
+        checkLocation: CheckLocation, targetLocation: LatLng,
     ) {
         updateState {
             copy(checkLocationResponse = checkLocation)
@@ -131,7 +142,7 @@ class HomeViewModel(
     }
 
     private fun isSameLocation(
-        savedLatLng: LatLng, targetLocation: LatLng
+        savedLatLng: LatLng, targetLocation: LatLng,
     ): Boolean {
         val tolerance = 0.0002
 

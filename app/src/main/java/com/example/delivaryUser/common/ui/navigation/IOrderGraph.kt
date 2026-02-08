@@ -6,6 +6,7 @@ import androidx.navigation.navigation
 import com.example.delivaryUser.feature.address.mapview.ui.view.MapScreen
 import com.example.delivaryUser.feature.address.saveaddress.ui.view.SaveAddressScreen
 import com.example.delivaryUser.feature.addresslist.ui.view.AddressListScreen
+import com.example.delivaryUser.feature.fastorder.ui.view.FastOrderScreen
 import com.example.delivaryUser.feature.pointtopoint.ui.components.AddressType
 import com.example.delivaryUser.feature.pointtopoint.ui.view.PointToPointScreen
 import kotlinx.serialization.Serializable
@@ -22,10 +23,13 @@ sealed interface IOrderGraph : IDestination {
     data object PointToPoint : IOrderGraph
 
     @Serializable
-    data class Map(val addressType: AddressType= AddressType.SENDER) : IDestination
+    data class Map(val addressType: AddressType = AddressType.SENDER) : IDestination
 
     @Serializable
     data class SaveAddress(val addressType: AddressType) : IDestination
+
+    @Serializable
+    data object FastOrder : IDestination
 }
 
 fun NavGraphBuilder.buildNavOrderGraph() {
@@ -41,6 +45,9 @@ fun NavGraphBuilder.buildNavOrderGraph() {
         }
         composable<IOrderGraph.SaveAddress> {
             SaveAddressScreen()
+        }
+        composable<IOrderGraph.FastOrder> {
+            FastOrderScreen()
         }
     }
 }
