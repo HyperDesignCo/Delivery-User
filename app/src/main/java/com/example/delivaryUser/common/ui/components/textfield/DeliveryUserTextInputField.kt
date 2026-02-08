@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.extension.autoMirror
+import com.example.delivaryUser.common.ui.extension.clickableWithNoRipple
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 
 @Composable
@@ -37,9 +38,9 @@ fun DelivaryUserTextInputField(
     placeholder: String? = null,
     @DrawableRes leadingIconRes: Int? = null,
     @DrawableRes trailingIconRes: Int? = null,
-    readOnly : Boolean = DeliveryUserTextInputFieldDefaults.isReadOnly,
-    leadingIconColor : Color?=null,
-    trailingIconColor : Color?=null,
+    readOnly: Boolean = DeliveryUserTextInputFieldDefaults.isReadOnly,
+    leadingIconColor: Color? = null,
+    trailingIconColor: Color? = null,
     supportingText: String? = null,
     isError: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -51,6 +52,8 @@ fun DelivaryUserTextInputField(
     shape: Shape = DeliveryUserTextInputFieldDefaults.shape,
     colors: DeliveryUserTextInputFieldColors = DeliveryUserTextInputFieldDefaults.color(),
     textAlign: TextAlign = DeliveryUserTextInputFieldDefaults.textAlign,
+    onTrailingIconClicked: () -> Unit = {},
+    onLeadingIconClicked: () -> Unit = {},
 ) {
 
     OutlinedTextField(
@@ -62,15 +65,31 @@ fun DelivaryUserTextInputField(
         leadingIcon = leadingIconRes?.let {
             {
                 leadingIconColor?.let {
-                    DelivaryUserTextInputFieldIcon(contentColor =it , leadingIconRes = leadingIconRes)
-                }?:  DelivaryUserTextInputFieldIcon(contentColor = colors.contentColor, leadingIconRes = leadingIconRes)
+                    DelivaryUserTextInputFieldIcon(
+                        contentColor = it,
+                        leadingIconRes = leadingIconRes,
+                        onIconClicked = onLeadingIconClicked
+                    )
+                } ?: DelivaryUserTextInputFieldIcon(
+                    contentColor = colors.contentColor,
+                    leadingIconRes = leadingIconRes,
+                    onIconClicked = onLeadingIconClicked
+                )
             }
         },
         trailingIcon = trailingIconRes?.let {
             {
-                trailingIconColor?.let{
-                    DelivaryUserTextInputFieldIcon(contentColor =it, leadingIconRes = trailingIconRes)
-                } ?: DelivaryUserTextInputFieldIcon(contentColor = colors.contentColor, leadingIconRes = trailingIconRes)
+                trailingIconColor?.let {
+                    DelivaryUserTextInputFieldIcon(
+                        contentColor = it,
+                        leadingIconRes = trailingIconRes,
+                        onIconClicked = onTrailingIconClicked
+                    )
+                } ?: DelivaryUserTextInputFieldIcon(
+                    contentColor = colors.contentColor,
+                    leadingIconRes = trailingIconRes,
+                    onIconClicked = onTrailingIconClicked
+                )
 
             }
         },
@@ -152,14 +171,14 @@ object DeliveryUserTextInputFieldDefaults {
 
     @Composable
     fun color(
-         focusedBorderColor: Color = DelivaryUserTheme.colors.secondary,
+        focusedBorderColor: Color = DelivaryUserTheme.colors.secondary,
         unfocusedBorderColor: Color = DelivaryUserTheme.colors.secondary,
         disabledBorderColor: Color = DelivaryUserTheme.colors.secondary,
         focusedContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         unfocusedContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         disabledContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         errorContainerColor: Color = DelivaryUserTheme.colors.status.redAccent,
-        contentColor: Color =DelivaryUserTheme.colors.secondary,
+        contentColor: Color = DelivaryUserTheme.colors.secondary,
     ) = DeliveryUserTextInputFieldColors(
         focusedBorderColor = focusedBorderColor,
         unfocusedBorderColor = unfocusedBorderColor,
@@ -173,11 +192,18 @@ object DeliveryUserTextInputFieldDefaults {
 }
 
 @Composable
-private fun DelivaryUserTextInputFieldIcon(@DrawableRes leadingIconRes: Int, contentColor: Color) {
+private fun DelivaryUserTextInputFieldIcon(
+    @DrawableRes leadingIconRes: Int,
+    contentColor: Color,
+    onIconClicked: () -> Unit,
+) {
     Icon(
         modifier = Modifier
             .size(DeliveryUserTextInputFieldDefaults.iconSize)
-            .autoMirror(),
+            .autoMirror()
+            .clickableWithNoRipple {
+                onIconClicked()
+            },
         tint = contentColor,
         imageVector = ImageVector.vectorResource(leadingIconRes),
         contentDescription = null
