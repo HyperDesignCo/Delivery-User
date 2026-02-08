@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CheckLocationDto(
-    @SerialName("message") val message: String,
+    @SerialName("message") val message: String? = null,
     @SerialName("data") val data: LocationDto? = null,
 )
 
