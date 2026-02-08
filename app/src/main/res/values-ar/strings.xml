@@ -137,4 +137,10 @@
     <!-- Fast Order -->
     <string name="add_order_specific_details">اضف تفاصيل الطلب هنا .....</string>
     <string name="attach_image">إرفاق صورة</string>
+    <string name="delivery_to">Delivery to</string>
+    <string name="estimated_time_of_arrival">Estimated time of arrival</string>
+    <string name="waiting_for_the_market_response">Waiting for the market response</string>
+    <string name="the_order_is_now_being_prepared">The order is now being prepared</string>
+    <string name="on_my_way">On my way</string>
+    <string name="it_was_received">It was received</string>
 </resources>

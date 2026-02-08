@@ -9,6 +9,7 @@ import com.example.delivaryUser.feature.deliveryoutzone.ui.view.DeliveryOutZoneS
 import com.example.delivaryUser.feature.home.ui.view.HomeScreen
 import com.example.delivaryUser.feature.orders.orderdetails.ui.view.OrderDetailsScreen
 import com.example.delivaryUser.feature.orders.orderslist.ui.view.OrdersScreen
+import com.example.delivaryUser.feature.trackorder.ui.view.TrackOrderScreen
 import com.example.delivaryUser.feature.userdata.account.ui.view.AccountScreen
 import kotlinx.serialization.Serializable
 
@@ -33,6 +34,9 @@ sealed interface IMainGraph : IDestination {
 
     @Serializable
     data class DeliveryOutZone(val latitude: Double, val longitude: Double) : IMainGraph
+
+    @Serializable
+    data object TrackOrder : IMainGraph
 }
 
 fun NavGraphBuilder.buildNavMainGraph() {
@@ -42,6 +46,7 @@ fun NavGraphBuilder.buildNavMainGraph() {
         composable<IMainGraph.OrderDetails> { OrderDetailsScreen() }
         composable<IMainGraph.Account> {  AccountScreen() }
         composable<IMainGraph.DeliveryOutZone> { DeliveryOutZoneScreen() }
+        composable<IMainGraph.TrackOrder> { TrackOrderScreen() }
     }
 }
 
