@@ -134,4 +134,7 @@
     <string name="apartment_number">رقم الشقة</string>
     <string name="special_sign">علامة مميزة</string>
     <string name="extra_info">معلومات إضافية</string>
+    <!-- Fast Order -->
+    <string name="add_order_specific_details">اضف تفاصيل الطلب هنا .....</string>
+    <string name="attach_image">إرفاق صورة</string>
 </resources>

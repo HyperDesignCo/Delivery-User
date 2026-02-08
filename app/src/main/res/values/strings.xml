@@ -134,4 +134,7 @@
     <string name="apartment_number">Apartment number</string>
     <string name="special_sign">Special sign</string>
     <string name="extra_info">Extra info</string>
+    <!-- Fast Order -->
+    <string name="add_order_specific_details">Add order specific details here .....</string>
+    <string name="attach_image">Attach Image</string>
 </resources>
