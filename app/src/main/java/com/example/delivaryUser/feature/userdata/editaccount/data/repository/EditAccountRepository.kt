@@ -10,8 +10,7 @@ import com.example.delivaryUser.service.user.domain.repository.local.IUserLocalD
 class EditAccountRepository(private val remote: IEditAccountRemoteDataSource, private val local: IUserLocalDataSource) :
     IEditAccountRepository {
     override suspend fun editAccount(request: EditAccountRequest) {
-        val token = local.getToken()
-        val result = remote.editAccount(request, token)
+        val result = remote.editAccount(request)
         local.saveUser(user = UserMapper.dtoToEntity(result.user ?: UserDto()))
     }
 }

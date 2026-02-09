@@ -4,5 +4,5 @@ import com.example.delivaryUser.feature.userdata.editaccount.data.model.dto.Edit
 import com.example.delivaryUser.feature.userdata.editaccount.data.model.request.EditAccountRequest
 
 interface IEditAccountRemoteDataSource {
-    suspend fun editAccount(request: EditAccountRequest, token: String) : EditAccountDto
+    suspend fun editAccount(request: EditAccountRequest) : EditAccountDto
 }

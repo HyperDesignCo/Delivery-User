@@ -4,5 +4,5 @@ import com.example.delivaryUser.feature.authentication.base.data.dto.Authenticat
 import com.example.delivaryUser.feature.authentication.changepassword.data.model.request.ChangePasswordRequest
 
 interface IChangePasswordRemoteDataSource {
-    suspend fun changePassword(request: ChangePasswordRequest, token: String): AuthenticationDto
+    suspend fun changePassword(request: ChangePasswordRequest): AuthenticationDto
 }

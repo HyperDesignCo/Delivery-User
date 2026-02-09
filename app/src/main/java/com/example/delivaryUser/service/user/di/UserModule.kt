@@ -4,8 +4,10 @@ import com.example.delivaryUser.service.user.data.repository.UserRepository
 import com.example.delivaryUser.service.user.data.repository.local.UserLocalDataSource
 import com.example.delivaryUser.service.user.domain.interactors.GetIsAuthenticatedUseCase
 import com.example.delivaryUser.service.user.domain.interactors.GetPasswordUseCase
+import com.example.delivaryUser.service.user.domain.interactors.GetTokenUseCase
 import com.example.delivaryUser.service.user.domain.interactors.GetUserUseCase
 import com.example.delivaryUser.service.user.domain.interactors.SaveIsAuthenticatedUseCase
+import com.example.delivaryUser.service.user.domain.interactors.SaveTokenUseCase
 import com.example.delivaryUser.service.user.domain.repository.IUserRepository
 import com.example.delivaryUser.service.user.domain.repository.local.IUserLocalDataSource
 import org.koin.core.module.dsl.factoryOf
@@ -20,4 +22,6 @@ val userModule = module {
     factoryOf(::SaveIsAuthenticatedUseCase)
     factoryOf(::GetUserUseCase)
     factoryOf(::GetPasswordUseCase)
+    factoryOf(::GetTokenUseCase)
+    factoryOf(::SaveTokenUseCase)
 }

@@ -4,5 +4,5 @@ import com.example.delivaryUser.feature.authentication.forgetpassword.data.model
 import com.example.delivaryUser.feature.authentication.forgetpassword.data.model.request.ForgetPasswordRequest
 
 interface IForgetPasswordRemoteDataSource {
-    suspend fun forgetPassword(request: ForgetPasswordRequest, token :String): ForgetPasswordDto
+    suspend fun forgetPassword(request: ForgetPasswordRequest): ForgetPasswordDto
 }

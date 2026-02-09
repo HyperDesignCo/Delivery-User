@@ -7,7 +7,7 @@ import com.example.delivaryUser.feature.pointtopoint.data.models.request.Deliver
 import com.example.delivaryUser.feature.pointtopoint.data.models.request.PointToPointRequest
 
 interface IPointToPointRemoteDataSource {
-    suspend fun getOrderPurposes(token: String): OrderPurposesResponseDto
-    suspend fun getDeliveryCost(token: String, request: DeliveryCostRequest): DeliveryCostResponseDto
-    suspend fun addNewOrder(token: String, request: PointToPointRequest): NewOrderResponseDto
+    suspend fun getOrderPurposes(): OrderPurposesResponseDto
+    suspend fun getDeliveryCost(request: DeliveryCostRequest): DeliveryCostResponseDto
+    suspend fun addNewOrder(request: PointToPointRequest): NewOrderResponseDto
 }
