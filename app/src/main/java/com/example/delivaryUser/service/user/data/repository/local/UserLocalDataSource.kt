@@ -32,6 +32,21 @@ class UserLocalDataSource(private val localProvider: ILocalDataSourceProvider, p
         return String(decryptedBytes, Charsets.UTF_8)
     }
 
+    override suspend fun savePassword(password: String) {
+        val encryptedBytes = Crypto.encrypt(password.toByteArray(Charsets.UTF_8))
+        val encryptedString = Base64.encodeToString(encryptedBytes, Base64.NO_WRAP)
+        localProvider.save(key = LocalDataSourceEnum.PASSWORD, value = encryptedString, type = String::class.java)
+    }
+
+    override suspend fun getPassword(): String {
+        val encryptedString =
+            localProvider.read(key = LocalDataSourceEnum.PASSWORD, defaultValue = "", type = String::class.java)
+        if (encryptedString.isEmpty()) return ""
+        val encryptedBytes = Base64.decode(encryptedString, Base64.NO_WRAP)
+        val decryptedBytes = Crypto.decrypt(encryptedBytes)
+        return String(decryptedBytes, Charsets.UTF_8)
+    }
+
     override suspend fun saveUser(user: UserEntity) = localProvider.save(
         key = LocalDataSourceEnum.USER, value = json.encodeToString(value = user), type = String::class.java
     )
@@ -85,10 +100,4 @@ class UserLocalDataSource(private val localProvider: ILocalDataSourceProvider, p
 
     override suspend fun deleteIsAuthenticated() =
         localProvider.delete<Boolean>(key = LocalDataSourceEnum.IS_AUTHENTICATED, type = Boolean::class.java)
-
-    override suspend fun savePassword(password: String) =
-        localProvider.save(key = LocalDataSourceEnum.PASSWORD, value = password, type = String::class.java)
-
-    override suspend fun getPassword(): String =
-        localProvider.read(key = LocalDataSourceEnum.PASSWORD, defaultValue = "", type = String::class.java)
 }
