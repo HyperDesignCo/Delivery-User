@@ -7,10 +7,9 @@ import com.example.delivaryUser.feature.authentication.forgetpassword.domain.rep
 
 class ForgetPasswordRemoteDataSource(private val provider: IRemoteDataSourceProvider) :
     IForgetPasswordRemoteDataSource {
-    override suspend fun forgetPassword(request: ForgetPasswordRequest, token: String): ForgetPasswordDto =
+    override suspend fun forgetPassword(request: ForgetPasswordRequest): ForgetPasswordDto =
         provider.post(
             endpoint = FORGET_PASSWORD_ENDPOINT,
-            headers = mapOf("Authorization" to "Bearer $token"),
             requestBody = request,
             serializer = ForgetPasswordDto.serializer()
         )

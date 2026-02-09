@@ -10,9 +10,8 @@ import com.example.delivaryUser.service.user.domain.repository.local.IUserLocalD
 class ChangePasswordRepository(private val remote: IChangePasswordRemoteDataSource, val local: IUserLocalDataSource) :
     IChangePasswordRepository {
     override suspend fun changePassword(request: ChangePasswordRequest): Authentication {
-        val token = local.getToken()
         val user = local.getUser()
-        val result = remote.changePassword(request.copy(phone = user.phone), token)
+        val result = remote.changePassword(request.copy(phone = user.phone))
         local.savePassword(password = request.password)
         return AuthenticationMapper.dtoToDomain(model = result)
     }

@@ -15,8 +15,7 @@ class AddressRepository(
     private val addressLocal: IAddressLocalDataSource,
 ) : IAddressRepository {
     override suspend fun getAddresses(): List<Address> {
-        val token = localUser.getToken()
-        return remote.getAddresses(token).address?.map { AddressMapper.dtoToDomain(it) } ?: emptyList()
+        return remote.getAddresses().address?.map { AddressMapper.dtoToDomain(it) } ?: emptyList()
     }
 
     override suspend fun saveSenderAddress(address: Address) =
@@ -37,12 +36,10 @@ class AddressRepository(
     override suspend fun deleteRecipientAddress() = addressLocal.deleteRecipientAddress()
 
     override suspend fun saveAddress(request: AddAddressRequest): Address {
-        val token = localUser.getToken()
         val user = localUser.getUser()
         return AddressMapper.dtoToDomain(
             remote.saveAddress(
                 request = request.copy(name = user.name),
-                token = token
             ).address ?: AddressDto()
         )
     }
