@@ -4,5 +4,5 @@ import com.example.delivaryUser.feature.fastorder.data.models.request.FastOrderR
 import com.example.delivaryUser.feature.orders.base.data.models.dto.NewOrderResponseDto
 
 interface IFastOrderRemoteDataSource {
-    suspend fun createFastOrder(request: FastOrderRequest, token: String): NewOrderResponseDto
+    suspend fun createFastOrder(request: FastOrderRequest): NewOrderResponseDto
 }

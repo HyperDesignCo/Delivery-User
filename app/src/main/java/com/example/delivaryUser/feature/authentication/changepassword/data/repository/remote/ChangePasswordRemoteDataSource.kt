@@ -9,10 +9,8 @@ class ChangePasswordRemoteDataSource(private val provider: IRemoteDataSourceProv
     IChangePasswordRemoteDataSource {
     override suspend fun changePassword(
         request: ChangePasswordRequest,
-        token: String,
     ): AuthenticationDto = provider.post(
         endpoint = CHANGE_PASSWORD_ENDPOINT,
-        headers = mapOf("Authorization" to "Bearer $token"),
         requestBody = request,
         serializer = AuthenticationDto.serializer()
     )

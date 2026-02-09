@@ -3,6 +3,7 @@ package com.example.delivaryUser.common.data.repository.remote
 import com.example.delivaryUser.common.data.DelivaryUserException
 import com.example.delivaryUser.common.domain.Resource
 import com.example.delivaryUser.service.language.domain.usecase.GetLanguageUseCase
+import com.example.delivaryUser.service.user.domain.interactors.GetTokenUseCase
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.HttpResponseValidator
@@ -27,11 +28,17 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 
 @OptIn(DelicateCoroutinesApi::class)
-fun provideHttpClient(json: Json, language: GetLanguageUseCase) = HttpClient(Android) {
+fun provideHttpClient(json: Json, language: GetLanguageUseCase, getToken: GetTokenUseCase) = HttpClient(Android) {
     val lang = runBlocking {
         when (val resource = language.invoke(Unit).first()) {
             is Resource.Success -> resource
             else -> "en"
+        }
+    }
+    val token = runBlocking {
+        when (val resource = getToken.invoke(Unit)) {
+            is Resource.Success -> resource.model
+            else -> ""
         }
     }
     expectSuccess = true
@@ -51,6 +58,8 @@ fun provideHttpClient(json: Json, language: GetLanguageUseCase) = HttpClient(And
         url("https://delivery-online.com/api/user/")
         contentType(ContentType.Application.Json)
         header("Accept-Language", lang)
+        if (token.isNotBlank())
+            header("Authorization", "Bearer $token")
     }
     HttpResponseValidator {
         handleResponseExceptionWithRequest { exception, request ->

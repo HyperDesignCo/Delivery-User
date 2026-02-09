@@ -6,14 +6,14 @@ import com.example.delivaryUser.feature.fastorder.domain.repository.remote.IFast
 import com.example.delivaryUser.feature.orders.base.data.models.dto.NewOrderResponseDto
 
 class FastOrderRemoteDataSource(private val provider: IRemoteDataSourceProvider) : IFastOrderRemoteDataSource {
-    override suspend fun createFastOrder(request: FastOrderRequest, token: String): NewOrderResponseDto =
+    override suspend fun createFastOrder(request: FastOrderRequest): NewOrderResponseDto =
         provider.postWithFile(
             endpoint = FAST_ORDER_END_POINT,
-            headers = mapOf("Authorization" to "Bearer $token"),
             files = request.remoteRequestWithFiles,
             requestBody = request.remoteRequest,
             serializer = NewOrderResponseDto.serializer()
         )
+
     companion object {
         const val FAST_ORDER_END_POINT = "UserAddOrder"
     }

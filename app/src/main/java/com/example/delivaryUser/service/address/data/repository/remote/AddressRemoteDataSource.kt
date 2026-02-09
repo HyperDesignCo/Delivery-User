@@ -7,19 +7,16 @@ import com.example.delivaryUser.service.address.data.models.request.AddAddressRe
 import com.example.delivaryUser.service.address.domain.repository.remote.IAddressRemoteDataSource
 
 class AddressRemoteDataSource(val provider: IRemoteDataSourceProvider) : IAddressRemoteDataSource {
-    override suspend fun getAddresses(token: String): AddressesResponseDto = provider.get(
-        headers = mapOf("Authorization" to "Bearer $token"),
+    override suspend fun getAddresses(): AddressesResponseDto = provider.get(
         endpoint = ADDRESSES_ENDPOINT,
         serializer = AddressesResponseDto.serializer(),
     )
 
     override suspend fun saveAddress(
         request: AddAddressRequest,
-        token: String,
     ): AddressResponseDto = provider.post(
         endpoint = USER_ADD_ADDRESS_ENDPOINT,
         requestBody = request,
-        headers = mapOf("Authorization" to "Bearer $token"),
         serializer = AddressResponseDto.serializer()
     )
 

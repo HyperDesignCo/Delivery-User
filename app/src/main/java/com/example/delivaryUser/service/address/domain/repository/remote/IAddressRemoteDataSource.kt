@@ -5,6 +5,6 @@ import com.example.delivaryUser.service.address.data.models.dto.AddressesRespons
 import com.example.delivaryUser.service.address.data.models.request.AddAddressRequest
 
 interface IAddressRemoteDataSource {
-    suspend fun getAddresses(token: String): AddressesResponseDto
-    suspend fun saveAddress(request: AddAddressRequest, token: String): AddressResponseDto
+    suspend fun getAddresses(): AddressesResponseDto
+    suspend fun saveAddress(request: AddAddressRequest): AddressResponseDto
 }

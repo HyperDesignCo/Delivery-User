@@ -23,4 +23,8 @@ class UserRepository(private val local: IUserLocalDataSource) : IUserRepository 
     override suspend fun deleteIsAuthenticated() = local.deleteIsAuthenticated()
 
     override suspend fun getPassword(): String = local.getPassword()
+
+    override suspend fun saveToken(token: String) = local.saveToken(token)
+
+    override suspend fun getToken(): String = local.getToken()
 }

@@ -9,25 +9,21 @@ import com.example.delivaryUser.feature.pointtopoint.data.models.request.PointTo
 import com.example.delivaryUser.feature.pointtopoint.domain.repository.remote.IPointToPointRemoteDataSource
 
 class PointToPointRemoteDataSource(private val provider: IRemoteDataSourceProvider) : IPointToPointRemoteDataSource {
-    override suspend fun getOrderPurposes(token: String): OrderPurposesResponseDto = provider.get(
-        headers = mapOf("Authorization" to "Bearer $token"),
+    override suspend fun getOrderPurposes(): OrderPurposesResponseDto = provider.get(
         endpoint = ORDER_PURPOSES_ENDPOINT,
         serializer = OrderPurposesResponseDto.serializer(),
     )
 
     override suspend fun getDeliveryCost(
-        token: String,
         request: DeliveryCostRequest,
     ): DeliveryCostResponseDto = provider.post(
-        headers = mapOf("Authorization" to "Bearer $token"),
         requestBody = request,
         endpoint = DELIVERY_COST_ENDPOINT,
         serializer = DeliveryCostResponseDto.serializer(),
     )
 
-    override suspend fun addNewOrder(token: String, request: PointToPointRequest): NewOrderResponseDto = provider.post(
+    override suspend fun addNewOrder(request: PointToPointRequest): NewOrderResponseDto = provider.post(
         endpoint = ADD_NEW_ORDER_ENDPOINT,
-        headers = mapOf("Authorization" to "Bearer $token"),
         requestBody = request,
         serializer = NewOrderResponseDto.serializer(),
     )

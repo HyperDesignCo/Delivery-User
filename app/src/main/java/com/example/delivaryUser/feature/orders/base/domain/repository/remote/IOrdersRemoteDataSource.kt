@@ -4,6 +4,6 @@ import com.example.delivaryUser.feature.orders.base.data.models.dto.OrderRespons
 import com.example.delivaryUser.feature.orders.base.data.models.dto.OrdersDto
 
 interface IOrdersRemoteDataSource {
-    suspend fun getOrders(token: String): OrdersDto
-    suspend fun getOrderById(token: String, id: Int): OrderResponseDto
+    suspend fun getOrders(): OrdersDto
+    suspend fun getOrderById(id: Int): OrderResponseDto
 }

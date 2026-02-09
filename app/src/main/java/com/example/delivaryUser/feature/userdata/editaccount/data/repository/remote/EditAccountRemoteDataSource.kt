@@ -6,10 +6,9 @@ import com.example.delivaryUser.feature.userdata.editaccount.data.model.request.
 import com.example.delivaryUser.feature.userdata.editaccount.domain.repository.remote.IEditAccountRemoteDataSource
 
 class EditAccountRemoteDataSource(private val provider: IRemoteDataSourceProvider) : IEditAccountRemoteDataSource {
-    override suspend fun editAccount(request: EditAccountRequest, token: String): EditAccountDto =
+    override suspend fun editAccount(request: EditAccountRequest): EditAccountDto =
         provider.postWithFile(
             endpoint = EDIT_ACCOUNT_ENDPOINT,
-            headers = mapOf("Authorization" to "Bearer $token"),
             files = request.remoteRequestWithFiles,
             requestBody = request.remoteRequest,
             serializer = EditAccountDto.serializer()

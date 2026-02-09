@@ -11,4 +11,6 @@ interface IUserRepository {
     suspend fun deleteRememberMe()
     suspend fun deleteIsAuthenticated()
     suspend fun getPassword(): String
+    suspend fun saveToken(token: String)
+    suspend fun getToken(): String
 }
