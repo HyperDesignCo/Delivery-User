@@ -1,5 +1,7 @@
 package com.example.delivaryUser.service.user.data.repository.local
 
+import android.util.Base64
+import com.example.delivaryUser.common.data.models.Crypto
 import com.example.delivaryUser.common.data.repository.local.LocalDataSourceEnum
 import com.example.delivaryUser.common.domain.local.ILocalDataSourceProvider
 import com.example.delivaryUser.service.user.data.entity.UserEntity
@@ -8,12 +10,42 @@ import kotlinx.serialization.json.Json
 
 class UserLocalDataSource(private val localProvider: ILocalDataSourceProvider, private val json: Json) :
     IUserLocalDataSource {
-    override suspend fun saveToken(token: String) =
-        localProvider.save(key = LocalDataSourceEnum.ACCESS_TOKEN, value = token, type = String::class.java)
+    override suspend fun saveToken(token: String) {
+        val encryptedBytes = Crypto.encrypt(token.toByteArray(Charsets.UTF_8))
+        val encryptedString = Base64.encodeToString(encryptedBytes, Base64.NO_WRAP)
+        localProvider.save(
+            key = LocalDataSourceEnum.ACCESS_TOKEN,
+            value = encryptedString,
+            type = String::class.java
+        )
+    }
 
-    override suspend fun getToken(): String = localProvider.read(
-        key = LocalDataSourceEnum.ACCESS_TOKEN, defaultValue = "", type = String::class.java
-    )
+    override suspend fun getToken(): String {
+        val encryptedString = localProvider.read(
+            key = LocalDataSourceEnum.ACCESS_TOKEN,
+            defaultValue = "",
+            type = String::class.java
+        )
+        if (encryptedString.isEmpty()) return ""
+        val encryptedBytes = Base64.decode(encryptedString, Base64.NO_WRAP)
+        val decryptedBytes = Crypto.decrypt(encryptedBytes)
+        return String(decryptedBytes, Charsets.UTF_8)
+    }
+
+    override suspend fun savePassword(password: String) {
+        val encryptedBytes = Crypto.encrypt(password.toByteArray(Charsets.UTF_8))
+        val encryptedString = Base64.encodeToString(encryptedBytes, Base64.NO_WRAP)
+        localProvider.save(key = LocalDataSourceEnum.PASSWORD, value = encryptedString, type = String::class.java)
+    }
+
+    override suspend fun getPassword(): String {
+        val encryptedString =
+            localProvider.read(key = LocalDataSourceEnum.PASSWORD, defaultValue = "", type = String::class.java)
+        if (encryptedString.isEmpty()) return ""
+        val encryptedBytes = Base64.decode(encryptedString, Base64.NO_WRAP)
+        val decryptedBytes = Crypto.decrypt(encryptedBytes)
+        return String(decryptedBytes, Charsets.UTF_8)
+    }
 
     override suspend fun saveUser(user: UserEntity) = localProvider.save(
         key = LocalDataSourceEnum.USER, value = json.encodeToString(value = user), type = String::class.java
@@ -68,10 +100,4 @@ class UserLocalDataSource(private val localProvider: ILocalDataSourceProvider, p
 
     override suspend fun deleteIsAuthenticated() =
         localProvider.delete<Boolean>(key = LocalDataSourceEnum.IS_AUTHENTICATED, type = Boolean::class.java)
-
-    override suspend fun savePassword(password: String) =
-        localProvider.save(key = LocalDataSourceEnum.PASSWORD, value = password, type = String::class.java)
-
-    override suspend fun getPassword(): String =
-        localProvider.read(key = LocalDataSourceEnum.PASSWORD, defaultValue = "", type = String::class.java)
 }
