@@ -112,4 +112,7 @@ dependencies {
 
     //Security
     implementation(libs.androidx.security.crypto)
+
+    //Web view
+    implementation(libs.androidx.webkit)
 }
