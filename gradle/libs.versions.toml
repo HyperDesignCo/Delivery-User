@@ -68,6 +68,8 @@ securityCrypto = "1.1.0-alpha06"
 material = "1.13.0"
 jetbrainsKotlinJvm = "2.3.0"
 
+#WebView
+webkit = "1.15.0"
 
 
 
@@ -136,6 +138,8 @@ accompanist-permissions = { module = "com.google.accompanist:accompanist-permiss
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto"}
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
+#Web View
+androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
 
 
 [plugins]
