@@ -137,4 +137,6 @@
     <!-- Fast Order -->
     <string name="add_order_specific_details">اضف تفاصيل الطلب هنا .....</string>
     <string name="attach_image">إرفاق صورة</string>
+    <!--Chat with Ai -->
+    <string name="ai" >الذكاء الاصطناعي</string>
 </resources>

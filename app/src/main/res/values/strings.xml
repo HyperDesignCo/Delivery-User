@@ -137,4 +137,6 @@
     <!-- Fast Order -->
     <string name="add_order_specific_details">Add order specific details here .....</string>
     <string name="attach_image">Attach Image</string>
+    <!--Chat with Ai -->
+    <string name="ai" >AI</string>
 </resources>
