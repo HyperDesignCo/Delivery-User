@@ -140,9 +140,17 @@
     <!--Chat with Ai -->
     <string name="ai" >الذكاء الاصطناعي</string>
     <string name="delivery_to">Delivery to</string>
-    <string name="estimated_time_of_arrival">Estimated time of arrival</string>
-    <string name="waiting_for_the_market_response">Waiting for the market response</string>
-    <string name="the_order_is_now_being_prepared">The order is now being prepared</string>
-    <string name="on_my_way">On my way</string>
-    <string name="it_was_received">It was received</string>
+    <!--Track Order-->
+    <string name="estimated_time_of_arrival">الوقت المتوقع للوصول</string>
+    <string name="waiting_for_the_market_response">بانتظار رد المتجر</string>
+    <string name="the_order_is_now_being_prepared">يتم الآن تحضير الطلب</string>
+    <string name="on_my_way">في الطريق إليك</string>
+    <string name="it_was_received">تم الاستلام</string>
+    <string name="is_your_delivery_hero_for_today">هو مندوب التوصيل الخاص بك اليوم</string>
+    <string name="order_from">الطلب من</string>
+    <string name="support">الدعم</string>
+    <string name="delivery_fee">تكلفة التوصيل</string>
+    <string name="open_map">فتح الخريطة</string>
+    <string name="driver_location">موقع المندوب</string>
+    <string name="cancel_order">إلغاء الطلب</string>
 </resources>

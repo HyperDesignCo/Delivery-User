@@ -44,8 +44,8 @@ fun DeliverySteps(
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = DelivaryUserTheme.colors.background.surfaceHigh,
-                shape = RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp)
+                color = DelivaryUserTheme.colors.background.surface,
+                shape = RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp)
             )
             .padding(horizontal = 16.dp)
     ) {

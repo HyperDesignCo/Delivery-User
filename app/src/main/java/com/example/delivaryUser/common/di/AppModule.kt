@@ -17,6 +17,7 @@ import com.example.delivaryUser.common.ui.language.ILanguageEvent
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.IAuthGraph
+import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.INavigator
 import com.example.delivaryUser.common.ui.navigation.Navigator
 import kotlinx.serialization.json.Json
@@ -26,7 +27,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val appModule = module {
-    single<INavigator> { Navigator(startGraph = IAuthGraph.AuthGraph) }
+    single<INavigator> { Navigator(startGraph = IMainGraph.RootGraph) }
     single<IEventController<IMessageEvent>>(qualifier = named("MessageEvent")) { EventController() }
     single<IEventController<ILoadingEvent>>(qualifier = named("LoadingEvent")) { EventController() }
     single<IEventController<ILanguageEvent>>(qualifier = named("LanguageEvent")) { EventController() }

@@ -67,6 +67,7 @@ googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
 securityCrypto = "1.1.0-alpha06"
 material = "1.13.0"
 jetbrainsKotlinJvm = "2.3.0"
+foundation = "1.10.2"
 
 #WebView
 webkit = "1.15.0"
@@ -137,6 +138,7 @@ accompanist-permissions = { module = "com.google.accompanist:accompanist-permiss
 #Security
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto"}
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 #Web View
 androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }

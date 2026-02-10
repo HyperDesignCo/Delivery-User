@@ -140,9 +140,17 @@
     <!--Chat with Ai -->
     <string name="ai" >AI</string>
     <string name="delivery_to">Delivery to</string>
+    <!--Track Order-->
     <string name="estimated_time_of_arrival">Estimated time of arrival</string>
     <string name="waiting_for_the_market_response">Waiting for the market response</string>
     <string name="the_order_is_now_being_prepared">The order is now being prepared</string>
     <string name="on_my_way">On my way</string>
     <string name="it_was_received">It was received</string>
+    <string name="is_your_delivery_hero_for_today">Your delivery hero for today</string>
+    <string name="order_from">Order From</string>
+    <string name="support">Support</string>
+    <string name="delivery_fee">"Delivery "</string>
+    <string name="open_map">open map</string>
+    <string name="driver_location">Driver Location</string>
+    <string name="cancel_order">Cancel order</string>
 </resources>

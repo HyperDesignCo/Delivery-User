@@ -44,7 +44,7 @@ sealed interface IMainGraph : IDestination {
 }
 
 fun NavGraphBuilder.buildNavMainGraph() {
-    navigation<IMainGraph.RootGraph>(startDestination = IMainGraph.Home) {
+    navigation<IMainGraph.RootGraph>(startDestination = IMainGraph.TrackOrder) {
         composable<IMainGraph.Home> { HomeScreen() }
         composable<IMainGraph.Orders> { OrdersScreen() }
         composable<IMainGraph.OrderDetails> { OrderDetailsScreen() }
