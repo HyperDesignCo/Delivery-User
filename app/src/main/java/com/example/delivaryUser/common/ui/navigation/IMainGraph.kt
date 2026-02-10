@@ -5,6 +5,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.bars.navigationbar.DelivaryUserNavigationBarItemState
+import com.example.delivaryUser.feature.chatwithai.ui.view.ChatWithAiScreen
 import com.example.delivaryUser.feature.deliveryoutzone.ui.view.DeliveryOutZoneScreen
 import com.example.delivaryUser.feature.home.ui.view.HomeScreen
 import com.example.delivaryUser.feature.orders.orderdetails.ui.view.OrderDetailsScreen
@@ -23,7 +24,7 @@ sealed interface IMainGraph : IDestination {
     data object Orders : IMainGraph
 
     @Serializable
-    data object Chat : IMainGraph
+    data object Notifications : IMainGraph
 
     @Serializable
     data object Account : IMainGraph
@@ -33,6 +34,9 @@ sealed interface IMainGraph : IDestination {
 
     @Serializable
     data class DeliveryOutZone(val latitude: Double, val longitude: Double) : IMainGraph
+
+    @Serializable
+    data object Chat : IMainGraph
 }
 
 fun NavGraphBuilder.buildNavMainGraph() {
@@ -42,6 +46,8 @@ fun NavGraphBuilder.buildNavMainGraph() {
         composable<IMainGraph.OrderDetails> { OrderDetailsScreen() }
         composable<IMainGraph.Account> {  AccountScreen() }
         composable<IMainGraph.DeliveryOutZone> { DeliveryOutZoneScreen() }
+        composable<IMainGraph.Notifications> { }
+        composable<IMainGraph.Chat> { ChatWithAiScreen() }
     }
 }
 
@@ -63,10 +69,10 @@ sealed class BottomDestination(
     )
 
 
-    data object Chat : BottomDestination(
-        labelRes = R.string.chat,
-        icon = R.drawable.ic_chat,
-        route = IMainGraph.Chat
+    data object Notifications : BottomDestination(
+        labelRes = R.string.notifications,
+        icon = R.drawable.ic_notification,
+        route = IMainGraph.Notifications
     )
 
     data object Account : BottomDestination(
@@ -76,6 +82,6 @@ sealed class BottomDestination(
     )
 
     companion object {
-        val destinations = listOf(Home, Orders, Chat, Account)
+        val destinations = listOf(Home, Orders, Notifications, Account)
     }
 }

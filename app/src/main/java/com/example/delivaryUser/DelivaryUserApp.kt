@@ -35,6 +35,7 @@ import com.example.delivaryUser.common.ui.language.ILanguageEvent
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.BottomDestination
+import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.INavigator
 import com.example.delivaryUser.common.ui.navigation.NavigationEvent
 import com.example.delivaryUser.common.ui.navigation.buildNavAccountGraph
@@ -44,6 +45,7 @@ import com.example.delivaryUser.common.ui.navigation.buildNavOrderGraph
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -80,7 +82,11 @@ fun DelivaryUserApp(
             bottomBar = {
                 DelivaryUserNavigationBar(
                     navController = navHostController, destinations = BottomDestination.destinations,
-                    onFloatingButtonClick = {}
+                    onFloatingButtonClick = {
+                        runBlocking {
+                            navigator.navigate(IMainGraph.Chat)
+                        }
+                    }
                 )
             }
         ) { innerPadding ->
@@ -100,7 +106,7 @@ fun DelivaryUserApp(
 }
 
 @Composable
-private fun ObserveMessageEvent(snackbarHostState: SnackbarHostState, coroutineScope: CoroutineScope,) {
+private fun ObserveMessageEvent(snackbarHostState: SnackbarHostState, coroutineScope: CoroutineScope) {
     val context = LocalContext.current
     fun UIText.toMessageString(): String {
         return when (this) {
@@ -109,7 +115,7 @@ private fun ObserveMessageEvent(snackbarHostState: SnackbarHostState, coroutineS
         }
     }
     val messageEvent: IEventController<IMessageEvent> = koinInject(qualifier = named("MessageEvent"))
-    ObserveAsEvents(messageEvent.event, ) { event ->
+    ObserveAsEvents(messageEvent.event) { event ->
         when (event) {
             is IMessageEvent.Toast -> {
                 Toast.makeText(context, event.message.toMessageString(), Toast.LENGTH_LONG).show()
@@ -134,6 +140,7 @@ private fun ObserveLoadingEvent() {
     }
     if (isLoading) DelivaryUserLoadingDialog()
 }
+
 @Composable
 fun ObserveLanguageEvent() {
     val context = LocalContext.current
