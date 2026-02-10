@@ -12,7 +12,7 @@
     <string name="address_first_second_phone_must_be_different">يجب أن يكون الهاتف الأول والثاني مختلفين</string>
     <!-- navigation bar -->
     <string name="home">الرئيسيه</string>
-    <string name="chat">الدردشة</string>
+    <string name="notifications">اشعارات</string>
     <string name="order">الطلب</string>
     <string name="account">الحساب</string>
     <!-- Login -->
