@@ -12,7 +12,7 @@
     <string name="address_first_second_phone_must_be_different">First and second phone must be different</string>
     <!-- navigation bar -->
     <string name="home">Home</string>
-    <string name="chat">Chat</string>
+    <string name="notifications">Notifications</string>
     <string name="order">Order</string>
     <string name="account">Account</string>
     <!-- Login -->
@@ -137,4 +137,6 @@
     <!-- Fast Order -->
     <string name="add_order_specific_details">Add order specific details here .....</string>
     <string name="attach_image">Attach Image</string>
+    <!--Chat with Ai -->
+    <string name="ai" >AI</string>
 </resources>

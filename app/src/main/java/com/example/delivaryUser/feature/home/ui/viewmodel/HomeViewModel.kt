@@ -33,7 +33,7 @@ class HomeViewModel(
 
     override fun onActionTrigger(action: HomeContract.Action) {
         when (action) {
-            is HomeContract.Action.ChatWithAiClicked -> {}
+            is HomeContract.Action.ChatWithAiClicked -> navigateToChatWithAi()
             is HomeContract.Action.FastOrderClicked -> onFastOrderClicked()
             is HomeContract.Action.NavigateBacKClicked -> navigateBack()
             is HomeContract.Action.OnAddLocationClicked -> {
@@ -200,6 +200,12 @@ class HomeViewModel(
     private fun onFastOrderClicked() {
         viewModelScope.launch {
             updateState { copy(isButtonsVisible = isButtonsVisible.not()) }
+        }
+    }
+
+    private fun navigateToChatWithAi() {
+        viewModelScope.launch {
+            fireNavigate(IMainGraph.Chat)
         }
     }
 

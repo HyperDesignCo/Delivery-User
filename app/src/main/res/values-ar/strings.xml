@@ -12,7 +12,7 @@
     <string name="address_first_second_phone_must_be_different">يجب أن يكون الهاتف الأول والثاني مختلفين</string>
     <!-- navigation bar -->
     <string name="home">الرئيسيه</string>
-    <string name="chat">الدردشة</string>
+    <string name="notifications">اشعارات</string>
     <string name="order">الطلب</string>
     <string name="account">الحساب</string>
     <!-- Login -->
@@ -137,4 +137,6 @@
     <!-- Fast Order -->
     <string name="add_order_specific_details">اضف تفاصيل الطلب هنا .....</string>
     <string name="attach_image">إرفاق صورة</string>
+    <!--Chat with Ai -->
+    <string name="ai" >الذكاء الاصطناعي</string>
 </resources>
