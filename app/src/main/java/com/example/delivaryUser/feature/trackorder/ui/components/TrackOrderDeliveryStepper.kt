@@ -20,18 +20,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 
 data class StepItem(
-    val label: String, val isCompleted: Boolean
+    val label: String, val isCompleted: Boolean,
 )
 
 @Composable
 fun DeliverySteps(
-    currentStep: Int, time: String, modifier: Modifier = Modifier
+    currentStep: Int, time: String, modifier: Modifier = Modifier,
 ) {
     val steps = listOf(
         StepItem(stringResource(R.string.waiting_for_the_market_response), currentStep >= 0),
@@ -39,37 +41,32 @@ fun DeliverySteps(
         StepItem(stringResource(R.string.on_my_way), currentStep >= 2),
         StepItem(stringResource(R.string.it_was_received), currentStep >= 3)
     )
-
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = DelivaryUserTheme.colors.background.surface,
+                color = DelivaryUserTheme.colors.background.surfaceHigh,
                 shape = RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp)
             )
-            .padding(horizontal = 16.dp)
     ) {
         Text(
             text = stringResource(R.string.estimated_time_of_arrival),
             style = DelivaryUserTheme.typography.body.medium,
             color = DelivaryUserTheme.colors.secondary,
-            modifier = Modifier.padding(top = 12.dp)
         )
-
         Text(
             text = time,
             style = DelivaryUserTheme.typography.title.extraLarge,
             color = DelivaryUserTheme.colors.secondary,
-            modifier = Modifier.padding(top = 16.dp)
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1
         )
-
         Text(
+            modifier = Modifier.padding(top = 8.dp),
             text = "Order from seoudisupermarket is being prepared now",
-            style = DelivaryUserTheme.typography.label.medium,
+            style = DelivaryUserTheme.typography.body.medium.copy(fontSize = 13.sp),
             color = DelivaryUserTheme.colors.secondary,
-            modifier = Modifier.padding(top = 8.dp)
         )
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -86,7 +83,6 @@ fun DeliverySteps(
                         shape = RoundedCornerShape(2.dp)
                     )
             )
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -132,7 +128,7 @@ fun DeliverySteps(
 
 @Composable
 private fun StepCircle(
-    isCompleted: Boolean, isActive: Boolean, modifier: Modifier = Modifier
+    isCompleted: Boolean, isActive: Boolean, modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier

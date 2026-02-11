@@ -1,5 +1,7 @@
 package com.example.delivaryUser.feature.trackorder.ui.view
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,7 +21,7 @@ import com.example.delivaryUser.common.ui.components.bars.topbar.DelivaryUserTop
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
-import com.example.delivaryUser.feature.trackorder.ui.components.DeliveryHeader
+import com.example.delivaryUser.feature.trackorder.ui.components.TrackOrderDeliveryHeader
 import com.example.delivaryUser.feature.trackorder.ui.components.DeliverySteps
 import com.example.delivaryUser.feature.trackorder.ui.components.MapSection
 import com.example.delivaryUser.feature.trackorder.ui.components.OrderDetailsSheetContent
@@ -65,27 +67,11 @@ fun TrackOrderContent(
         }) {
         DelivaryUserScreen(
             header = {
-                DelivaryUserTopBar(
-                    onStartIconClicked = { action(TrackOrderContract.Action.OnBackClicked) })
+                DelivaryUserTopBar(onStartIconClicked = { action(TrackOrderContract.Action.OnBackClicked) })
             },
             contentScrollState = rememberScrollState()
         ) {
-            DeliveryHeader(
-                client = state.client,
-            )
-
-            HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                color = DelivaryUserTheme.colors.background.disable,
-                thickness = 6.dp
-            )
-
-            DeliverySteps(
-                currentStep = 1, time = state.delivery.time
-            )
-
+            TrackOrderDetails(client = state.client, deliveryTime = state.delivery.time)
             MapSection(
                 onMapClicked = {
                     action(TrackOrderContract.Action.OnMapClicked)
@@ -93,6 +79,19 @@ fun TrackOrderContent(
             )
         }
     }
+}
+
+@Composable
+private fun TrackOrderDetails(client: TrackOrderContract.Client, deliveryTime: String) {
+        TrackOrderDeliveryHeader(client = client)
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, bottom = 15.dp),
+            color = DelivaryUserTheme.colors.background.disable.copy(alpha = 0.10f),
+            thickness = 5.dp
+        )
+        DeliverySteps(currentStep = 1, time = deliveryTime, modifier = Modifier.padding(horizontal = 16.dp))
 }
 
 @PreviewAllVariants
