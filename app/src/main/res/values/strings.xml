@@ -52,6 +52,7 @@
     <string name="add_new_address">Add New Address</string>
     <string name="new_order">New Order</string>
     <string name="point_to_point">Point to Point</string>
+    <string name="track_order">Track order</string>
     <!--Orders -->
     <string name="from">From</string>
     <string name="egp">EGP</string>
