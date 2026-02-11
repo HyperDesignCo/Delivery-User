@@ -138,5 +138,12 @@
     <string name="add_order_specific_details">اضف تفاصيل الطلب هنا .....</string>
     <string name="attach_image">إرفاق صورة</string>
     <!--Chat with Ai -->
-    <string name="ai" >الذكاء الاصطناعي</string>
+    <string name="ai">الذكاء الاصطناعي</string>
+    <!-- Cancel Order -->
+    <string name="cancel_order">الغاء الطلب</string>
+    <string name="tell_us_why_to_cancel_order">أخبرنا لماذا تريد إلغاء الطلب</string>
+    <string name="cancel">الغاء</string>
+    <string name="sure_to_cancel">هل تريد إلغاء هذا الطلب؟</string>
+    <string name="keep">احتفظ</string>
+    <string name="order_canceled">تم إلغاء الطلب</string>
 </resources>

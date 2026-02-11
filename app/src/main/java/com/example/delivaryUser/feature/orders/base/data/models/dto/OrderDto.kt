@@ -66,7 +66,7 @@ data class OrderDto(
     @SerialName("OrderPurpose")
     val orderPurpose: String? = null,
     @SerialName("cancel_user_type")
-    val cancelUserType: Int? = null,
+    val cancelUserType: String? = null,
     @SerialName("cancel_image")
     val cancelImage: String? = null,
     @SerialName("delivery_time")
