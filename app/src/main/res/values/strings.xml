@@ -139,4 +139,11 @@
     <string name="attach_image">Attach Image</string>
     <!--Chat with Ai -->
     <string name="ai" >AI</string>
+    <!-- Cancel Order -->
+    <string name="cancel_order">Cancel Order</string>
+    <string name="tell_us_why_to_cancel_order">Tell us why you want to cancel your order.</string>
+    <string name="cancel">Cancel</string>
+    <string name="sure_to_cancel">Cancel this order?</string>
+    <string name="keep">Keep</string>
+    <string name="order_canceled">The order has been canceled</string>
 </resources>
