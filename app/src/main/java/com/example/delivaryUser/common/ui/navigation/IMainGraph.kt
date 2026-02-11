@@ -5,6 +5,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.bars.navigationbar.DelivaryUserNavigationBarItemState
+import com.example.delivaryUser.feature.cancelorder.ui.view.CancelOrderScreen
 import com.example.delivaryUser.feature.chatwithai.ui.view.ChatWithAiScreen
 import com.example.delivaryUser.feature.deliveryoutzone.ui.view.DeliveryOutZoneScreen
 import com.example.delivaryUser.feature.home.ui.view.HomeScreen
@@ -34,6 +35,9 @@ sealed interface IMainGraph : IDestination {
     data class OrderDetails(val id: Int) : IMainGraph
 
     @Serializable
+    data class CancelOrder(val id: Int) : IMainGraph
+
+    @Serializable
     data class DeliveryOutZone(val latitude: Double, val longitude: Double) : IMainGraph
 
     @Serializable
@@ -48,11 +52,12 @@ fun NavGraphBuilder.buildNavMainGraph() {
         composable<IMainGraph.Home> { HomeScreen() }
         composable<IMainGraph.Orders> { OrdersScreen() }
         composable<IMainGraph.OrderDetails> { OrderDetailsScreen() }
-        composable<IMainGraph.Account> {  AccountScreen() }
+        composable<IMainGraph.Account> { AccountScreen() }
         composable<IMainGraph.DeliveryOutZone> { DeliveryOutZoneScreen() }
         composable<IMainGraph.Notifications> { }
         composable<IMainGraph.Chat> { ChatWithAiScreen() }
         composable<IMainGraph.TrackOrder> { TrackOrderScreen() }
+        composable<IMainGraph.CancelOrder> { CancelOrderScreen() }
     }
 }
 

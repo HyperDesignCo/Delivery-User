@@ -31,7 +31,7 @@ data class Order(
     val totalOrderPrice: String,
     val createdAt: String,
     val orderPurpose: String,
-    val cancelUserType: Int,
+    val cancelUserType: String,
     val cancelImage: String,
     val deliveryTime: String,
     val deliveryId: String,

@@ -139,6 +139,13 @@
     <string name="attach_image">Attach Image</string>
     <!--Chat with Ai -->
     <string name="ai" >AI</string>
+    <!-- Cancel Order -->
+    <string name="cancel_order">Cancel Order</string>
+    <string name="tell_us_why_to_cancel_order">Tell us why you want to cancel your order.</string>
+    <string name="cancel">Cancel</string>
+    <string name="sure_to_cancel">Cancel this order?</string>
+    <string name="keep">Keep</string>
+    <string name="order_canceled">The order has been canceled</string>
     <string name="delivery_to">Delivery to</string>
     <!--Track Order-->
     <string name="estimated_time_of_arrival">Estimated time of arrival</string>
@@ -152,5 +159,4 @@
     <string name="delivery_fee">"Delivery "</string>
     <string name="open_map">open map</string>
     <string name="driver_location">Driver Location</string>
-    <string name="cancel_order">Cancel order</string>
 </resources>
