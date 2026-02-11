@@ -9,6 +9,7 @@ import com.example.delivaryUser.feature.authentication.login.di.loginModule
 import com.example.delivaryUser.feature.authentication.register.di.registerModule
 import com.example.delivaryUser.feature.authentication.splash.di.splashModule
 import com.example.delivaryUser.feature.authentication.verifyOtp.di.verifyOtpModule
+import com.example.delivaryUser.feature.cancelorder.di.cancelOrderModule
 import com.example.delivaryUser.feature.chatwithai.di.chatWithAiModule
 import com.example.delivaryUser.feature.home.di.homeModule
 import com.example.delivaryUser.service.location.di.locationModule
@@ -54,6 +55,7 @@ val featuresModule = module {
         deliveryOutZoneModule,
         saveAddressModule,
         fastOrderModule,
-        chatWithAiModule
+        chatWithAiModule,
+        cancelOrderModule
     )
 }
