@@ -11,6 +11,8 @@ data class OrderDto(
     val userId: Int? = null,
     @SerialName("user_name")
     val userName: String? = null,
+    @SerialName("client_image")
+    val userImage: String? = null,
     @SerialName("delivery_name")
     val deliveryName: String? = null,
     @SerialName("delivery_rate")

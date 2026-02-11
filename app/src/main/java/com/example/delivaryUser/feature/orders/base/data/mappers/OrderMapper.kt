@@ -42,6 +42,7 @@ object OrderMapper : Mapper<OrderDto, Order, Unit>() {
         cancelImage = model.cancelImage.orEmpty(),
         deliveryTime = model.deliveryTime.orEmpty(),
         deliveryId = model.deliveryId.orEmpty(),
-        images = OrderImageMapper.dtoToDomain(list = model.images)
+        images = OrderImageMapper.dtoToDomain(list = model.images),
+        userImage = model.userImage.orEmpty()
     )
 }

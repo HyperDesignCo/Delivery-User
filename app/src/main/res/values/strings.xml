@@ -147,7 +147,6 @@
     <string name="sure_to_cancel">Cancel this order?</string>
     <string name="keep">Keep</string>
     <string name="order_canceled">The order has been canceled</string>
-    <string name="delivery_to">Delivery to</string>
     <!--Track Order-->
     <string name="estimated_time_of_arrival">Estimated time of arrival</string>
     <string name="waiting_for_the_market_response">Waiting for the market response</string>
@@ -163,4 +162,5 @@
     <string name="price_of_user">Estimated order price from the user</string>
     <string name="price_order">Price order</string>
     <string name="total_price">Total price</string>
+    <string name="delivery_to">Delivery to</string>
 </resources>

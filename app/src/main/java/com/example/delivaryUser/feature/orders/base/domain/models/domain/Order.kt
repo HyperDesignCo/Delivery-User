@@ -4,6 +4,7 @@ data class Order(
     val id: Int,
     val userId: Int,
     val userName: String,
+    val userImage : String,
     val deliveryName: String,
     val deliveryImage: String,
     val orderStatus: OrderStatus,

@@ -27,22 +27,10 @@ import com.example.delivaryUser.common.ui.components.bars.topbar.DelivaryUserTop
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
-import com.example.delivaryUser.feature.orders.base.domain.models.domain.OrderStatus
+import com.example.delivaryUser.feature.orders.base.ui.asString
 import com.example.delivaryUser.feature.orders.orderdetails.ui.viewmodel.OrderDetailsContract
 import com.example.delivaryUser.feature.orders.orderdetails.ui.viewmodel.OrderDetailsViewModel
 import org.koin.androidx.compose.koinViewModel
-
-@Composable
-fun OrderStatus.asString() = when (this) {
-    OrderStatus.PENDING -> stringResource(R.string.order_is_pending)
-    OrderStatus.ACCEPTED -> stringResource(R.string.order_is_accepted)
-    OrderStatus.ON_WAY -> stringResource(R.string.order_is_on_the_way)
-    OrderStatus.DELIVERY_ARRIVE -> stringResource(R.string.order_is_on_the_way)
-    OrderStatus.DELIVERY_START -> stringResource(R.string.order_is_placed)
-    OrderStatus.DELIVERED -> stringResource(R.string.order_is_delivered)
-    OrderStatus.CANCELED -> stringResource(R.string.order_is_cancelled)
-    OrderStatus.UNKNOWN -> ""
-}
 @Composable
 fun OrderDetailsScreen(viewModel: OrderDetailsViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()

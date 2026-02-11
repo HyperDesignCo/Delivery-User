@@ -20,10 +20,12 @@ import coil.compose.AsyncImage
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
+import com.example.delivaryUser.feature.trackorder.ui.viewmodel.TrackOrderContract
 
 @Composable
 fun DeliveryHeader(
-    userName: String, userAddress: String, userImage: String, modifier: Modifier = Modifier
+    client: TrackOrderContract.Client,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -45,8 +47,8 @@ fun DeliveryHeader(
             verticalAlignment = Alignment.Top
         ) {
             AsyncImage(
-                model = userImage.ifEmpty { R.drawable.img_default_user_account },
-                contentDescription = "User Image",
+                model = client.image.ifEmpty { R.drawable.img_default_user_account },
+                contentDescription = null,
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape),
@@ -60,13 +62,13 @@ fun DeliveryHeader(
                     .padding(start = 10.dp)
             ) {
                 Text(
-                    text = userName,
+                    text = client.name,
                     style = DelivaryUserTheme.typography.title.medium,
                     color = DelivaryUserTheme.colors.secondary
                 )
 
                 Text(
-                    text = userAddress,
+                    text = client.address,
                     style = DelivaryUserTheme.typography.label.large,
                     color = DelivaryUserTheme.colors.secondary
                 )
@@ -75,9 +77,8 @@ fun DeliveryHeader(
     }
 }
 
-@PreviewAllVariants
 @Composable
+@PreviewAllVariants
 private fun DeliveryHeaderPreview() = DelivaryUserTheme {
-    DeliveryHeader(userName = "Abdallah Alsayed", userAddress = "test,cairo,test", userImage = "")
-
+    DeliveryHeader(client = TrackOrderContract.Client())
 }

@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -27,38 +26,15 @@ import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.extension.clickableWithNoRipple
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import com.example.delivaryUser.feature.orders.base.domain.models.domain.OrderStatus
+import com.example.delivaryUser.feature.orders.base.ui.asString
+import com.example.delivaryUser.feature.orders.base.ui.toColor
 import com.example.delivaryUser.feature.orders.orderslist.ui.viewmodel.OrdersContract
-
-
-@Composable
-fun OrderStatus.toColor() = when (this) {
-    OrderStatus.PENDING -> DelivaryUserTheme.colors.status.yellowAccent
-    OrderStatus.ACCEPTED -> DelivaryUserTheme.colors.status.greenAccent
-    OrderStatus.ON_WAY -> DelivaryUserTheme.colors.status.orangeAccent
-    OrderStatus.DELIVERY_ARRIVE -> DelivaryUserTheme.colors.status.orangeAccent
-    OrderStatus.DELIVERY_START -> DelivaryUserTheme.colors.status.grayAccent
-    OrderStatus.DELIVERED -> DelivaryUserTheme.colors.status.blueAccent
-    OrderStatus.CANCELED -> DelivaryUserTheme.colors.status.redAccent
-    OrderStatus.UNKNOWN -> Color.Unspecified
-}
-
-@Composable
-fun OrderStatus.asString() = when (this) {
-    OrderStatus.PENDING -> stringResource(R.string.order_is_pending)
-    OrderStatus.ACCEPTED -> stringResource(R.string.order_is_accepted)
-    OrderStatus.ON_WAY -> stringResource(R.string.order_is_on_the_way)
-    OrderStatus.DELIVERY_ARRIVE -> stringResource(R.string.order_is_on_the_way)
-    OrderStatus.DELIVERY_START -> stringResource(R.string.order_is_placed)
-    OrderStatus.DELIVERED -> stringResource(R.string.order_is_delivered)
-    OrderStatus.CANCELED -> stringResource(R.string.order_is_cancelled)
-    OrderStatus.UNKNOWN -> ""
-}
 
 @Composable
 fun OrderCard(
     order: OrdersContract.OrderUiState,
     onOrderClicked: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -135,16 +111,16 @@ private fun OrderMainDate(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            if(stars.isNotBlank())
-            for (i in 0..4) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_star),
-                    contentDescription = null,
-                    tint = if (stars.toInt()> i ) DelivaryUserTheme.colors.status.accentColor else DelivaryUserTheme.colors.background.hint.copy(
-                        alpha = 0.2f
+            if (stars.isNotBlank())
+                for (i in 0..4) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_star),
+                        contentDescription = null,
+                        tint = if (stars.toInt() > i) DelivaryUserTheme.colors.status.accentColor else DelivaryUserTheme.colors.background.hint.copy(
+                            alpha = 0.2f
+                        )
                     )
-                )
-            }
+                }
         }
         Row(
             modifier = Modifier.fillMaxWidth(),

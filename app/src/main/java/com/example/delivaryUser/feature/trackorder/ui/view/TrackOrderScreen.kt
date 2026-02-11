@@ -1,24 +1,16 @@
 package com.example.delivaryUser.feature.trackorder.ui.view
 
-import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
@@ -46,13 +38,11 @@ fun TrackOrderScreen(viewModel: TrackOrderViewModel = koinViewModel()) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrackOrderContent(
-    state: TrackOrderContract.State, action: (TrackOrderContract.Action) -> Unit
+    state: TrackOrderContract.State, action: (TrackOrderContract.Action) -> Unit,
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val sheetHeight = screenHeight * (296f / 733f)
-    Log.d("testData",state.toString())
-
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 150.dp,
@@ -60,54 +50,47 @@ fun TrackOrderContent(
         sheetShape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
         sheetContent = {
             OrderDetailsSheetContent(
-                deliveryName = state.deliveryName,
+                deliveryName = state.delivery.name,
                 deliveryImg = "",
-                deliveryFee = state.deliveryPrice,
-                totalPrice = state.totalPrice,
-                orderId = "#${state.orderNumber}",
-                onCallClicked = { action(TrackOrderContract.Action.CallDriverClicked) },
-                onChatClicked = { action(TrackOrderContract.Action.ChatWithDriverClicked) },
+                deliveryFee = state.delivery.price,
+                totalPrice = state.order.totalPrice,
+                orderId = state.order.id,
+                onCallClicked = { action(TrackOrderContract.Action.OnCallDriverClicked) },
+                onChatClicked = { action(TrackOrderContract.Action.OnChatWithDriverClicked) },
                 onCancelClick = {},
-                priceOfUser = state.estimatedPrice,
-                orderPrice = state.orderPrice,
+                priceOfUser = state.order.estimatedPrice,
+                orderPrice = state.order.price,
                 modifier = Modifier.height(sheetHeight)
             )
         }) {
         DelivaryUserScreen(
             header = {
                 DelivaryUserTopBar(
-                    onStartIconClicked = { action(TrackOrderContract.Action.BackClicked) })
-            }) {
-            Column(
+                    onStartIconClicked = { action(TrackOrderContract.Action.OnBackClicked) })
+            },
+            contentScrollState = rememberScrollState()
+        ) {
+            DeliveryHeader(
+                client = state.client,
+            )
+
+            HorizontalDivider(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-            ) {
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                color = DelivaryUserTheme.colors.background.disable,
+                thickness = 6.dp
+            )
 
-                DeliveryHeader(
-                    userName = state.clientName,
-                    userAddress = state.clientAddress,
-                    userImage = ""
-                )
+            DeliverySteps(
+                currentStep = 1, time = state.delivery.time
+            )
 
-                HorizontalDivider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    color = DelivaryUserTheme.colors.background.disable,
-                    thickness = 6.dp
-                )
-
-                DeliverySteps(
-                    currentStep = 1, time = state.deliveryTime
-                )
-
-                MapSection(
-                    onMapClicked = {
-                        action(TrackOrderContract.Action.MapClicked)
-                    },
-                )
-            }
+            MapSection(
+                onMapClicked = {
+                    action(TrackOrderContract.Action.OnMapClicked)
+                },
+            )
         }
     }
 }

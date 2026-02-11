@@ -147,7 +147,6 @@
     <string name="sure_to_cancel">هل تريد إلغاء هذا الطلب؟</string>
     <string name="keep">احتفظ</string>
     <string name="order_canceled">تم إلغاء الطلب</string>
-    <string name="delivery_to">Delivery to</string>
     <!--Track Order-->
     <string name="estimated_time_of_arrival">الوقت المتوقع للوصول</string>
     <string name="waiting_for_the_market_response">بانتظار رد المتجر</string>
@@ -163,4 +162,5 @@
     <string name="price_of_user">سعر الطلب المقدر من قبل المستخدم</string>
     <string name="price_order">سعر الطلب</string>
     <string name="total_price">اجمالي السعر</string>
+    <string name="delivery_to">التسليم إلى</string>
 </resources>
