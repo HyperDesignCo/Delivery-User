@@ -2,6 +2,7 @@ package com.example.delivaryUser.common.ui.components.buttons
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
@@ -12,11 +13,13 @@ fun DelivaryUserButtonPrimary(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
+    shape: Shape = DelivaryUserButtonDefaults.shape,
 ) {
     DelivaryUserButton(
+        modifier = modifier,
         label = label,
         onClick = onClick,
-        modifier = modifier,
+        shape = shape,
         colors = DelivaryUserButtonPrimaryDefaults.colors,
         isEnabled = isEnabled,
     )
