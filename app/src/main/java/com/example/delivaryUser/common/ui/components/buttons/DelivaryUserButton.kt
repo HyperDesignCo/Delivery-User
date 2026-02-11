@@ -33,6 +33,7 @@ fun DelivaryUserButton(
         modifier = modifier
             .fillMaxWidth()
             .clip(shape),
+        shape = shape,
         colors = ButtonColors(
             containerColor = colors.containerColor,
             contentColor = colors.contentColor,
