@@ -160,4 +160,7 @@
     <string name="delivery_fee">"Delivery "</string>
     <string name="open_map">open map</string>
     <string name="driver_location">Driver Location</string>
+    <string name="price_of_user">Estimated order price from the user</string>
+    <string name="price_order">Price order</string>
+    <string name="total_price">Total price</string>
 </resources>

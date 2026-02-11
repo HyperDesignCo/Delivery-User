@@ -1,5 +1,6 @@
 package com.example.delivaryUser.feature.trackorder.ui.viewmodel
 
+import com.example.delivaryUser.feature.orders.base.domain.models.domain.OrderStatus
 import com.google.android.gms.maps.model.LatLng
 
 sealed interface TrackOrderContract {
@@ -11,17 +12,20 @@ sealed interface TrackOrderContract {
     }
 
     data class State(
-        val deliveryTo: String = "",
-        val userName: String = "",
-        val userAddress: String = "",
-        val userImage: String = "",
-        val currentStep: Int = 0, // 0-3
-        val driverName: String = "Delivery",
-        val driverImage: String = "",
-        val deliveryFee: String = "289.95",
-        val totalPrice: String = "8558",
-        val orderStatus: String = "",
-        val refusedReason: String = "",
-        val isRefused: Boolean = false,
+        val orderState : OrderStatus = OrderStatus.PENDING,
+        val orderNumber :String="",
+        val providerName: String="",
+        val clientName: String="",
+        val deliveryName: String="",
+        val deliveryNumber: String="",
+        val deliveryPrice: String="",
+        val clientAddress:String="",
+        val clientLatitude:String="",
+        val clientLongitude:String="",
+        val orderPrice: String= "",
+        val chatId:String="",
+        val deliveryTime:String="",
+        val totalPrice : String  = "0.0" ,
+        val estimatedPrice : String = "",
     )
 }

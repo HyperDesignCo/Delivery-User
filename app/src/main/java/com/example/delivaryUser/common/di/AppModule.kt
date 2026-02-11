@@ -27,7 +27,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val appModule = module {
-    single<INavigator> { Navigator(startGraph = IMainGraph.RootGraph) }
+    single<INavigator> { Navigator(startGraph = IAuthGraph.AuthGraph) }
     single<IEventController<IMessageEvent>>(qualifier = named("MessageEvent")) { EventController() }
     single<IEventController<ILoadingEvent>>(qualifier = named("LoadingEvent")) { EventController() }
     single<IEventController<ILanguageEvent>>(qualifier = named("LanguageEvent")) { EventController() }

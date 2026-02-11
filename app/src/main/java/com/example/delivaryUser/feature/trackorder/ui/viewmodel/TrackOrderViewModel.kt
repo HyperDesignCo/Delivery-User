@@ -1,13 +1,26 @@
 package com.example.delivaryUser.feature.trackorder.ui.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
+import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
+import com.example.delivaryUser.feature.orders.base.domain.models.domain.Order
+import com.example.delivaryUser.feature.orders.orderdetails.domain.ineractors.GetOrderDetailsUseCase
+import com.example.delivaryUser.feature.orders.orderslist.domain.interactors.GetOrdersUseCase
+import com.example.delivaryUser.feature.orders.orderslist.ui.viewmodel.toUiState
 import kotlinx.coroutines.launch
 
-class TrackOrderViewModel : BaseViewModel<TrackOrderContract.State, TrackOrderContract.Action>(
+class TrackOrderViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val getOrdersUseCase: GetOrderDetailsUseCase
+) : BaseViewModel<TrackOrderContract.State, TrackOrderContract.Action>(
     TrackOrderContract.State()
 ) {
+
+    private val route = savedStateHandle.toRoute<IMainGraph.TrackOrder>()
+
     init {
         loadOrderData()
     }
@@ -23,15 +36,38 @@ class TrackOrderViewModel : BaseViewModel<TrackOrderContract.State, TrackOrderCo
 
     private fun loadOrderData() {
         viewModelScope.launch {
-            // Load order details from repository
-            updateState {
-                copy(
-                    deliveryTo = "Delivery to",
-                    userName = "Ahmed Hassan",
-                    userAddress = "123 Main Street, Cairo",
-                    currentStep = 1
+            getOrdersUseCase.invoke(body = route.id)
+                .collectResource(
+                    onSuccess = { getOrderDetailsSuccess(order = it) },
+                    onLoading = { onLoading(it) }
                 )
-            }
+        }
+    }
+
+    private fun onLoading(isLoading: Boolean) {
+        fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading))
+
+    }
+
+    private fun getOrderDetailsSuccess(order: Order) {
+        updateState {
+            copy(
+                orderState = order.orderStatus,
+                orderNumber = order.id.toString(),
+                providerName = order.providerName,
+                clientName = order.clientName,
+                deliveryName = order.deliveryName,
+                deliveryNumber = order.deliveryPhone,
+                deliveryPrice = order.deliveryFees,
+                orderPrice = order.deliveryPrice,
+                totalPrice = order.totalOrderPrice,
+                estimatedPrice = order.orderPrice,
+                deliveryTime = order.deliveryTime,
+                chatId = order.chatId,
+                clientLatitude = order.clientLatitude,
+                clientLongitude = order.clientLongitude,
+                clientAddress = order.clientAddress,
+            )
         }
     }
 

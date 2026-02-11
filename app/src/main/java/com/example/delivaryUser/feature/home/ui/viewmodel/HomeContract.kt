@@ -15,6 +15,7 @@ sealed interface HomeContract {
         data object OnNewOrderClicked : Action
         data object OnPointToPointClicked : Action
         data class OnChangeLocation(val latLng: LatLng) : Action
+        data object OnTrackOrderClicked : Action
     }
 
     data class State(

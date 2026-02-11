@@ -36,11 +36,9 @@ fun OrderDetailsSheetContent(
     deliveryImg: String,
     deliveryFee: String,
     totalPrice: String,
-    orderStatus: String,
-    providerImage: String,
-    providerName: String,
-    providerAddress: String,
     orderId: String,
+    priceOfUser:String,
+    orderPrice:String,
     onCallClicked: () -> Unit,
     onChatClicked: () -> Unit,
     onCancelClick: () -> Unit,
@@ -69,12 +67,10 @@ fun OrderDetailsSheetContent(
         OrderSummary(
             deliveryFee = deliveryFee,
             totalPrice = totalPrice,
-            orderStatus = orderStatus,
-            providerImage = providerImage,
-            providerName = providerName,
-            providerAddress = providerAddress,
             orderId = orderId,
             onCancelClick = onCancelClick,
+            orderPrice = orderPrice,
+            priceOfUser = priceOfUser
         )
     }
 }
@@ -144,62 +140,47 @@ private fun DriverHeader(
 private fun OrderSummary(
     deliveryFee: String,
     totalPrice: String,
-    orderStatus: String,
-    providerImage: String,
-    providerName: String,
-    providerAddress: String,
+    priceOfUser:String,
+    orderPrice:String,
     orderId: String,
     onCancelClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
-            .padding(16.dp)
+            .padding(horizontal = 16.dp, vertical = 5.dp)
             .fillMaxWidth()
     ) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = stringResource(
-                        R.string.order_from
-                    ),
-                    style = DelivaryUserTheme.typography.label.large,
-                    color = DelivaryUserTheme.colors.secondary,
-                )
-                Text(
-                    text = providerName,
-                    style = DelivaryUserTheme.typography.title.large,
-                    color = DelivaryUserTheme.colors.secondary,
-                )
-                Text(
-                    text = providerAddress,
-                    style = DelivaryUserTheme.typography.title.large,
-                    color = DelivaryUserTheme.colors.secondary,
-                )
-            }
-            AsyncImage(
-                model = providerImage.ifEmpty { R.drawable.img_default_user_account },
-                contentDescription = "Provider Image",
-                modifier = Modifier
-                    .size(50.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop,
-                error = painterResource(R.drawable.img_default_user_account),
-            )
-        }
+
         DetailRow(
-            label = stringResource(R.string.support), value = orderId
+            isBold = true,
+            label = stringResource(R.string.order_number), value = orderId
         )
+        DetailRow(
+            label = stringResource(R.string.price_of_user), value = priceOfUser
+        )
+
+        DetailRow(
+            label = stringResource(R.string.price_order), value = orderPrice
+        )
+
         DetailRow(
             label = stringResource(R.string.delivery_fee), value = deliveryFee
         )
-        DetailRow(label = stringResource(R.string.total), value = totalPrice, isBold = true)
+
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(),
+            color = DelivaryUserTheme.colors.background.disable,
+            thickness = 2.dp
+        )
+
+        DetailRow(label = stringResource(R.string.total_price), value = totalPrice, isBold = true)
 
         Text(
             text = stringResource(R.string.cancel_order),
             style = DelivaryUserTheme.typography.title.large,
             color = DelivaryUserTheme.colors.status.redAccent,
-            modifier=Modifier.clickable(onClick = {onCancelClick()})
+            modifier = Modifier.clickable(onClick = { onCancelClick() })
         )
     }
 }
@@ -216,7 +197,7 @@ private fun DetailRow(
     ) {
         Text(
             text = label,
-            style = DelivaryUserTheme.typography.title.large,
+            style = if (isBold) DelivaryUserTheme.typography.title.large else DelivaryUserTheme.typography.label.large,
             color = DelivaryUserTheme.colors.secondary
         )
         Text(
@@ -235,11 +216,9 @@ private fun OrderDetailsSheetContentPreview() = DelivaryUserTheme {
         deliveryImg = "",
         deliveryFee = "233",
         totalPrice = "2332",
-        orderStatus = "pending",
-        providerImage = "",
-        providerName = "Seoudi Supermarket",
-        providerAddress = " El Sheikh Zayed - El Hay 9",
         orderId = "#123456789",
+        priceOfUser = "233",
+        orderPrice = "22",
         onCallClicked = {},
         onCancelClick = {},
         onChatClicked = {})

@@ -51,6 +51,7 @@ fun TrackOrderContent(
     val scaffoldState = rememberBottomSheetScaffoldState()
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val sheetHeight = screenHeight * (296f / 733f)
+    Log.d("testData",state.toString())
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
@@ -59,18 +60,16 @@ fun TrackOrderContent(
         sheetShape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
         sheetContent = {
             OrderDetailsSheetContent(
-                deliveryName = "Abdallah Alsayed",
+                deliveryName = state.deliveryName,
                 deliveryImg = "",
-                deliveryFee = "233",
-                totalPrice = "2332",
-                orderStatus = "pending",
-                providerImage = "",
-                providerName = "Seoudi Supermarket",
-                providerAddress = " El Sheikh Zayed - El Hay 9",
-                orderId = "#123456789",
+                deliveryFee = state.deliveryPrice,
+                totalPrice = state.totalPrice,
+                orderId = "#${state.orderNumber}",
                 onCallClicked = { action(TrackOrderContract.Action.CallDriverClicked) },
                 onChatClicked = { action(TrackOrderContract.Action.ChatWithDriverClicked) },
                 onCancelClick = {},
+                priceOfUser = state.estimatedPrice,
+                orderPrice = state.orderPrice,
                 modifier = Modifier.height(sheetHeight)
             )
         }) {
@@ -86,9 +85,9 @@ fun TrackOrderContent(
             ) {
 
                 DeliveryHeader(
-                    userName = "Abdallah Alsayed",
-                    userAddress = "22 , Street 11, El Sheikh Zayed - El Hay 1",
-                    userImage = state.userImage
+                    userName = state.clientName,
+                    userAddress = state.clientAddress,
+                    userImage = ""
                 )
 
                 HorizontalDivider(
@@ -100,7 +99,7 @@ fun TrackOrderContent(
                 )
 
                 DeliverySteps(
-                    currentStep = state.currentStep, time = "7:15 PM"
+                    currentStep = 1, time = state.deliveryTime
                 )
 
                 MapSection(

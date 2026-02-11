@@ -97,7 +97,7 @@ fun HomeContent(state: HomeContract.State, action: (HomeContract.Action) -> Unit
     DelivaryUserScreen(
         contentScrollState = rememberScrollState(),
         header = {
-            DelivaryUserTopBar({})
+            DelivaryUserTopBar({action(HomeContract.Action.OnTrackOrderClicked)})
         },
         contentVerticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),

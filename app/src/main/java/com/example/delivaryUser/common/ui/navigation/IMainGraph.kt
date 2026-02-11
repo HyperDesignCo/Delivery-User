@@ -44,11 +44,11 @@ sealed interface IMainGraph : IDestination {
     data object Chat : IMainGraph
 
     @Serializable
-    data object TrackOrder : IMainGraph
+    data class TrackOrder(val id: Int) : IMainGraph
 }
 
 fun NavGraphBuilder.buildNavMainGraph() {
-    navigation<IMainGraph.RootGraph>(startDestination = IMainGraph.TrackOrder) {
+    navigation<IMainGraph.RootGraph>(startDestination = IMainGraph.Home) {
         composable<IMainGraph.Home> { HomeScreen() }
         composable<IMainGraph.Orders> { OrdersScreen() }
         composable<IMainGraph.OrderDetails> { OrderDetailsScreen() }
@@ -58,6 +58,7 @@ fun NavGraphBuilder.buildNavMainGraph() {
         composable<IMainGraph.Chat> { ChatWithAiScreen() }
         composable<IMainGraph.TrackOrder> { TrackOrderScreen() }
         composable<IMainGraph.CancelOrder> { CancelOrderScreen() }
+
     }
 }
 

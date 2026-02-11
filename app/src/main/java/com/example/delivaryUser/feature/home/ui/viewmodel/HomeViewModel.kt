@@ -6,6 +6,7 @@ import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.IOrderGraph
+import com.example.delivaryUser.common.ui.navigation.IOrderGraph.*
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetLocationResponseUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
@@ -18,6 +19,7 @@ import com.example.delivaryUser.service.location.domain.model.CheckLocation
 import com.example.delivaryUser.service.location.domain.model.Location
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -37,11 +39,11 @@ class HomeViewModel(
             is HomeContract.Action.FastOrderClicked -> onFastOrderClicked()
             is HomeContract.Action.NavigateBacKClicked -> navigateBack()
             is HomeContract.Action.OnAddLocationClicked -> {
-                fireNavigate(destination = IOrderGraph.Map())
+                fireNavigate(destination = Map())
             }
 
             is HomeContract.Action.OnLocationClicked -> {
-                fireNavigate(destination = IOrderGraph.Map())
+                fireNavigate(destination = Map())
             }
 
             is HomeContract.Action.OnNewOrderClicked -> {
@@ -55,7 +57,13 @@ class HomeViewModel(
             is HomeContract.Action.OnChangeLocation -> {
                 changeLocation(action.latLng)
             }
+
+            HomeContract.Action.OnTrackOrderClicked -> navigateToTrackOrder()
         }
+    }
+
+    private fun navigateToTrackOrder(){
+        fireNavigate(IMainGraph.TrackOrder(95))
     }
 
     private fun loadSavedLocationFirst() {

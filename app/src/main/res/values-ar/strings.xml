@@ -160,4 +160,7 @@
     <string name="delivery_fee">تكلفة التوصيل</string>
     <string name="open_map">فتح الخريطة</string>
     <string name="driver_location">موقع المندوب</string>
+    <string name="price_of_user">سعر الطلب المقدر من قبل المستخدم</string>
+    <string name="price_order">سعر الطلب</string>
+    <string name="total_price">اجمالي السعر</string>
 </resources>
