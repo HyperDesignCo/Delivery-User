@@ -25,7 +25,7 @@ import com.example.delivaryUser.feature.home.ui.viewmodel.HomeContract
 
 @Composable
 fun HomeAdsSlider(ads: List<HomeContract.AdUiState>, modifier: Modifier = Modifier) {
-    Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         val pagerState = rememberPagerState(pageCount = {
             ads.size
         })

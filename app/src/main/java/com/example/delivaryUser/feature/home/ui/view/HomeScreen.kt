@@ -4,15 +4,21 @@ import android.Manifest
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,14 +38,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.bars.topbar.DelivaryUserTopBar
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
-import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.example.delivaryUser.common.ui.extension.clickableWithNoRipple
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import com.example.delivaryUser.feature.home.ui.components.HomeAdsSlider
 import com.example.delivaryUser.feature.home.ui.components.HomeCard
 import com.example.delivaryUser.feature.home.ui.components.HomeLocation
+import com.example.delivaryUser.feature.home.ui.components.HomeTrackOrderItem
 import com.example.delivaryUser.feature.home.ui.viewmodel.HomeContract
 import com.example.delivaryUser.feature.home.ui.viewmodel.HomeViewModel
+import com.example.delivaryUser.feature.orders.orderdetails.ui.view.asString
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.LocationServices
@@ -47,6 +54,7 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.koinViewModel
+
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
@@ -94,24 +102,45 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
 
 @Composable
 fun HomeContent(state: HomeContract.State, action: (HomeContract.Action) -> Unit) {
-    DelivaryUserScreen(
-        contentScrollState = rememberScrollState(),
-        header = {
-            DelivaryUserTopBar({})
-        },
-        contentVerticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp),
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = DelivaryUserTheme.colors.background.surfaceHigh)
+            .navigationBarsPadding()
+            .statusBarsPadding(),
+        contentPadding = PaddingValues(
+            bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + 24.dp
+        ),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        stickyHeader {
+            DelivaryUserTopBar(startIcon = null)
             HomeLocation(
                 location = state.location,
                 onLocationClicked = { action(HomeContract.Action.OnLocationClicked(state.location)) },
                 onAddLocationClicked = { action(HomeContract.Action.OnAddLocationClicked) }
             )
+        }
+        item {
             HomeAdsSlider(
+                modifier = Modifier.padding(horizontal = 16.dp),
                 ads = state.ads
             )
+        }
+        if(state.trackOrders.isNotEmpty())
+        items(state.trackOrders.size, key = { state.trackOrders[it].orderId }) { index ->
+            HomeTrackOrderItem(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                orderStatus = state.trackOrders[index].orderStatus.asString(),
+                orderId = state.trackOrders[index].orderId,
+                image = state.trackOrders[index].image,
+                userName = state.trackOrders[index].deliveryName,
+                onTrackOrderClicked = { action(HomeContract.Action.OnTrackOrderClicked(state.trackOrders[index].orderId.toInt())) }
+            )
+        }
+        item {
             HomeCard(
-                modifier = Modifier.padding(),
+                modifier = Modifier.padding(horizontal = 16.dp),
                 cardColor = DelivaryUserTheme.colors.status.greenAccent,
                 text = stringResource(R.string.fast_order),
                 image = painterResource(R.drawable.img_fast_order),
@@ -119,19 +148,28 @@ fun HomeContent(state: HomeContract.State, action: (HomeContract.Action) -> Unit
                 imageWidth = 98.dp,
                 onCardClicked = { action(HomeContract.Action.FastOrderClicked) }
             )
+        }
+        item {
             if (state.isButtonsVisible) {
                 OrderTypeItem(
+                    modifier = Modifier.padding(horizontal = 16.dp),
                     label = stringResource(R.string.new_order),
                     icon = painterResource(R.drawable.img_new_order),
                     onClick = { action(HomeContract.Action.OnNewOrderClicked) }
                 )
                 OrderTypeItem(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp),
                     label = stringResource(R.string.point_to_point),
                     icon = painterResource(R.drawable.img_point_to_point),
                     onClick = { action(HomeContract.Action.OnPointToPointClicked) }
                 )
             }
+        }
+        item {
             HomeCard(
+                modifier = Modifier.padding(horizontal = 16.dp),
                 cardColor = DelivaryUserTheme.colors.status.redAccent,
                 text = stringResource(R.string.order_with_ai),
                 image = painterResource(R.drawable.img_order_with_ai),
@@ -140,7 +178,8 @@ fun HomeContent(state: HomeContract.State, action: (HomeContract.Action) -> Unit
                 onCardClicked = { action(HomeContract.Action.ChatWithAiClicked) }
             )
         }
-
+        item { Spacer(modifier = Modifier.width(24.dp)) }
+    }
 }
 
 @Composable
