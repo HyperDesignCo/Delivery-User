@@ -1,7 +1,7 @@
 package com.example.delivaryUser.feature.home.domain.repository
 
-import com.example.delivaryUser.feature.home.domain.models.Ads
+import com.example.delivaryUser.feature.home.domain.models.HomeData
 
 interface IHomeRepository {
-    suspend fun getAds(): Ads
+    suspend fun getHomeData(): HomeData
 }
