@@ -31,9 +31,10 @@ fun HomeLocation(
     location: String,
     onLocationClicked: () -> Unit,
     onAddLocationClicked: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .dropShadow(
                 shape = RectangleShape,
