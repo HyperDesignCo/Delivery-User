@@ -1,18 +1,16 @@
 package com.example.delivaryUser.feature.home.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.example.delivaryUser.common.ui.extension.UIText
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
-import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.IOrderGraph
-import com.example.delivaryUser.common.ui.navigation.IOrderGraph.*
+import com.example.delivaryUser.common.ui.navigation.IOrderGraph.Map
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetLocationResponseUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
 import com.example.delivaryUser.feature.home.domain.interactors.GetAdsUseCase
-import com.example.delivaryUser.feature.home.domain.models.Ads
+import com.example.delivaryUser.feature.home.domain.models.HomeData
 import com.example.delivaryUser.service.location.data.model.request.CheckLocationRequest
 import com.example.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
 import com.example.delivaryUser.service.location.domain.model.CheckLocation
@@ -31,6 +29,7 @@ class HomeViewModel(
 ) : BaseViewModel<HomeContract.State, HomeContract.Action>(HomeContract.State()) {
     init {
         loadSavedLocationFirst()
+        getHomeData()
     }
 
     override fun onActionTrigger(action: HomeContract.Action) {
@@ -58,7 +57,9 @@ class HomeViewModel(
                 changeLocation(action.latLng)
             }
 
-            HomeContract.Action.OnTrackOrderClicked -> navigateToTrackOrder()
+            is HomeContract.Action.OnTrackOrderClicked -> {
+                // TODO Navigate to track order with the id provided
+            }
         }
     }
 
@@ -74,7 +75,6 @@ class HomeViewModel(
                         copy(savedLatLng = savedLatLng)
                     }
                     loadLocation()
-                    getAds()
                 })
         }
     }
@@ -103,10 +103,8 @@ class HomeViewModel(
 
     private fun checkLocationFromApi() {
         val targetLatLng = state.value.latLng ?: return
-
         val request = CheckLocationRequest(
-            latitude = targetLatLng.latitude.toString(),
-            longitude = targetLatLng.longitude.toString()
+            latitude = targetLatLng.latitude.toString(), longitude = targetLatLng.longitude.toString()
         )
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -191,18 +189,20 @@ class HomeViewModel(
         checkLocationFromApi()
     }
 
-    private fun getAds() {
+    private fun getHomeData() {
         viewModelScope.launch {
             useCase.invoke(body = Unit).collectResource(onSuccess = {
-                onGetAdsUseCaseSuccess(it)
+                onGetHomeDataSuccess(it)
             }, onLoading = {
                 fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
             })
         }
     }
 
-    private fun onGetAdsUseCaseSuccess(ads: Ads) {
-        updateState { copy(ads = ads.ads.map { it.toUiState() }) }
+    private fun onGetHomeDataSuccess(homeData: HomeData) {
+        updateState {
+            copy(ads = homeData.ads.map { it.toUiState() }, trackOrders = homeData.orders.map { it.toUiState() })
+        }
     }
 
     private fun onFastOrderClicked() {

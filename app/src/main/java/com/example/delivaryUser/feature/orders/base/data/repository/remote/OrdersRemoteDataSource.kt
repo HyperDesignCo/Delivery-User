@@ -18,7 +18,6 @@ class OrdersRemoteDataSource(private val provider: IRemoteDataSourceProvider) : 
         endpoint = ORDER_DETAILS,
         serializer = OrderResponseDto.serializer(),
     )
-
     companion object {
         const val ORDERS_ENDPOINT = "usergetorders"
         const val ORDER_DETAILS = "userorderdetails"
