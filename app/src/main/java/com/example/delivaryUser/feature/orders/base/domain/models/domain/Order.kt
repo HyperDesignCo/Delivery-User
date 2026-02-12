@@ -37,6 +37,7 @@ data class Order(
     val deliveryTime: String,
     val deliveryId: String,
     val images: List<OrderImage>,
+    val orderType:String
 )
 
 enum class OrderStatus(val value: String) {

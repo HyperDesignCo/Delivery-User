@@ -77,4 +77,6 @@ data class OrderDto(
     val deliveryId: String? = null,
     @SerialName("images")
     val images: List<OrderImageDto>? = null,
+    @SerialName("order_type")
+    val orderType: String? = null
 )

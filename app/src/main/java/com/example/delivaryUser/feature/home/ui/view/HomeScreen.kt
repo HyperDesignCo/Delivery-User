@@ -46,7 +46,7 @@ import com.example.delivaryUser.feature.home.ui.components.HomeLocation
 import com.example.delivaryUser.feature.home.ui.components.HomeTrackOrderItem
 import com.example.delivaryUser.feature.home.ui.viewmodel.HomeContract
 import com.example.delivaryUser.feature.home.ui.viewmodel.HomeViewModel
-import com.example.delivaryUser.feature.orders.orderdetails.ui.view.asString
+import com.example.delivaryUser.feature.orders.base.ui.asString
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.LocationServices

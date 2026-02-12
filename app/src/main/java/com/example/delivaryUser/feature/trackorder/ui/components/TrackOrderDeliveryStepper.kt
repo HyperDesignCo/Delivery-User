@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
+import com.example.delivaryUser.feature.orders.base.domain.models.domain.OrderStatus
 
 data class StepItem(
     val label: String, val isCompleted: Boolean,
@@ -33,28 +36,38 @@ data class StepItem(
 
 @Composable
 fun DeliverySteps(
-    currentStep: Int, time: String, modifier: Modifier = Modifier,
+    currentStep: OrderStatus, orderState: String, time: String, modifier: Modifier = Modifier,
 ) {
     val steps = listOf(
-        StepItem(stringResource(R.string.waiting_for_the_market_response), currentStep >= 0),
-        StepItem(stringResource(R.string.the_order_is_now_being_prepared), currentStep >= 1),
-        StepItem(stringResource(R.string.on_my_way), currentStep >= 2),
-        StepItem(stringResource(R.string.it_was_received), currentStep >= 3)
+        StepItem(stringResource(R.string.pending), currentStep == OrderStatus.PENDING),
+        StepItem(stringResource(R.string.accepted), currentStep == OrderStatus.ACCEPTED),
+        StepItem(stringResource(R.string.on_the_way), currentStep == OrderStatus.ON_WAY),
+        StepItem(stringResource(R.string.delivered), currentStep == OrderStatus.DELIVERED)
     )
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .shadow(
+                elevation = 13.dp,
+                shape = RoundedCornerShape(
+                    bottomEnd = 20.dp,
+                    bottomStart = 20.dp
+                ),
+                clip = false
+            )
             .background(
                 color = DelivaryUserTheme.colors.background.surfaceHigh,
                 shape = RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp)
-            )
+            ),
     ) {
         Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(R.string.estimated_time_of_arrival),
             style = DelivaryUserTheme.typography.body.medium,
             color = DelivaryUserTheme.colors.secondary,
         )
         Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
             text = time,
             style = DelivaryUserTheme.typography.title.extraLarge,
             color = DelivaryUserTheme.colors.secondary,
@@ -62,8 +75,10 @@ fun DeliverySteps(
             maxLines = 1
         )
         Text(
-            modifier = Modifier.padding(top = 8.dp),
-            text = "Order from seoudisupermarket is being prepared now",
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .padding(horizontal = 16.dp),
+            text = orderState,
             style = DelivaryUserTheme.typography.body.medium.copy(fontSize = 13.sp),
             color = DelivaryUserTheme.colors.secondary,
         )
@@ -71,6 +86,7 @@ fun DeliverySteps(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 32.dp)
+                .padding(horizontal = 16.dp)
                 .height(40.dp)
         ) {
             Box(
@@ -92,7 +108,8 @@ fun DeliverySteps(
             ) {
                 steps.forEachIndexed { index, _ ->
                     StepCircle(
-                        isCompleted = index <= currentStep, isActive = index == currentStep
+                        isCompleted = index <= currentStep.ordinal,
+                        isActive = index == currentStep.ordinal
                     )
                 }
             }
@@ -101,21 +118,21 @@ fun DeliverySteps(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 16.dp),
+                .padding(top = 6.dp, bottom = 16.dp)
+                .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Top
         ) {
             steps.forEachIndexed { index, step ->
                 Column(
                     modifier = Modifier.weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+
+                    ) {
                     Text(
                         text = step.label,
                         style = DelivaryUserTheme.typography.title.small,
                         color = when {
-                            index < currentStep -> DelivaryUserTheme.colors.status.greenAccent
-                            index == currentStep -> DelivaryUserTheme.colors.secondary
+                            index < currentStep.ordinal -> DelivaryUserTheme.colors.status.greenAccent
+                            index == currentStep.ordinal -> DelivaryUserTheme.colors.secondary
                             else -> DelivaryUserTheme.colors.secondaryVariant
                         },
 
@@ -132,7 +149,7 @@ private fun StepCircle(
 ) {
     Box(
         modifier = modifier
-            .size(28.dp)
+            .size(19.dp)
             .clip(CircleShape)
             .background(
                 color = when {
@@ -145,8 +162,10 @@ private fun StepCircle(
         if (isCompleted || isActive) {
             Image(
                 painter = painterResource(R.drawable.img_order_track_check),
-                contentDescription = "Completed",
-                modifier = Modifier.size(18.dp),
+                contentDescription = null,
+                modifier = Modifier
+                    .width(12.dp)
+                    .height(10.dp),
                 contentScale = ContentScale.Fit
             )
         }
@@ -156,6 +175,10 @@ private fun StepCircle(
 @PreviewAllVariants
 @Composable
 private fun DeliveryStepsPreview() = DelivaryUserTheme {
-    DeliverySteps(currentStep = 2, time = "7:15 PM")
+    DeliverySteps(
+        currentStep = OrderStatus.ON_WAY,
+        orderState = "Order is pending",
+        time = "7:15 PM"
+    )
 }
 

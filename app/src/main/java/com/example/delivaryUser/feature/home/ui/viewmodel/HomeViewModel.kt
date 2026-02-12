@@ -58,15 +58,10 @@ class HomeViewModel(
             }
 
             is HomeContract.Action.OnTrackOrderClicked -> {
-                // TODO Navigate to track order with the id provided
+                fireNavigate(IMainGraph.TrackOrder(action.id))
             }
         }
     }
-
-    private fun navigateToTrackOrder(){
-        fireNavigate(IMainGraph.TrackOrder(95))
-    }
-
     private fun loadSavedLocationFirst() {
         viewModelScope.launch(Dispatchers.IO) {
             getSavedLocationUseCase.invoke(Unit).collectResource(

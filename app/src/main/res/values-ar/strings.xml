@@ -149,10 +149,6 @@
     <string name="order_canceled">تم إلغاء الطلب</string>
     <!--Track Order-->
     <string name="estimated_time_of_arrival">الوقت المتوقع للوصول</string>
-    <string name="waiting_for_the_market_response">بانتظار رد المتجر</string>
-    <string name="the_order_is_now_being_prepared">يتم الآن تحضير الطلب</string>
-    <string name="on_my_way">في الطريق إليك</string>
-    <string name="it_was_received">تم الاستلام</string>
     <string name="is_your_delivery_hero_for_today">هو مندوب التوصيل الخاص بك اليوم</string>
     <string name="order_from">الطلب من</string>
     <string name="support">الدعم</string>
@@ -163,4 +159,12 @@
     <string name="price_order">سعر الطلب</string>
     <string name="total_price">اجمالي السعر</string>
     <string name="delivery_to">التسليم إلى</string>
+    <string name="minutes">د</string>
+    <string name="pending">قيد الانتظار</string>
+    <string name="accepted">مقبول</string>
+    <string name="on_the_way">في الطريق</string>
+    <string name="delivered">تم التسليم</string>
+    <string name="home_location">عنوان المنزل</string>
+    <string name="first_point">النقطة الاولي</string>
+    <string name="second_point">النقطة الثانية</string>
 </resources>
