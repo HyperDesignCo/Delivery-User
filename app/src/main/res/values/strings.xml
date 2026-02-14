@@ -147,4 +147,7 @@
     <string name="sure_to_cancel">Cancel this order?</string>
     <string name="keep">Keep</string>
     <string name="order_canceled">The order has been canceled</string>
+    <!-- Rate order -->
+    <string name="rate">Rate</string>
+    <string name="we_received_your_rate">We received your rating. Thank you!</string>
 </resources>
