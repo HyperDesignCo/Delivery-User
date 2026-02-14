@@ -15,6 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,6 +41,13 @@ fun HomeTrackOrderItem(
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .dropShadow(
+                shape = RoundedCornerShape(20.dp),
+                shadow = Shadow(
+                    radius = 6.dp,
+                    spread = 1.dp,
+                    color = DelivaryUserTheme.colors.shadow)
+            )
             .background(
                 color = DelivaryUserTheme.colors.background.surfaceHigh,
                 shape = RoundedCornerShape(20.dp)
