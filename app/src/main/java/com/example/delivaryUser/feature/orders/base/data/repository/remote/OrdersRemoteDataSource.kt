@@ -3,6 +3,8 @@ package com.example.delivaryUser.feature.orders.base.data.repository.remote
 import com.example.delivaryUser.common.domain.remote.IRemoteDataSourceProvider
 import com.example.delivaryUser.feature.orders.base.data.models.dto.OrderResponseDto
 import com.example.delivaryUser.feature.orders.base.data.models.dto.OrdersDto
+import com.example.delivaryUser.feature.orders.base.data.models.dto.RateOrderResponseDto
+import com.example.delivaryUser.feature.orders.base.data.models.request.RateOrderRequest
 import com.example.delivaryUser.feature.orders.base.domain.repository.remote.IOrdersRemoteDataSource
 
 class OrdersRemoteDataSource(private val provider: IRemoteDataSourceProvider) : IOrdersRemoteDataSource {
@@ -19,8 +21,14 @@ class OrdersRemoteDataSource(private val provider: IRemoteDataSourceProvider) : 
         serializer = OrderResponseDto.serializer(),
     )
 
+    override suspend fun rateOrder(request: RateOrderRequest): RateOrderResponseDto= provider.post(
+        endpoint = RATE_ORDER,
+        requestBody = request,
+        serializer = RateOrderResponseDto.serializer(),
+    )
     companion object {
         const val ORDERS_ENDPOINT = "usergetorders"
         const val ORDER_DETAILS = "userorderdetails"
+        const val RATE_ORDER = "UserAddRate"
     }
 }
