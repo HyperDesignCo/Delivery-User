@@ -147,4 +147,7 @@
     <string name="sure_to_cancel">هل تريد إلغاء هذا الطلب؟</string>
     <string name="keep">احتفظ</string>
     <string name="order_canceled">تم إلغاء الطلب</string>
+    <!-- Rate order -->
+    <string name="rate">تقييم</string>
+    <string name="we_received_your_rate">لقد استلمنا تقييمك، شكرًا لك!</string>
 </resources>

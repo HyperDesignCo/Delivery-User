@@ -12,5 +12,11 @@ data class RateDto(
     @SerialName("comment")
     val comment: String? = null,
     @SerialName("created_at")
-    val createdAt: String? = null
+    val createdAt: String? = null,
+    @SerialName("updated_at")
+    val updatedAt: String? = null,
+    @SerialName("order_id")
+    val orderId: Int? = null,
+    @SerialName("user_id")
+    val userId: Int? = null
 )
