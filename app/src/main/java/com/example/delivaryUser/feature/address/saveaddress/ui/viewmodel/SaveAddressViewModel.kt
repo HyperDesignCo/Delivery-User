@@ -10,8 +10,8 @@ import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetLocationResponseUseCase
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.interactors.GetLocationResponseUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.interactors.GetSavedLocationUseCase
 import com.example.delivaryUser.feature.address.saveaddress.domain.interactors.SaveAddressUseCase
 import com.example.delivaryUser.feature.pointtopoint.ui.components.AddressType
 import com.example.delivaryUser.service.address.data.models.request.AddAddressRequest

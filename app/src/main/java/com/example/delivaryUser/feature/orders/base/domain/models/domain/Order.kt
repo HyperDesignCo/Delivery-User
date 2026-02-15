@@ -4,6 +4,7 @@ data class Order(
     val id: Int,
     val userId: Int,
     val userName: String,
+    val userImage : String,
     val deliveryName: String,
     val deliveryImage: String,
     val orderStatus: OrderStatus,
@@ -36,6 +37,7 @@ data class Order(
     val deliveryTime: String,
     val deliveryId: String,
     val images: List<OrderImage>,
+    val orderType:String
 )
 
 enum class OrderStatus(val value: String) {

@@ -147,7 +147,29 @@
     <string name="sure_to_cancel">Cancel this order?</string>
     <string name="keep">Keep</string>
     <string name="order_canceled">The order has been canceled</string>
+    <!--Track Order-->
+    <string name="estimated_time_of_arrival">Estimated time of arrival</string>
+    <string name="is_your_delivery_hero_for_today">Your delivery hero for today</string>
+    <string name="order_from">Order From</string>
+    <string name="support">Support</string>
+    <string name="delivery_fee">"Delivery "</string>
+    <string name="open_map">open map</string>
+    <string name="driver_location">Driver Location</string>
+    <string name="price_of_user">Estimated order price from the user</string>
+    <string name="price_order">Price order</string>
+    <string name="total_price">Total price</string>
+    <string name="delivery_to">Delivery to</string>
+    <string name="minutes">M</string>
+    <string name="pending">Pending</string>
+    <string name="accepted">Accepted</string>
+    <string name="on_the_way">On the way</string>
+    <string name="delivered">Delivered</string>
+    <string name="home_location">Home Location</string>
+    <string name="first_point">First Point</string>
+    <string name="second_point">Second Point</string>
+    <string name="type_a_message">Type a message...</string>
     <!-- Rate order -->
     <string name="rate">Rate</string>
     <string name="we_received_your_rate">We received your rating. Thank you!</string>
+
 </resources>

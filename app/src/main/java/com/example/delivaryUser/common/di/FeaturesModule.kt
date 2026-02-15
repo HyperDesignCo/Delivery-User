@@ -11,6 +11,7 @@ import com.example.delivaryUser.feature.authentication.splash.di.splashModule
 import com.example.delivaryUser.feature.authentication.verifyOtp.di.verifyOtpModule
 import com.example.delivaryUser.feature.cancelorder.di.cancelOrderModule
 import com.example.delivaryUser.feature.chatwithai.di.chatWithAiModule
+import com.example.delivaryUser.feature.chatwithdelivery.di.chatWithDeliveryModule
 import com.example.delivaryUser.feature.home.di.homeModule
 import com.example.delivaryUser.service.location.di.locationModule
 import com.example.delivaryUser.feature.orders.base.di.ordersModule
@@ -25,6 +26,7 @@ import com.example.delivaryUser.service.address.di.addressModule
 import com.example.delivaryUser.service.language.di.languageModule
 import com.example.delivaryUser.feature.deliveryoutzone.di.deliveryOutZoneModule
 import com.example.delivaryUser.feature.fastorder.di.fastOrderModule
+import com.example.delivaryUser.feature.trackorder.di.trackOrderModule
 import com.example.delivaryUser.service.user.di.userModule
 import org.koin.dsl.module
 
@@ -56,6 +58,8 @@ val featuresModule = module {
         saveAddressModule,
         fastOrderModule,
         chatWithAiModule,
-        cancelOrderModule
+        cancelOrderModule,
+        trackOrderModule,
+        chatWithDeliveryModule
     )
 }

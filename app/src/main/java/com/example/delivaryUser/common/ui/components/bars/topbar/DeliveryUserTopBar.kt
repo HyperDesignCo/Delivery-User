@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,24 +31,30 @@ import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DelivaryUserTopBar(
-    onStartIconClicked: () -> Unit ={},
+    onStartIconClicked: () -> Unit = {},
     modifier: Modifier = Modifier,
     @DrawableRes startIcon: Int? = R.drawable.ic_back,
     content: (@Composable () -> Unit)? = null,
     @DrawableRes endIcon: Int? = null,
     onEndIconClicked: () -> Unit = {},
     colors: DeliveryUserTopBarColors = DeliveryUserTopBarDefaults.colors(),
+    rowContent: (@Composable RowScope.() -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(DeliveryUserTopBarDefaults.height)
             .background(color = colors.containerColor)
-            .padding(start = DeliveryUserTopBarDefaults.startPadding, end = DeliveryUserTopBarDefaults.endPadding),
+            .padding(
+                start = DeliveryUserTopBarDefaults.startPadding,
+                end = DeliveryUserTopBarDefaults.endPadding
+            ),
         verticalAlignment = DeliveryUserTopBarDefaults.verticalAlignment,
         horizontalArrangement = DeliveryUserTopBarDefaults.horizontalArrangement
     ) {
-        IconButton(modifier = Modifier.size(DeliveryUserTopBarDefaults.iconSize), onClick = { onStartIconClicked() }) {
+        IconButton(
+            modifier = Modifier.size(DeliveryUserTopBarDefaults.iconSize),
+            onClick = { onStartIconClicked() }) {
             startIcon?.let {
                 Icon(
                     modifier = Modifier.autoMirror(),
@@ -57,19 +64,31 @@ fun DelivaryUserTopBar(
                 )
             }
         }
+
         Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.Center
+            modifier = Modifier.weight(1f), contentAlignment = Alignment.Center
         ) {
-            content?.invoke() ?: Image(
-                modifier = Modifier.size(
-                    width = DeliveryUserTopBarDefaults.logoWidth,
-                    height = DeliveryUserTopBarDefaults.logoHeight
-                ),
-                painter = painterResource(R.drawable.img_topbar_logo),
-                contentDescription = null
-            )
+            if (rowContent != null) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
+                    content = rowContent
+                )
+            } else {
+                content?.invoke() ?: Image(
+                    modifier = Modifier.size(
+                        width = DeliveryUserTopBarDefaults.logoWidth,
+                        height = DeliveryUserTopBarDefaults.logoHeight
+                    ),
+                    painter = painterResource(R.drawable.img_topbar_logo),
+                    contentDescription = null
+                )
+            }
         }
+
         endIcon?.let {
             IconButton(
                 modifier = Modifier.size(DeliveryUserTopBarDefaults.iconSize),
@@ -81,7 +100,6 @@ fun DelivaryUserTopBar(
                 )
             }
         } ?: Spacer(modifier = Modifier)
-
     }
 }
 
@@ -104,7 +122,8 @@ object DeliveryUserTopBarDefaults {
     fun colors(
         containerColor: Color = DelivaryUserTheme.colors.primary,
         contentColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
-    ): DeliveryUserTopBarColors = DeliveryUserTopBarColors(containerColor = containerColor, contentColor = contentColor)
+    ): DeliveryUserTopBarColors =
+        DeliveryUserTopBarColors(containerColor = containerColor, contentColor = contentColor)
 }
 
 @Composable

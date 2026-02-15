@@ -13,11 +13,11 @@ import com.example.delivaryUser.common.ui.message.MessageType
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetCurrentLocationUseCase
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.GetSavedLocationUseCase
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.ReverseGeocodeUseCase
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationResponseUseCase
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.interactors.GetCurrentLocationUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.interactors.GetSavedLocationUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.interactors.ReverseGeocodeUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.interactors.SaveLocationResponseUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.interactors.SaveLocationUseCase
 import com.example.delivaryUser.feature.pointtopoint.ui.components.AddressType
 import com.example.delivaryUser.service.location.data.model.request.CheckLocationRequest
 import com.example.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
