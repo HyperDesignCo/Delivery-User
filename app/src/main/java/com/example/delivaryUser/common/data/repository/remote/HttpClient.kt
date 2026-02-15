@@ -111,4 +111,3 @@ private fun responseValidationMapping(errorResponse: APIErrorResponse): Delivary
         }?.toMap() ?: emptyMap(), message = errorResponse.message
     )
 }
-private fun getToken() =
