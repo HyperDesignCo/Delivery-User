@@ -58,6 +58,12 @@ fun provideHttpClient(json: Json, language: GetLanguageUseCase, getToken: GetTok
         url("https://delivery-online.com/api/user/")
         contentType(ContentType.Application.Json)
         header("Accept-Language", lang)
+        val token = runBlocking {
+            when (val resource = getToken.invoke(Unit)) {
+                is Resource.Success -> resource.model
+                else -> ""
+            }
+        }
         if (token.isNotBlank())
             header("Authorization", "Bearer $token")
     }
