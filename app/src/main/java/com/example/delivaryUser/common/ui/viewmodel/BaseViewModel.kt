@@ -48,11 +48,13 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
     suspend fun fireNavigateUp() {
         navigator.navigateUp()
     }
+
     fun fireLanguageEvent(language: String) {
         viewModelScope.launch {
             languageEvent.emit(ILanguageEvent.ChangeLanguage(language))
         }
     }
+
     fun <Result> Flow<Resource<Result>>.collectResource(
         onSuccess: suspend (Result) -> Unit = {},
         onFailure: suspend (DelivaryUserException) -> Unit = {},
@@ -80,9 +82,7 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
                 exception.errors.mapValues { UIText.DynamicString(it.value) }
             )
 
-            is DelivaryUserException.Client.UnAuthorized -> {
-                // TODO Handle UnAuthorized
-            }
+            is DelivaryUserException.Client.UnAuthorized -> handleExceptionMessages(message = exception.message)
 
             is DelivaryUserException.Client.Unhandled -> handleExceptionMessages(message = exception.message)
 
@@ -109,7 +109,7 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
 
     open fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) {}
 
-    private fun handleExceptionMessages(message: String?)  {
+    private fun handleExceptionMessages(message: String?) {
         Log.d("TAG", "handleExceptionMessages: $message")
         fireMessage(
             messageType = IMessageEvent.Snackbar(
@@ -126,7 +126,7 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
             RequestErrorKeyValues.PHONE_VALIDATION to UIText.StringResource(R.string.phone_validation_message),
             RequestErrorKeyValues.NAME_VALIDATION to UIText.StringResource(R.string.user_name_validation_message),
             RequestErrorKeyValues.EMAIL_VALIDATION to UIText.StringResource(R.string.email_validation_message),
-            RequestErrorKeyValues.OTP_VALIDATION to UIText.StringResource(R.string.otp_validation_message) ,
+            RequestErrorKeyValues.OTP_VALIDATION to UIText.StringResource(R.string.otp_validation_message),
             RequestErrorKeyValues.CONFIRMATION_PASSWORD to UIText.StringResource(R.string.confirmation_password_does_not_match),
             RequestErrorKeyValues.ADDRESS_FIRST_PHONE_VALIDATION to UIText.StringResource(R.string.phone_validation_message),
             RequestErrorKeyValues.ADDRESS_SECOND_PHONE_VALIDATION to UIText.StringResource(R.string.phone_validation_message),
