@@ -12,6 +12,7 @@ sealed class DelivaryUserException (override val message: String? = null): Excep
 
     sealed class Client(override val message: String?) : DelivaryUserException(message) {
         data class UnAuthorized(override val message: String? = null) : Client(message = "Unauthorized")
+        data class NotFound(override val message: String? = null) : Client(message = "Unauthorized")
         data class ResponseValidation(
             val errors: Map<IErrorKeyEnum, String>,
             override val message: String? = null
