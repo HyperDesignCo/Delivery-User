@@ -11,6 +11,7 @@ import com.example.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.example.delivaryUser.common.domain.exceptions.RequestErrorKeyValues
 import com.example.delivaryUser.common.ui.eventcontroller.IEventController
 import com.example.delivaryUser.common.ui.extension.UIText
+import com.example.delivaryUser.common.ui.extension.UIText.*
 import com.example.delivaryUser.common.ui.language.ILanguageEvent
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
@@ -79,7 +80,7 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
     ) {
         when (exception) {
             is DelivaryUserException.Client.ResponseValidation -> onRequestValidation(
-                exception.errors.mapValues { UIText.DynamicString(it.value) }
+                exception.errors.mapValues { DynamicString(it.value) }
             )
 
             is DelivaryUserException.Client.UnAuthorized -> handleExceptionMessages(message = exception.message)
@@ -91,7 +92,7 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
             is DelivaryUserException.Local.RequestValidation -> {
                 onRequestValidation(
                     exception.errors
-                        .mapValues { requestErrorMap[it.value] ?: UIText.StringResource(R.string.unknown_error) }
+                        .mapValues { requestErrorMap[it.value] ?: StringResource(R.string.unknown_error) }
                 )
             }
 
@@ -104,6 +105,7 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
             is DelivaryUserException.Server.InternalServerError -> handleExceptionMessages(message = exception.message)
 
             is DelivaryUserException.UnKnown -> handleExceptionMessages(message = exception.message)
+            is DelivaryUserException.Client.NotFound ->  handleExceptionMessages(message = exception.message)
         }
     }
 

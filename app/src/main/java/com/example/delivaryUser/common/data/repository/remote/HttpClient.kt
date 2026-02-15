@@ -87,14 +87,7 @@ private suspend fun handleResponseException(
             )
         }
 
-        HttpStatusCode.NotFound.value -> {
-            val responseBodyText = response.bodyAsText()
-            return responseValidationMapping(
-                json.decodeFromString<APIErrorResponse>(
-                    responseBodyText
-                )
-            )
-        }
+        HttpStatusCode.NotFound.value -> throw DelivaryUserException.Client.NotFound(message = response.status.description)
 
         HttpStatusCode.InternalServerError.value -> return DelivaryUserException.Server.InternalServerError(
             httpErrorCode = statusCode, message = response.status.description
