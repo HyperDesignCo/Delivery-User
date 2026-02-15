@@ -77,7 +77,7 @@ private suspend fun handleResponseException(
     json: Json,
 ): DelivaryUserException {
     when (val statusCode = response.status.value) {
-        HttpStatusCode.Unauthorized.value -> throw DelivaryUserException.Client.UnAuthorized()
+        HttpStatusCode.Unauthorized.value -> throw DelivaryUserException.Client.UnAuthorized(message = response.status.description)
         HttpStatusCode.UnprocessableEntity.value -> {
             val responseBodyText = response.bodyAsText()
             return responseValidationMapping(
@@ -99,7 +99,6 @@ private suspend fun handleResponseException(
         HttpStatusCode.InternalServerError.value -> return DelivaryUserException.Server.InternalServerError(
             httpErrorCode = statusCode, message = response.status.description
         )
-
         else -> throw DelivaryUserException.Client.Unhandled(
             errorCode = statusCode, message = response.status.description
         )
