@@ -2,6 +2,7 @@ package com.example.delivaryUser.feature.orders.orderslist.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,43 +35,50 @@ import com.example.delivaryUser.feature.orders.orderslist.ui.viewmodel.OrdersCon
 fun OrderCard(
     order: OrdersContract.OrderUiState,
     onOrderClicked: (Int) -> Unit,
+    onRatingClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(
-                color = order.orderState.toColor(), shape = RoundedCornerShape(8.dp)
-            )
-            .clickableWithNoRipple {
-                onOrderClicked(order.orderId)
-            }
-            .padding(16.dp),
-    ) {
-        OrderState(orderState = order.orderState.asString(), orderDate = order.orderDate)
-        Text(
-            text = stringResource(R.string.from).plus(" ").plus(order.provider),
-            style = DelivaryUserTheme.typography.body.small,
-            color = DelivaryUserTheme.colors.secondary
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
+    Box {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(
+                    color = order.orderState.toColor(), shape = RoundedCornerShape(8.dp)
+                )
+                .clickableWithNoRipple {
+                    onOrderClicked(order.orderId)
+                }
+                .padding(16.dp)
+                .padding(bottom = 40.dp),
         ) {
-            AsyncImage(
-                modifier = Modifier
-                    .size(42.dp)
-                    .clip(CircleShape),
-                model = order.delivary.deliveryImage,
-                contentDescription = null,
-                contentScale = ContentScale.Crop
+            OrderState(orderState = order.orderState.asString(), orderDate = order.orderDate)
+            Text(
+                text = stringResource(R.string.from).plus(" ").plus(order.provider),
+                style = DelivaryUserTheme.typography.body.small,
+                color = DelivaryUserTheme.colors.secondary
             )
-            OrderMainDate(
-                deliveryName = order.delivary.deliveryName,
-                stars = order.stars,
-                orderId = order.orderId,
-                orderPrice = order.orderPrice
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                AsyncImage(
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(CircleShape),
+                    model = order.delivary.deliveryImage,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop
+                )
+                OrderMainDate(
+                    deliveryName = order.delivary.deliveryName,
+                    stars = order.stars,
+                    orderId = order.orderId,
+                    orderPrice = order.orderPrice
+                )
+            }
         }
+        OrderRating(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            onRatingClicked = { onRatingClicked() })
     }
 }
 
@@ -157,6 +165,7 @@ private fun OrderCardPreview() = DelivaryUserTheme {
             stars = "4",
 
             ),
-        onOrderClicked = {}
+        onOrderClicked = {},
+        onRatingClicked = {}
     )
 }

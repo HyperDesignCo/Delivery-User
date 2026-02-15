@@ -58,6 +58,12 @@ fun provideHttpClient(json: Json, language: GetLanguageUseCase, getToken: GetTok
         url("https://delivery-online.com/api/user/")
         contentType(ContentType.Application.Json)
         header("Accept-Language", lang)
+        val token = runBlocking {
+            when (val resource = getToken.invoke(Unit)) {
+                is Resource.Success -> resource.model
+                else -> ""
+            }
+        }
         if (token.isNotBlank())
             header("Authorization", "Bearer $token")
     }
@@ -77,7 +83,7 @@ private suspend fun handleResponseException(
     json: Json,
 ): DelivaryUserException {
     when (val statusCode = response.status.value) {
-        HttpStatusCode.Unauthorized.value -> throw DelivaryUserException.Client.UnAuthorized()
+        HttpStatusCode.Unauthorized.value -> throw DelivaryUserException.Client.UnAuthorized(message = response.status.description)
         HttpStatusCode.UnprocessableEntity.value -> {
             val responseBodyText = response.bodyAsText()
             return responseValidationMapping(
@@ -87,19 +93,11 @@ private suspend fun handleResponseException(
             )
         }
 
-        HttpStatusCode.NotFound.value -> {
-            val responseBodyText = response.bodyAsText()
-            return responseValidationMapping(
-                json.decodeFromString<APIErrorResponse>(
-                    responseBodyText
-                )
-            )
-        }
+        HttpStatusCode.NotFound.value -> throw DelivaryUserException.Client.NotFound(message = response.status.description)
 
         HttpStatusCode.InternalServerError.value -> return DelivaryUserException.Server.InternalServerError(
             httpErrorCode = statusCode, message = response.status.description
         )
-
         else -> throw DelivaryUserException.Client.Unhandled(
             errorCode = statusCode, message = response.status.description
         )

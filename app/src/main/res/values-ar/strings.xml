@@ -167,4 +167,7 @@
     <string name="home_location">عنوان المنزل</string>
     <string name="first_point">النقطة الاولي</string>
     <string name="second_point">النقطة الثانية</string>
+    <!-- Rate order -->
+    <string name="rate">تقييم</string>
+    <string name="we_received_your_rate">لقد استلمنا تقييمك، شكرًا لك!</string>
 </resources>
