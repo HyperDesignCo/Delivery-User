@@ -1,11 +1,9 @@
 package com.example.delivaryUser.feature.authentication.verifyOtp.ui.view
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -22,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.buttons.DelivaryUserButtonPrimary
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
+import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.example.delivaryUser.common.ui.components.textfield.DelivaryUserTextInputField
 import com.example.delivaryUser.common.ui.components.textfield.DeliveryUserTextInputFieldDefaults
 import com.example.delivaryUser.common.ui.extension.clickableWithNoRipple
@@ -38,12 +37,8 @@ fun VerifyOtpScreen(viewModel: VerifyOtpViewModel = koinViewModel()) {
 
 @Composable
 private fun VerifyOtpContent(state: VerifyOtpContract.State, action: (VerifyOtpContract.Action) -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = DelivaryUserTheme.colors.background.surfaceHigh)
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    DelivaryUserScreen(
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         Text(
             modifier = Modifier.padding(top = 28.dp),
