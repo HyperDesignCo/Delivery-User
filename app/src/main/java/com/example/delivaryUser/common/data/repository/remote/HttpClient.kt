@@ -1,6 +1,5 @@
 package com.example.delivaryUser.common.data.repository.remote
 
-import android.util.Log
 import com.example.delivaryUser.common.data.DelivaryUserException
 import com.example.delivaryUser.common.domain.Resource
 import com.example.delivaryUser.service.language.domain.usecase.GetLanguageUseCase
