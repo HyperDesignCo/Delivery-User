@@ -25,9 +25,11 @@ sealed interface TrackOrderContract {
     )
 
     data class DeliveryState(
+        val id :String = "",
         val name: String = "",
         val number: String = "",
         val price: String = "",
+        val image: String = "",
         val time: String = "",
         val chatId: String = "",
         val latitude: String = "",

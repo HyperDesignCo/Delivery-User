@@ -23,6 +23,8 @@ class TrackOrderViewModel(
     private val _effect = Channel<String>()
     val effect = _effect.receiveAsFlow()
 
+    private var orderId: Int = 0
+
     private val route = savedStateHandle.toRoute<IMainGraph.TrackOrder>()
 
     init {
@@ -43,7 +45,8 @@ class TrackOrderViewModel(
                 .collectResource(onSuccess = ::loadOrderDetailsSuccess, onLoading = ::onLoading)
         }
 
-    private fun loadOrderDetailsSuccess(order: Order) =
+    private fun loadOrderDetailsSuccess(order: Order) {
+        orderId = order.id
         updateState {
             copy(
                 order = state.value.order.copy(
@@ -54,13 +57,15 @@ class TrackOrderViewModel(
                     estimatedPrice = order.orderPrice,
                 ),
                 delivery = state.value.delivery.copy(
+                    id = order.deliveryId,
                     name = order.deliveryName,
                     number = order.deliveryPhone,
                     price = order.deliveryFees,
                     time = order.deliveryTime.toDeliverYTime(),
                     chatId = order.chatId,
                     latitude = order.deliveryLatitude,
-                    longitude = order.deliveryLongitude
+                    longitude = order.deliveryLongitude,
+                    image = order.deliveryImage
                 ),
                 client = state.value.client.copy(
                     name = order.clientName,
@@ -73,6 +78,8 @@ class TrackOrderViewModel(
                 ),
             )
         }
+    }
+
 
     private fun onBackClicked() = viewModelScope.launch {
         fireNavigateUp()
@@ -88,7 +95,17 @@ class TrackOrderViewModel(
     }
 
     private fun onChatWithDriverClicked() = viewModelScope.launch {
-        //todo nav to chat screen
+        fireNavigate(
+            IMainGraph.ChatWithDelivery(
+                orderId = orderId.toString(),
+                chatId = state.value.delivery.chatId,
+                deliveryId = state.value.delivery.id,
+                deliveryImg = state.value.delivery.image,
+                deliveryName = state.value.delivery.name,
+                deliveryNumber = state.value.delivery.number,
+                isNewChat = if (state.value.delivery.chatId.isEmpty()) true else false
+            )
+        )
     }
 
     private fun onLoading(isLoading: Boolean) {

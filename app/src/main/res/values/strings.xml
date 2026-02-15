@@ -167,7 +167,9 @@
     <string name="home_location">Home Location</string>
     <string name="first_point">First Point</string>
     <string name="second_point">Second Point</string>
+    <string name="type_a_message">Type a message...</string>
     <!-- Rate order -->
     <string name="rate">Rate</string>
     <string name="we_received_your_rate">We received your rating. Thank you!</string>
+
 </resources>

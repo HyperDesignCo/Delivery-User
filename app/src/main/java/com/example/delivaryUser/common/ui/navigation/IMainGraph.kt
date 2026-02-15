@@ -7,6 +7,7 @@ import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.bars.navigationbar.DelivaryUserNavigationBarItemState
 import com.example.delivaryUser.feature.cancelorder.ui.view.CancelOrderScreen
 import com.example.delivaryUser.feature.chatwithai.ui.view.ChatWithAiScreen
+import com.example.delivaryUser.feature.chatwithdelivery.ui.view.ChatWithDeliveryScreen
 import com.example.delivaryUser.feature.deliveryoutzone.ui.view.DeliveryOutZoneScreen
 import com.example.delivaryUser.feature.home.ui.view.HomeScreen
 import com.example.delivaryUser.feature.orders.orderdetails.ui.view.OrderDetailsScreen
@@ -45,6 +46,17 @@ sealed interface IMainGraph : IDestination {
 
     @Serializable
     data class TrackOrder(val id: Int) : IMainGraph
+
+    @Serializable
+    data class ChatWithDelivery(
+        val chatId: String,
+        val orderId: String,
+        val deliveryId: String,
+        val deliveryImg: String,
+        val deliveryName:String,
+        val deliveryNumber:String,
+        val isNewChat: Boolean
+    ) : IMainGraph
 }
 
 fun NavGraphBuilder.buildNavMainGraph() {
@@ -58,6 +70,7 @@ fun NavGraphBuilder.buildNavMainGraph() {
         composable<IMainGraph.Chat> { ChatWithAiScreen() }
         composable<IMainGraph.TrackOrder> { TrackOrderScreen() }
         composable<IMainGraph.CancelOrder> { CancelOrderScreen() }
+        composable<IMainGraph.ChatWithDelivery> { ChatWithDeliveryScreen() }
 
     }
 }

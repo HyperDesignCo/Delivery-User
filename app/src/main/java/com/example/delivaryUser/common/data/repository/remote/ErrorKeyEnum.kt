@@ -29,5 +29,8 @@ enum class ErrorKeyEnum : IErrorKeyEnum {
 
     @SerialName("phone2")
     ADDRESS_SECOND_PHONE,
+
+    @SerialName("message")
+    USER_MESSAGE,
     UNKNOWN;
 }

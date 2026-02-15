@@ -7,7 +7,7 @@ import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
-import com.example.delivaryUser.feature.address.mapview.domain.usecase.SaveLocationUseCase
+import com.example.delivaryUser.feature.address.mapview.domain.interactors.SaveLocationUseCase
 import com.example.delivaryUser.feature.deliveryoutzone.data.model.request.AddAreaRequest
 import com.example.delivaryUser.feature.deliveryoutzone.domain.interactors.AddAreaUseCase
 import com.google.android.gms.maps.model.LatLng

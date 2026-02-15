@@ -1,4 +1,4 @@
-package com.example.delivaryUser.feature.address.mapview.domain.usecase
+package com.example.delivaryUser.feature.address.mapview.domain.interactors
 
 import com.example.delivaryUser.common.domain.Resource
 import com.example.delivaryUser.common.domain.usecase.BaseUseCase
