@@ -1,10 +1,9 @@
 package com.example.delivaryUser.feature.authentication.forgetpassword.ui.view
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -20,6 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.buttons.DelivaryUserButtonPrimary
 import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
+import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.example.delivaryUser.common.ui.components.textfield.DelivaryUserTextInputField
 import com.example.delivaryUser.common.ui.components.textfield.DeliveryUserTextInputFieldDefaults
 import com.example.delivaryUser.common.ui.extension.asString
@@ -39,12 +39,9 @@ private fun ForgetPasswordContent(
     state: ForgetPasswordContract.State,
     action: (ForgetPasswordContract.Action) -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = DelivaryUserTheme.colors.background.surfaceHigh)
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    DelivaryUserScreen(
+        modifier = Modifier.navigationBarsPadding(),
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         Text(
             modifier = Modifier.padding(top = 28.dp),
