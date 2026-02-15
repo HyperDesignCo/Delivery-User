@@ -1,5 +1,6 @@
 package com.example.delivaryUser.common.data.repository.remote
 
+import android.util.Log
 import com.example.delivaryUser.common.data.DelivaryUserException
 import com.example.delivaryUser.common.domain.Resource
 import com.example.delivaryUser.service.language.domain.usecase.GetLanguageUseCase
@@ -58,6 +59,12 @@ fun provideHttpClient(json: Json, language: GetLanguageUseCase, getToken: GetTok
         url("https://delivery-online.com/api/user/")
         contentType(ContentType.Application.Json)
         header("Accept-Language", lang)
+        val token = runBlocking {
+            when (val resource = getToken.invoke(Unit)) {
+                is Resource.Success -> resource.model
+                else -> ""
+            }
+        }
         if (token.isNotBlank())
             header("Authorization", "Bearer $token")
     }
@@ -105,3 +112,4 @@ private fun responseValidationMapping(errorResponse: APIErrorResponse): Delivary
         }?.toMap() ?: emptyMap(), message = errorResponse.message
     )
 }
+private fun getToken() =
