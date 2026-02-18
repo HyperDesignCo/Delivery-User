@@ -192,12 +192,10 @@ class SaveAddressViewModel(
 
         fireNavigate(destination = IMainGraph.Home, builder = {
             popUpTo(IMainGraph.Home) {
-                inclusive = false
+                inclusive = true
                 saveState = false
             }
-            launchSingleTop = true
         })
-
 
     }
 
