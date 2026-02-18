@@ -61,6 +61,7 @@ class HomeViewModel(
             }
         }
     }
+
     private fun loadSavedLocationFirst() {
         viewModelScope.launch(Dispatchers.IO) {
             getSavedLocationUseCase.invoke(Unit).collectResource(
@@ -90,15 +91,19 @@ class HomeViewModel(
         val regionName = savedLocation.currentRegionName.orEmpty()
         val areaName = savedLocation.currentAreaName.orEmpty()
         val displayLocation = "$regionName,$areaName"
-        updateState {
-            copy(location = displayLocation)
+        if (areaName.isNotEmpty() || regionName.isNotEmpty()) {
+            updateState {
+                copy(location = displayLocation)
+            }
         }
+
     }
 
     private fun checkLocationFromApi() {
         val targetLatLng = state.value.latLng ?: return
         val request = CheckLocationRequest(
-            latitude = targetLatLng.latitude.toString(), longitude = targetLatLng.longitude.toString()
+            latitude = targetLatLng.latitude.toString(),
+            longitude = targetLatLng.longitude.toString()
         )
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -120,13 +125,14 @@ class HomeViewModel(
 
         val currentRegion = checkLocation.data?.currentRegion
         val currentArea = checkLocation.data?.currentArea
+        val displayLocation = state.value.location
         val savedLatLng = state.value.savedLatLng
 
         if (savedLatLng != null && isSameLocation(savedLatLng, targetLocation)) {
             return
         }
 
-        if (currentRegion.isNullOrEmpty() || currentArea.isNullOrEmpty()) {
+        if (displayLocation.isEmpty() && currentRegion.isNullOrEmpty() || currentArea.isNullOrEmpty()) {
             saveLocation(targetLocation)
 
             fireNavigate(
@@ -159,8 +165,10 @@ class HomeViewModel(
         val areaName = data.currentAreaName.orEmpty()
         val displayLocation = "$regionName,$areaName"
 
-        updateState {
-            copy(location = displayLocation)
+        if (areaName.isNotEmpty() || regionName.isNotEmpty()) {
+            updateState {
+                copy(location = displayLocation)
+            }
         }
     }
 
@@ -180,7 +188,10 @@ class HomeViewModel(
         updateState {
             copy(latLng = latLng)
         }
-        checkLocationFromApi()
+
+        if (state.value.savedLatLng == null) {
+            checkLocationFromApi()
+        }
     }
 
     private fun getHomeData() {
@@ -195,7 +206,9 @@ class HomeViewModel(
 
     private fun onGetHomeDataSuccess(homeData: HomeData) {
         updateState {
-            copy(ads = homeData.ads.map { it.toUiState() }, trackOrders = homeData.orders.map { it.toUiState() })
+            copy(
+                ads = homeData.ads.map { it.toUiState() },
+                trackOrders = homeData.orders.map { it.toUiState() })
         }
     }
 
