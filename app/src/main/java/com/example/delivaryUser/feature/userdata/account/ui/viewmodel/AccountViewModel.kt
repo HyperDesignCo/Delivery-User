@@ -18,7 +18,7 @@ class AccountViewModel(private val user: GetUserUseCase, private val logout: Log
         when (action) {
             is AccountScreenContract.Action.OnAccountInfoClicked -> onAccountInfoClicked()
             is AccountScreenContract.Action.OnEditProfileClicked -> onEditClicked()
-            is AccountScreenContract.Action.OnGetHelpClicked -> {}
+            is AccountScreenContract.Action.OnGetHelpClicked -> onGetHelpClicked()
             is AccountScreenContract.Action.OnLanguageClicked -> onLanguageClicked()
             is AccountScreenContract.Action.OnLogoutClicked -> onLogOutClicked()
             is AccountScreenContract.Action.OnMyOrdersClicked -> onMyOrdersClicked()
@@ -39,6 +39,10 @@ class AccountViewModel(private val user: GetUserUseCase, private val logout: Log
 
     private fun onEditClicked() {
         fireNavigate(IAccountGraph.EditAccount)
+    }
+
+    private fun onGetHelpClicked() {
+        fireNavigate(IAccountGraph.GetHelp)
     }
 
     private fun onAccountInfoClicked() {
