@@ -18,6 +18,7 @@ import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.message.MessageType
 import com.example.delivaryUser.common.ui.navigation.IDestination
 import com.example.delivaryUser.common.ui.navigation.INavigator
+import com.example.delivaryUser.common.ui.urlhandler.IUrlEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,12 +29,33 @@ import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 
 abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinComponent {
+    /** Because state flow always has a state even if the flow emits to it on the background stateflow will hold the latest value always
+    // Collect as StateWithLifeCycle collects the data not in the background
+    //With a regular Flow the value is lost:
+    //Flow emits value
+    //UI is in background → collectAsStateWithLifecycle stopped collecting
+    //Nobody is listening → emission is gone
+    //UI comes to foreground → gets NEXT emission, missed the previous one
+    //With StateFlow it is never lost:
+    //Flow emits value → StateFlow stores it
+    //UI is in background → collectAsStateWithLifecycle stopped collecting
+    //StateFlow holds the value waiting
+    //UI comes to foreground → StateFlow delivers the stored value immediately
+    App in background:
+    Flow emits → StateFlow receives and STORES the latest value
+    UI is not collecting → nobody reads it yet, but value is SAFE in StateFlow
+    App comes to foreground:
+    collectAsStateWithLifecycle resumes → reads the stored value from StateFlow
+    Value is never lost as long as it's the latest
+    But if multiple values emitted in background, only last one survives
+     */
     private val _state = MutableStateFlow(state)
     val state = _state.asStateFlow()
     private val navigator: INavigator by inject()
     private val messageEvent: IEventController<IMessageEvent> by inject(named("MessageEvent"))
     private val loadingEvent: IEventController<ILoadingEvent> by inject(named("LoadingEvent"))
     private val languageEvent: IEventController<ILanguageEvent> by inject(named("LanguageEvent"))
+    private val urlEvent: IEventController<IUrlEvent> by inject(named("UrlEvent"))
     abstract fun onActionTrigger(action: Action)
     fun updateState(update: State.() -> State) {
         _state.update { it.update() }
@@ -55,7 +77,11 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
             languageEvent.emit(ILanguageEvent.ChangeLanguage(language))
         }
     }
-
+    fun fireUrlEvent(url: String) {
+        viewModelScope.launch {
+            urlEvent.emit(IUrlEvent.OpenUrl(url))
+        }
+    }
     fun <Result> Flow<Resource<Result>>.collectResource(
         onSuccess: suspend (Result) -> Unit = {},
         onFailure: suspend (DelivaryUserException) -> Unit = {},
@@ -105,7 +131,7 @@ abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinCom
             is DelivaryUserException.Server.InternalServerError -> handleExceptionMessages(message = exception.message)
 
             is DelivaryUserException.UnKnown -> handleExceptionMessages(message = exception.message)
-            is DelivaryUserException.Client.NotFound ->  handleExceptionMessages(message = exception.message)
+            is DelivaryUserException.Client.NotFound -> handleExceptionMessages(message = exception.message)
         }
     }
 
