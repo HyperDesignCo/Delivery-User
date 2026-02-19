@@ -17,9 +17,9 @@ import com.example.delivaryUser.common.ui.language.ILanguageEvent
 import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.message.IMessageEvent
 import com.example.delivaryUser.common.ui.navigation.IAuthGraph
-import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.INavigator
 import com.example.delivaryUser.common.ui.navigation.Navigator
+import com.example.delivaryUser.common.ui.urlhandler.IUrlEvent
 import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
@@ -31,6 +31,7 @@ val appModule = module {
     single<IEventController<IMessageEvent>>(qualifier = named("MessageEvent")) { EventController() }
     single<IEventController<ILoadingEvent>>(qualifier = named("LoadingEvent")) { EventController() }
     single<IEventController<ILanguageEvent>>(qualifier = named("LanguageEvent")) { EventController() }
+    single<IEventController<IUrlEvent>>(qualifier = named("UrlEvent")) { EventController() }
     single<Json> {
         Json {
             ignoreUnknownKeys = true
