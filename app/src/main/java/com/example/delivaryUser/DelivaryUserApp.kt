@@ -20,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.os.LocaleListCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -43,6 +44,7 @@ import com.example.delivaryUser.common.ui.navigation.buildNavAuthGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavMainGraph
 import com.example.delivaryUser.common.ui.navigation.buildNavOrderGraph
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
+import com.example.delivaryUser.common.ui.urlhandler.IUrlEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -65,6 +67,7 @@ fun DelivaryUserApp(
             coroutineScope = coroutineScope
         )
         ObserveLoadingEvent()
+        ObserveUrlEvent()
         ObserveAsEvents(navigator.navigationEvent) { event ->
             when (event) {
                 is NavigationEvent.Navigate -> navHostController.navigate(
@@ -114,6 +117,7 @@ private fun ObserveMessageEvent(snackbarHostState: SnackbarHostState, coroutineS
             is UIText.StringResource -> context.getString(this.id)
         }
     }
+
     val messageEvent: IEventController<IMessageEvent> = koinInject(qualifier = named("MessageEvent"))
     ObserveAsEvents(messageEvent.event) { event ->
         when (event) {
@@ -139,6 +143,17 @@ private fun ObserveLoadingEvent() {
         }
     }
     if (isLoading) DelivaryUserLoadingDialog()
+}
+
+@Composable
+private fun ObserveUrlEvent() {
+    val urlEvent: IEventController<IUrlEvent> = koinInject(qualifier = named("UrlEvent"))
+    val uriHandler = LocalUriHandler.current
+    ObserveAsEvents(urlEvent.event) { event ->
+        when (event) {
+            is IUrlEvent.OpenUrl -> uriHandler.openUri(event.url)
+        }
+    }
 }
 
 @Composable
