@@ -1,10 +1,11 @@
 package com.example.delivaryUser.common.domain.usecase
 
-import android.util.Log
 import com.example.delivaryUser.common.data.DelivaryUserException
 import com.example.delivaryUser.common.domain.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
 
 abstract class BaseUseCase<out Domain, in Body> {
@@ -17,7 +18,7 @@ abstract class BaseUseCase<out Domain, in Body> {
     }.catch { exception ->
         emit(handleFailure(exception))
         emit(Resource.Loading(isLoading = false))
-    }
+    }.flowOn(Dispatchers.IO)
 
     suspend fun <Domain> nonFlowExecute(codeBlock: suspend () -> Domain) = runCatching {
         val result = codeBlock.invoke()
