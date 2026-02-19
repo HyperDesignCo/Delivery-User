@@ -39,11 +39,10 @@ class TrackOrderViewModel(
         }
     }
 
-    private fun loadOrderDetails() =
-        viewModelScope.launch {
-            orderDetails.invoke(body = route.id)
-                .collectResource(onSuccess = ::loadOrderDetailsSuccess, onLoading = ::onLoading)
-        }
+    private fun loadOrderDetails() = viewModelScope.launch {
+        orderDetails.invoke(body = route.id)
+            .collectResource(onSuccess = ::loadOrderDetailsSuccess, onLoading = ::onLoading)
+    }
 
     private fun loadOrderDetailsSuccess(order: Order) {
         orderId = order.id
@@ -52,15 +51,15 @@ class TrackOrderViewModel(
                 order = state.value.order.copy(
                     status = order.orderStatus,
                     id = order.id.toOrderId(),
-                    price = order.deliveryPrice,
-                    totalPrice = order.totalOrderPrice,
-                    estimatedPrice = order.orderPrice,
+                    price = order.deliveryPrice.toCurrency(),
+                    totalPrice = order.totalOrderPrice.toCurrency(),
+                    estimatedPrice = order.orderPrice.toCurrency(),
                 ),
                 delivery = state.value.delivery.copy(
                     id = order.deliveryId,
                     name = order.deliveryName,
                     number = order.deliveryPhone,
-                    price = order.deliveryFees,
+                    price = order.deliveryFees.toCurrency(),
                     time = order.deliveryTime.toDeliverYTime(),
                     chatId = order.chatId,
                     latitude = order.deliveryLatitude,
@@ -80,11 +79,9 @@ class TrackOrderViewModel(
         }
     }
 
-
     private fun onBackClicked() = viewModelScope.launch {
         fireNavigateUp()
     }
-
 
     private fun onCallDriverClicked() = viewModelScope.launch {
         val phoneNumber = state.value.delivery.number
@@ -114,8 +111,9 @@ class TrackOrderViewModel(
 
     private fun Int.toOrderId(): String = "#".plus(this)
 
-    private fun String.toDeliverYTime(): String =
-        this.plus(context.getString(R.string.minutes))
+    private fun String.toCurrency(): String = this.plus(context.getString(R.string.egp))
+
+    private fun String.toDeliverYTime(): String = this.plus(context.getString(R.string.minutes))
 
 
 }
