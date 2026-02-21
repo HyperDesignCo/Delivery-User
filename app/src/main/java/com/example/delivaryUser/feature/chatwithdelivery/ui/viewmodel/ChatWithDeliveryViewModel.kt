@@ -56,7 +56,7 @@ class ChatWithDeliveryViewModel(
             }
 
             ChatWithDeliveryContract.Action.SendMessageClicked -> {
-                sendMessage()
+                sendMessageClicked()
             }
 
             ChatWithDeliveryContract.Action.OnCallDriverClicked -> onCallDriverClicked()
@@ -87,7 +87,7 @@ class ChatWithDeliveryViewModel(
         fireNavigateUp()
     }
 
-    private fun sendMessage() {
+    private fun sendMessageClicked() {
         val messageText = state.value.message.value
 
         if (messageText.isBlank()) {
@@ -95,7 +95,9 @@ class ChatWithDeliveryViewModel(
         }
 
         val addMessageRequest = UserAddMessageRequest(
-            chatId = state.value.chatId, deliveryId = deliveryIdVar, message = messageText
+            chatId = if (route.isNewChat) state.value.chatId else chatIdVar,
+            deliveryId = deliveryIdVar,
+            message = messageText
         )
 
         viewModelScope.launch {

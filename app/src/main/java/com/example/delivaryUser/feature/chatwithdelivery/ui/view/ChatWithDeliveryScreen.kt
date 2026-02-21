@@ -31,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.example.delivaryUser.R
 import com.example.delivaryUser.common.ui.components.bars.topbar.DelivaryUserTopBar
+import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import com.example.delivaryUser.feature.chatwithdelivery.ui.components.ChatInputField
 import com.example.delivaryUser.feature.chatwithdelivery.ui.components.ChatMessageBubble
@@ -123,4 +124,10 @@ fun ChatWithDeliveryContent(
 
         })
     }
+}
+
+@Composable
+@PreviewAllVariants
+private fun ChatWithDeliveryContentPreview() = DelivaryUserTheme {
+    ChatWithDeliveryContent(state = ChatWithDeliveryContract.State(), action = {})
 }

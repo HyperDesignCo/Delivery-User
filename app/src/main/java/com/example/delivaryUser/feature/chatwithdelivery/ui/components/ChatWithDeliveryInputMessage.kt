@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.delivaryUser.R
+import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.components.textfield.DelivaryUserTextInputField
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 
@@ -75,4 +76,10 @@ fun ChatInputField(
             )
         }
     }
+}
+
+@Composable
+@PreviewAllVariants
+private fun ChatInputFieldPreview() = DelivaryUserTheme {
+    ChatInputField(messageValue = "Hello", onMessageChange = {}, onSendClick = {})
 }

@@ -33,8 +33,7 @@ fun TrackOrderDeliveryHeader(
             .fillMaxWidth()
             .background(DelivaryUserTheme.colors.background.surfaceHigh)
             .padding(horizontal = 16.dp)
-            .padding(top = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
             text = stringResource(R.string.delivery_to),
@@ -49,7 +48,7 @@ fun TrackOrderDeliveryHeader(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 error = painterResource(R.drawable.img_default_user_account),
-                model = client.image.ifEmpty { R.drawable.img_default_user_account },
+                model = client.image,
                 placeholder = painterResource(R.drawable.img_default_user_account),
             )
             Column {
@@ -77,8 +76,7 @@ fun TrackOrderDeliveryHeader(
 private fun TrackOrderDeliveryHeaderPreview() = DelivaryUserTheme {
     TrackOrderDeliveryHeader(
         client = TrackOrderContract.Client(
-            name = "Youssef Mahmoud",
-            address = "22 , Street 11, El Sheikh Zayed - El Hay 1"
+            name = "Youssef Mahmoud", address = "22 , Street 11, El Sheikh Zayed - El Hay 1"
         )
     )
 }

@@ -13,6 +13,7 @@ sealed interface TrackOrderContract {
         val order: OrderState = OrderState(),
         val delivery: DeliveryState = DeliveryState(),
         val client: Client = Client(),
+        val isDataReady: Boolean = false
     )
 
     data class OrderState(
@@ -25,7 +26,7 @@ sealed interface TrackOrderContract {
     )
 
     data class DeliveryState(
-        val id :String = "",
+        val id: String = "",
         val name: String = "",
         val number: String = "",
         val price: String = "",

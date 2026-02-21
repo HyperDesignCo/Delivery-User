@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import com.example.delivaryUser.feature.chatwithdelivery.ui.viewmodel.ChatWithDeliveryContract
 
@@ -60,7 +61,8 @@ fun ChatMessageBubble(
                 Column {
                     Text(
                         text = message.message,
-                        color = if (isCurrentUser) DelivaryUserTheme.colors.background.surfaceHigh
+                        color = if (isCurrentUser)
+                            DelivaryUserTheme.colors.background.surfaceHigh
                         else DelivaryUserTheme.colors.secondary,
                         style = DelivaryUserTheme.typography.body.large,
                         modifier = Modifier.fillMaxWidth()
@@ -81,4 +83,10 @@ fun ChatMessageBubble(
             }
         }
     }
+}
+
+@Composable
+@PreviewAllVariants
+private fun ChatMessageBubblePreview() = DelivaryUserTheme {
+    ChatMessageBubble(message = ChatWithDeliveryContract.ChatWithDeliveryUiState())
 }

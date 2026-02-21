@@ -1,5 +1,7 @@
 package com.example.delivaryUser.feature.trackorder.ui.view
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -9,14 +11,12 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.rememberBottomSheetScaffoldState
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.delivaryUser.common.ui.components.bars.topbar.DelivaryUserTopBar
@@ -25,14 +25,12 @@ import com.example.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.example.delivaryUser.common.ui.theme.DelivaryUserTheme
 import com.example.delivaryUser.feature.orders.base.domain.models.domain.OrderStatus
 import com.example.delivaryUser.feature.orders.base.ui.asString
-import com.example.delivaryUser.feature.trackorder.ui.components.TrackOrderDeliveryHeader
 import com.example.delivaryUser.feature.trackorder.ui.components.DeliverySteps
 import com.example.delivaryUser.feature.trackorder.ui.components.MapSection
 import com.example.delivaryUser.feature.trackorder.ui.components.OrderDetailsSheetContent
-import com.example.delivaryUser.feature.trackorder.ui.utilies.parseLatLng
+import com.example.delivaryUser.feature.trackorder.ui.components.TrackOrderDeliveryHeader
 import com.example.delivaryUser.feature.trackorder.ui.viewmodel.TrackOrderContract
 import com.example.delivaryUser.feature.trackorder.ui.viewmodel.TrackOrderViewModel
-import com.google.android.gms.maps.model.LatLng
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -68,7 +66,7 @@ fun TrackOrderContent(
         sheetContent = {
             OrderDetailsSheetContent(
                 deliveryName = state.delivery.name,
-                deliveryImg = "",
+                deliveryImg = state.delivery.image,
                 deliveryFee = state.delivery.price,
                 totalPrice = state.order.totalPrice,
                 orderId = state.order.id,
@@ -83,8 +81,7 @@ fun TrackOrderContent(
         DelivaryUserScreen(
             header = {
                 DelivaryUserTopBar(onStartIconClicked = { action(TrackOrderContract.Action.OnBackClicked) })
-            },
-            contentScrollState = rememberScrollState()
+            }, contentScrollState = rememberScrollState()
         ) {
             TrackOrderDetails(
                 client = state.client,
@@ -92,36 +89,20 @@ fun TrackOrderContent(
                 orderStatus = state.order.status
             )
 
-            val driverLocation = parseLatLng(
-                state.delivery.latitude,
-                state.delivery.longitude
-            )
-
-            val startClientLocation = parseLatLng(
-                state.client.startLatitude,
-                state.client.startLongitude
-            )
-
-            val endClientLocation = parseLatLng(
-                state.client.endLatitude,
-                state.client.endLongitude
-            )
-
             MapSection(
-                driverLocation = driverLocation,
+                delivery = state.delivery,
                 orderType = state.order.type,
-                startClientLocation = startClientLocation,
-                endClientLocation = endClientLocation
+                client = state.client,
+                isDataReady = state.isDataReady
             )
 
         }
     }
 }
+
 @Composable
 private fun TrackOrderDetails(
-    client: TrackOrderContract.Client,
-    orderStatus: OrderStatus,
-    deliveryTime: String
+    client: TrackOrderContract.Client, orderStatus: OrderStatus, deliveryTime: String
 ) {
     TrackOrderDeliveryHeader(client = client)
     HorizontalDivider(
@@ -132,14 +113,12 @@ private fun TrackOrderDetails(
         thickness = 5.dp
     )
     DeliverySteps(
-        currentStep = orderStatus,
-        orderState = orderStatus.asString(),
-        time = deliveryTime
+        currentStep = orderStatus, orderState = orderStatus.asString(), time = deliveryTime
     )
 }
 
-@PreviewAllVariants
 @Composable
+@PreviewAllVariants
 private fun TrackOrderContentPreview() = DelivaryUserTheme {
     TrackOrderContent(
         state = TrackOrderContract.State(), action = {})

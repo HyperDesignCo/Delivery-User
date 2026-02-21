@@ -48,12 +48,14 @@ class TrackOrderViewModel(
         orderId = order.id
         updateState {
             copy(
+                isDataReady = order.deliveryLatitude.isNotEmpty() && order.deliveryLongitude.isNotEmpty(),
                 order = state.value.order.copy(
                     status = order.orderStatus,
                     id = order.id.toOrderId(),
                     price = order.deliveryPrice.toCurrency(),
                     totalPrice = order.totalOrderPrice.toCurrency(),
                     estimatedPrice = order.orderPrice.toCurrency(),
+                    type = order.orderType
                 ),
                 delivery = state.value.delivery.copy(
                     id = order.deliveryId,
