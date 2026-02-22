@@ -7,6 +7,7 @@ sealed interface TrackOrderContract {
         data object OnBackClicked : Action
         data object OnCallDriverClicked : Action
         data object OnChatWithDriverClicked : Action
+        data object OnCancelOrderClicked : Action
     }
 
     data class State(

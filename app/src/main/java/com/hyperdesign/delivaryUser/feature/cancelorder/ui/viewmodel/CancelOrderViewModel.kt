@@ -55,7 +55,12 @@ class CancelOrderViewModel(
                     )
                 )
                 closeDialog()
-                fireNavigateUp()
+                fireNavigate(IMainGraph.Home, builder = {
+                    popUpTo(0) {
+                        saveState = true
+                        inclusive = true
+                    }
+                })
             })
         }
     }
