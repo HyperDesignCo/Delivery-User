@@ -5,7 +5,7 @@ import com.example.delivaryUser.service.location.data.entity.LocationEntity
 import com.example.delivaryUser.service.location.data.model.dto.LocationDto
 import com.example.delivaryUser.service.location.domain.model.Location
 
-object AddressMapper : Mapper<LocationDto, Location, LocationEntity>() {
+object LocationMapper : Mapper<LocationDto, Location, LocationEntity>() {
     override fun dtoToDomain(model: LocationDto): Location = Location(
         currentArea = model.currentArea.orEmpty(),
         currentRegion = model.currentRegion.orEmpty(),
@@ -29,5 +29,13 @@ object AddressMapper : Mapper<LocationDto, Location, LocationEntity>() {
         currentAreaName = model.currentAreaName,
         currentRegionName = model.currentRegionName,
         currentAreaDeliveryCost = model.currentAreaDeliveryCost
+    )
+
+    override fun domainToEntity(model: Location): LocationEntity = LocationEntity(
+        currentArea = model.currentArea,
+        currentRegion = model.currentRegion,
+        currentAreaName = model.currentAreaName,
+        currentAreaDeliveryCost = model.currentAreaDeliveryCost,
+        currentRegionName = model.currentRegionName
     )
 }

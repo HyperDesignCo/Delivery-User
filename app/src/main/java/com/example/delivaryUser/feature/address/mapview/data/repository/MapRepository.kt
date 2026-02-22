@@ -4,12 +4,10 @@ import android.Manifest
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
-import android.util.Log
 import androidx.annotation.RequiresPermission
 import com.example.delivaryUser.feature.address.mapview.domain.repository.IMapRepository
 import com.example.delivaryUser.feature.address.mapview.domain.repository.local.IMapLocalDataSource
 import com.example.delivaryUser.feature.address.mapview.ui.helper.buildAddressString
-import com.example.delivaryUser.service.location.domain.model.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
@@ -87,13 +85,6 @@ class MapRepository(
 
     }
 
-    override suspend fun checkLocationDelivery(
-        latitude: String,
-        longitude: String,
-        callback: (deliveryStatus: String, currentRestaurantBranch: String?, areaId: String) -> Unit
-    ) {
-        // TODO: Implement when API is ready
-    }
 
     override suspend fun isFirstLaunch(): Boolean {
         return local.isFirstLaunch()
@@ -106,10 +97,4 @@ class MapRepository(
 
     }
 
-    override suspend fun saveLocationResponse(locationResponse: Location) {
-        local.saveLocationResponse(locationResponse)
-    }
-
-    override suspend fun getSavedLocationResponse(): Location =
-        local.getSavedLocationResponse()
 }

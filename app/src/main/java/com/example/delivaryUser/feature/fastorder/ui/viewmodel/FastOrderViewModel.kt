@@ -16,13 +16,16 @@ import com.example.delivaryUser.feature.fastorder.domain.interactors.CreateFastO
 import com.example.delivaryUser.service.address.domain.interactors.GetSenderAddress
 import com.example.delivaryUser.service.address.domain.models.domain.Address
 import com.example.delivaryUser.service.location.data.model.request.CheckLocationRequest
+import com.example.delivaryUser.service.location.domain.LocationResult
 import com.example.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
+import com.example.delivaryUser.service.location.domain.interactors.ResolveLocationUseCase
 import com.example.delivaryUser.service.location.domain.model.Location
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 
 class FastOrderViewModel(
     val currentAddress: GetSavedLocationUseCase,
-    val checkLocation: CheckLocationUseCase,
+    private val resolveLocationUseCase: ResolveLocationUseCase,
     val getLocation: GetSenderAddress,
     val checkOut: CreateFastOrderUseCase,
 ) :
@@ -47,69 +50,65 @@ class FastOrderViewModel(
     }
 
     private fun init() {
-        getCurrentAddress()
+        getCurrentLocation()
         getLocation()
     }
 
-    private fun getCurrentAddress() {
+    private fun getCurrentLocation() {
         viewModelScope.launch {
-            currentAddress.invoke(body = Unit).collectResource(onSuccess = {
-                longitude = it?.longitude.orEmpty()
-                latitude = it?.latitude.orEmpty()
-                checkLocation(
-                    latitude = it?.latitude.orEmpty(),
-                    longitude = it?.longitude.orEmpty()
-                )
-            })
-        }
-    }
-
-    private fun checkLocation(latitude: Double, longitude: Double) {
-        val request = CheckLocationRequest(latitude = latitude.toString(), longitude = longitude.toString())
-        viewModelScope.launch {
-            checkLocation.invoke(body = request).collectResource(onSuccess = {
-                onCheckLocationSuccess(location = it.data)
-            })
-        }
-    }
-
-    private fun onCheckLocationSuccess(location: Location) {
-        if (location.currentRegion.isEmpty() || location.currentArea.isEmpty()) {
-            fireNavigate(
-                IMainGraph.DeliveryOutZone(
-                    latitude = latitude,
-                    longitude = longitude,
-                )
+            currentAddress.invoke(Unit).collectResource(
+                onSuccess = { latLng ->
+                    latLng?.let { resolveLocation(it) }
+                }
             )
-            updateState {
-                copy(deliveryCost = deliveryCost)
-            }
+        }
+    }
+
+    private fun resolveLocation(latLng: LatLng) {
+        viewModelScope.launch {
+            resolveLocationUseCase.invoke(latLng).collectResource(
+                onSuccess = { result ->
+                    when (result) {
+                        is LocationResult.LocationFound -> {
+                            latitude = result.savedLatLng.latitude
+                            longitude = result.savedLatLng.longitude
+                        }
+
+                        is LocationResult.OutOfZone -> {
+                            fireNavigate(
+                                IMainGraph.DeliveryOutZone(
+                                    latitude = result.latitude,
+                                    longitude = result.longitude,
+                                )
+                            )
+                        }
+
+                        LocationResult.SameLocation -> Unit
+                    }
+                }
+            )
         }
     }
 
     private fun getLocation() {
         viewModelScope.launch {
-            getLocation.invoke(body = Unit).collectResource(onSuccess = {
-                displaySavedLocation(
-                    it
-                )
-            })
+            getLocation.invoke(Unit).collectResource(
+                onSuccess = { displaySavedLocation(it) }
+            )
         }
     }
 
     private fun displaySavedLocation(savedLocation: Address) {
-        val regionName = savedLocation.region
-        val areaName = savedLocation.area
-        val displayLocation = "$regionName,$areaName"
         updateState {
-            copy(location = displayLocation, addressId = savedLocation.id)
+            copy(
+                location = "${savedLocation.region},${savedLocation.area}",
+                addressId = savedLocation.id
+            )
         }
     }
 
     private fun orderDetailsChanged(orderDetails: String) {
-        updateState {
-            copy(orderDetails = orderDetails)
-        }
+        updateState { copy(orderDetails = orderDetails) }
     }
 
     private fun onFileSelected(imageUri: Uri, imageFile: File) {
@@ -128,9 +127,7 @@ class FastOrderViewModel(
 
     private fun onImageRemovedClicked(index: Int) {
         updateState {
-            val newImages = images.toMutableList().apply {
-                removeAt(index)
-            }
+            val newImages = images.toMutableList().apply { removeAt(index) }
             copy(images = newImages)
         }
     }
@@ -144,15 +141,17 @@ class FastOrderViewModel(
             deliveryCost = state.value.deliveryCost,
         )
         viewModelScope.launch {
-            checkOut.invoke(body = request).collectResource(onSuccess = {
-                fireMessage(
-                    IMessageEvent.Snackbar(
-                        message = UIText.StringResource(R.string.we_received_order),
-                        messageType = MessageType.SUCCESS
+            checkOut.invoke(request).collectResource(
+                onSuccess = {
+                    fireMessage(
+                        IMessageEvent.Snackbar(
+                            message = UIText.StringResource(R.string.we_received_order),
+                            messageType = MessageType.SUCCESS
+                        )
                     )
-                )
-                fireNavigateUp()
-            })
+                    fireNavigateUp()
+                }
+            )
         }
     }
 }

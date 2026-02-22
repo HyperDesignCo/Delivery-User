@@ -1,5 +1,6 @@
 package com.example.delivaryUser.feature.address.saveaddress.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
@@ -10,7 +11,6 @@ import com.example.delivaryUser.common.ui.loading.ILoadingEvent
 import com.example.delivaryUser.common.ui.navigation.IMainGraph
 import com.example.delivaryUser.common.ui.navigation.IOrderGraph
 import com.example.delivaryUser.common.ui.viewmodel.BaseViewModel
-import com.example.delivaryUser.feature.address.mapview.domain.interactors.GetLocationResponseUseCase
 import com.example.delivaryUser.feature.address.mapview.domain.interactors.GetSavedLocationUseCase
 import com.example.delivaryUser.feature.address.saveaddress.domain.interactors.SaveAddressUseCase
 import com.example.delivaryUser.feature.pointtopoint.ui.components.AddressType
@@ -18,12 +18,13 @@ import com.example.delivaryUser.service.address.data.models.request.AddAddressRe
 import com.example.delivaryUser.service.address.domain.interactors.SaveRecipientAddressUseCase
 import com.example.delivaryUser.service.address.domain.interactors.SaveSenderAddressUseCase
 import com.example.delivaryUser.service.address.domain.models.domain.Address
+import com.example.delivaryUser.service.location.domain.interactors.GetLocationCheckUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SaveAddressViewModel(
     private val saveAddress: SaveAddressUseCase,
-    private val getLocationRemote: GetLocationResponseUseCase,
+    private val getLocationRemote: GetLocationCheckUseCase,
     private val getLocationLocal: GetSavedLocationUseCase,
     private val saveSenderAddress: SaveSenderAddressUseCase,
     savedStateHandle: SavedStateHandle,
@@ -124,12 +125,13 @@ class SaveAddressViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             getLocationRemote.invoke(Unit).collectResource(
                 onSuccess = { locationResponse ->
+                    Log.d("locationressponse",locationResponse.currentRegion.toString())
                     updateState {
                         copy(
-                            region = region.copy(value = locationResponse?.currentRegionName.toString()),
-                            area = area.copy(value = locationResponse?.currentAreaName.toString()),
-                            regionId = locationResponse?.currentRegion.toString(),
-                            areaId = locationResponse?.currentArea.toString()
+                            region = region.copy(value = locationResponse.currentRegionName),
+                            area = area.copy(value = locationResponse.currentAreaName),
+                            regionId = locationResponse.currentRegion,
+                            areaId = locationResponse.currentArea
                         )
                     }
                 })

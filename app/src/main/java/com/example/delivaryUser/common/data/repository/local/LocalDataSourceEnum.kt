@@ -14,5 +14,5 @@ enum class LocalDataSourceEnum(override val keyValue: String) : ILocalDataSource
     PASSWORD("password"),
     SAVED_LOCATION("saved_location"),
     FIRST_LAUNCH_COMPLETE("first_launch_complete"),
-    SAVED_LOCATION_RESPONSE("saved_location_response")
+    CHECK_LOCATION_RESPONSE("check_location_response")
 }
