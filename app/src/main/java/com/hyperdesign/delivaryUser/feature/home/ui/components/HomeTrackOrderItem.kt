@@ -55,6 +55,7 @@ fun HomeTrackOrderItem(
         verticalArrangement = Arrangement.spacedBy(30.dp)
     ) {
         HomeTrackOrderItemOrderMainData(orderStatus = orderStatus, orderId = orderId)
+        if (userName.isNotEmpty())
         HomeTrackOrderItemDeliveryMainData(
             image = image,
             userName = userName,

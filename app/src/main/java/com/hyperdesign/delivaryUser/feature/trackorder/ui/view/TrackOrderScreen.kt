@@ -72,7 +72,7 @@ fun TrackOrderContent(
                 orderId = state.order.id,
                 onCallClicked = { action(TrackOrderContract.Action.OnCallDriverClicked) },
                 onChatClicked = { action(TrackOrderContract.Action.OnChatWithDriverClicked) },
-                onCancelClick = {},
+                onCancelClick = { action(TrackOrderContract.Action.OnCancelOrderClicked)},
                 priceOfUser = state.order.estimatedPrice,
                 orderPrice = state.order.price,
                 modifier = Modifier.height(sheetHeight)

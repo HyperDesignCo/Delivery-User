@@ -36,6 +36,7 @@ class TrackOrderViewModel(
             is TrackOrderContract.Action.OnBackClicked -> onBackClicked()
             is TrackOrderContract.Action.OnCallDriverClicked -> onCallDriverClicked()
             is TrackOrderContract.Action.OnChatWithDriverClicked -> onChatWithDriverClicked()
+            TrackOrderContract.Action.OnCancelOrderClicked -> onCancelOrderClicked()
         }
     }
 
@@ -106,6 +107,9 @@ class TrackOrderViewModel(
             )
         )
     }
+
+    private fun onCancelOrderClicked() =
+        fireNavigate(IMainGraph.CancelOrder(orderId))
 
     private fun onLoading(isLoading: Boolean) {
         fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading))
