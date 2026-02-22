@@ -125,7 +125,6 @@ class SaveAddressViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             getLocationRemote.invoke(Unit).collectResource(
                 onSuccess = { locationResponse ->
-                    Log.d("locationressponse",locationResponse.currentRegion.toString())
                     updateState {
                         copy(
                             region = region.copy(value = locationResponse.currentRegionName),
