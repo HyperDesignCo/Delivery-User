@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <string name="unknown_error">حدث خطأ غير معروف</string>
+    <string name="something_wrong">حدث خطأ</string>
+    <string name="password_validation_message">كلمة المرور لازم تحتوي على حروف وأرقام وطولها لا يقل عن 8.</string>
+    <string name="phone_validation_message">من فضلك أدخل رقم هاتف صحيح.</string>
+    <string name="email_validation_message">البريد الإلكتروني يجب أن يكون من 8 إلى 50 حرف وبصيغة صحيحة.</string>
+    <string name="user_name_validation_message">الاسم يجب أن يكون من 3 إلى 50 حرف ويحتوي على حروف فقط بدون أرقام أو رموز.</string>
+    <string name="otp_validation_message">يجب أن يتكون الرمز من 4 أرقام.</string>
+    <string name="address_first_second_phone_must_be_different">يجب أن يكون الهاتف الأول والثاني مختلفين</string>
+    <!-- navigation bar -->
+    <string name="home">الرئيسيه</string>
+    <string name="notifications">اشعارات</string>
+    <string name="order">الطلب</string>
+    <string name="account">الحساب</string>
+    <!-- Login -->
+    <string name="password">كلمة المرور</string>
+    <string name="remember_me">تذكرني</string>
+    <string name="forgot_password">نسيت كلمة المرور؟</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="welcome_back">مرحباً بعودتك</string>
+    <string name="do_not_have_and_account">ليس لديك حساب؟</string>
+    <string name="register">التسجيل</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <!--Register -->
+    <string name="name">اسم المستخدم</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="have_account">لديك حساب بالفعل؟</string>
+    <string name="registered_successfully">تم التسجيل بنجاح!</string>
+    <string name="password_changed_successfully">تم تغيير كلمة المرور بنجاح</string>
+    <!--verify Otp -->
+    <string name="verify_otp">تحقق من OTP</string>
+    <string name="please_enter_the_otp_sent_to_your_phone_number">يرجى إدخال الرمز المكون من 4 أرقام الذي تم إرساله إلى بريدك الإلكتروني أو رقم هاتفك</string>
+    <string name="resend_code">إعادة إرسال الرمز</string>
+    <string name="verify">تحقق</string>
+    <!--Forget Password -->
+    <string name="forget_password">نسيت كلمة المرور</string>
+    <string name="please_enter_phone_number_to_send_code">يرجى إدخال بريدك الإلكتروني أو رقم هاتفك لتلقي رمز التحقق</string>
+    <string name="send_otp">إرسال OTP</string>
+    <!--change password-->
+    <string name="confirmation_password_does_not_match">كلمة مرور التأكيد لا تتطابق</string>
+    <string name="new_password">كلمة مرور جديدة</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="create_new_password">إنشاء كلمة مرور جديدة</string>
+    <string name="new_password_must_be_different">يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور المستخدمة سابقًا</string>
+    <string name="send">ارسال</string>
+    <!--Home -->
+    <string name="fast_order">طلب سريع</string>
+    <string name="order_with_ai">طلب بالذكاء الاصطناعي</string>
+    <string name="add_new_address">إضافة عنوان جديد</string>
+    <string name="new_order">طلب جديد</string>
+    <string name="point_to_point">من نقطة إلى نقطة</string>
+    <string name="track_order">تتبع الطلب</string>
+    <!--Orders -->
+    <string name="from">من</string>
+    <string name="egp">ج.م</string>
+    <string name="order_is_pending">الطلب قيد الانتظار</string>
+    <string name="order_is_accepted">الطلب مقبول</string>
+    <string name="order_is_placed">الطلب تم تقديمه</string>
+    <string name="order_is_cancelled">الطلب تم إلغاؤه</string>
+    <string name="order_is_on_the_way">الطلب في الطريق</string>
+    <string name="order_is_delivered">تم تسليم الطلب</string>
+    <string name="order_is_arrived">وصل الطلب</string>
+    <string name="order_list_empty">قائمة الطلبات فارغة</string>
+    <!--Order Details -->
+    <string name="order_details">تفاصيل الطلب</string>
+    <string name="order_number">رقم الطلب</string>
+    <string name="provider_name">اسم المزود</string>
+    <string name="client_name">اسم العميل</string>
+    <string name="delivery_name">اسم عامل  التوصيل</string>
+    <string name="delivery_number">رقم عامل  التوصيل</string>
+    <string name="order_price">سعر الطلب</string>
+    <string name="delivery">التسليم</string>
+    <string name="total">الإجمالي</string>
+    <string name="user_estimated_price">سعر الطلب المقدر من قبل المستخدم</string>
+    <!-- Address -->
+    <string name="save">حفظ</string>
+    <string name="addresses">العناوين</string>
+    <string name="address_saved_successfully">تم حفظ العنوان بنجاح</string>
+    <!-- Point to Point -->
+    <string name="where_is_it_going">الى أين سيتم إرساله؟</string>
+    <string name="choose_sender_address">اختر عنوان المرسل</string>
+    <string name="choose_recipient_Address">ختر عنوان المستلم</string>
+    <string name="order_type">نوع الطلب</string>
+    <string name="estimated_price">السعر التقديري</string>
+    <string name="comment">تعليق....</string>
+    <string name="delivery_fess">رسوم التوصيل</string>
+    <string name="checkout">الدفع</string>
+    <string name="order_purpose_validation">غرض الطلب يجب ألا يكون فارغًا</string>
+    <string name="sender_address_validation">يجب ألا يكون عنوان المرسل فارغًا</string>
+    <string name="recipient_address_validation">يجب ألا يكون عنوان المستلم فارغًا</string>
+    <string name="estimated_price_validation">يجب ألا يكون سعر الطلب المقدر فارغًا</string>
+    <string name="we_received_order">لقد تلقينا طلبك.</string>
+    <!-- Account -->
+    <string name="edit_account">تعديل الملف الشخصي</string>
+    <string name="my_orders">طلباتي</string>
+    <string name="get_help">احصل على المساعدة</string>
+    <string name="account_info">معلومات الحساب</string>
+    <string name="saved_location">الموقع المحفوظ</string>
+    <string name="language">اللغة</string>
+    <string name="english">الإنجليزية</string>
+    <string name="arabic">العربية</string>
+    <string name="logout">تسجيل الخروج</string>
+    <!-- Edit Account -->
+    <string name="edit">تعديل</string>
+    <string name="save_changes">حفظ التغييرات</string>
+    <string name="account_updated_successfully">تم تحديث الملف الشخصي بنجاح</string>
+    <!-- Language -->
+    <string name="apply">طبق</string>
+    <!--map-->
+    <string name="please_select_a_location_on_the_map">يرجى تحديد موقع على الخريطة</string>
+    <string name="choose_location">اختيار الموقع</string>
+    <string name="please_wait">يرجى الانتظار قليلاً</string>
+    <string name="search_for_a_location">ابحث عن موقع</string>
+    <string name="your_location_is_being_determined">جاري تحديد موقعك...</string>
+    <string name="we_need_your_location_to_can_access_this_screen">نحتاج إلى موقعك للوصول إلى هذه الشاشة</string>
+    <string name="location_permission_required">إذن الموقع مطلوب</string>
+    <string name="allow_permission">السماح بالإذن</string>
+    <string name="selected_address">الموقع المحدد:</string>
+    <!--Out Zone Delivery -->
+    <string name="outside_delivery_zone">خارج نطاق التوصيل</string>
+    <string name="do_not_deliver_to_your_area_yet">لا نقوم بالتوصيل إلى منطقتك حتى الآن، ولكن يمكنك التصويت لها لمساعدتنا في إعطائها أولوية عند توسيع خدماتنا. رأيك يساعدنا على التحسين!</string>
+    <string name="vote_for_this_location">صوّت لهذا الموقع</string>
+    <string name="change_location">تغيير الموقع</string>
+    <!-- Add Address -->
+    <string name="governorate">المحافظة</string>
+    <string name="area">المنطقة</string>
+    <string name="first_phone_number">رقم الهاتف الأول</string>
+    <string name="second_phone_number">رقم الهاتف الثاني</string>
+    <string name="street">الشارع</string>
+    <string name="building_number">رقم المبنى</string>
+    <string name="floor_number">رقم الدور</string>
+    <string name="apartment_number">رقم الشقة</string>
+    <string name="special_sign">علامة مميزة</string>
+    <string name="extra_info">معلومات إضافية</string>
+    <!-- Fast Order -->
+    <string name="add_order_specific_details">اضف تفاصيل الطلب هنا .....</string>
+    <string name="attach_image">إرفاق صورة</string>
+    <!--Chat with Ai -->
+    <string name="ai">الذكاء الاصطناعي</string>
+    <!-- Cancel Order -->
+    <string name="cancel_order">الغاء الطلب</string>
+    <string name="tell_us_why_to_cancel_order">أخبرنا لماذا تريد إلغاء الطلب</string>
+    <string name="cancel">الغاء</string>
+    <string name="sure_to_cancel">هل تريد إلغاء هذا الطلب؟</string>
+    <string name="keep">احتفظ</string>
+    <string name="order_canceled">تم إلغاء الطلب</string>
+    <!--Track Order-->
+    <string name="estimated_time_of_arrival">الوقت المتوقع للوصول</string>
+    <string name="is_your_delivery_hero_for_today">هو مندوب التوصيل الخاص بك اليوم</string>
+    <string name="order_from">الطلب من</string>
+    <string name="support">الدعم</string>
+    <string name="delivery_fee">تكلفة التوصيل</string>
+    <string name="open_map">فتح الخريطة</string>
+    <string name="driver_location">موقع المندوب</string>
+    <string name="price_of_user">سعر الطلب المقدر من قبل المستخدم</string>
+    <string name="price_order">سعر الطلب</string>
+    <string name="total_price">اجمالي السعر</string>
+    <string name="delivery_to">التسليم إلى</string>
+    <string name="minutes">د</string>
+    <string name="pending">قيد الانتظار</string>
+    <string name="accepted">مقبول</string>
+    <string name="on_the_way">في الطريق</string>
+    <string name="delivered">تم التسليم</string>
+    <string name="home_location">عنوان المنزل</string>
+    <string name="first_point">النقطة الاولي</string>
+    <string name="second_point">النقطة الثانية</string>
+    <string name="type_a_message">Type a message...</string>
+    <!-- Rate order -->
+    <string name="rate">تقييم</string>
+    <string name="we_received_your_rate">لقد استلمنا تقييمك، شكرًا لك!</string>
+</resources>

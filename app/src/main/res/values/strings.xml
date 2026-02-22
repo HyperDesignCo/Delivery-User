@@ -1,3 +1,175 @@
 <resources>
-    <string name="app_name">Delivary_User_Android</string>
+    <string name="app_name" translatable="false">DelivaryUser</string>
+
+    <!-- General -->
+    <string name="unknown_error">Unknown error occurred</string>
+    <string name="something_wrong">Something went wrong</string>
+    <string name="password_validation_message">Password must include letters and numbers and be at least 8 characters.</string>
+    <string name="phone_validation_message">Please enter a valid phone number.</string>
+    <string name="email_validation_message">Email must be between 8 and 50 characters and in a valid format.</string>
+    <string name="user_name_validation_message">Name must be 3–50 letters and contain only alphabetic characters.</string>
+    <string name="otp_validation_message">Code must be 4 digits.</string>
+    <string name="address_first_second_phone_must_be_different">First and second phone must be different</string>
+    <!-- navigation bar -->
+    <string name="home">Home</string>
+    <string name="notifications">Notifications</string>
+    <string name="order">Order</string>
+    <string name="account">Account</string>
+    <!-- Login -->
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="login">Login</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="do_not_have_and_account">Don\'t have an account?</string>
+    <string name="register">Register</string>
+    <string name="phone_number">Phone number</string>
+    <!--Register -->
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="have_account">Already has an account?</string>
+    <string name="registered_successfully">You have been successfully registered!</string>
+    <!--verify Otp -->
+    <string name="verify_otp">Verify OTP</string>
+    <string name="please_enter_the_otp_sent_to_your_phone_number">Please enter 4 digit code sent to your email or phone number</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="verify">Verify</string>
+    <!--Forget Password -->
+    <string name="forget_password">Forget Password</string>
+    <string name="please_enter_phone_number_to_send_code">Please enter your email or phone number to receive a verification code</string>
+    <string name="send_otp">Send OTP</string>
+    <!--change password-->
+    <string name="confirmation_password_does_not_match">Confirmation password does not match</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="create_new_password">Create New Password</string>
+    <string name="new_password_must_be_different">New password must be different from previously used password</string>
+    <string name="send">Send</string>
+    <string name="password_changed_successfully">Password successfully changed</string>
+    <!--Home -->
+    <string name="fast_order">Fast order</string>
+    <string name="order_with_ai">Order With Ai</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="new_order">New Order</string>
+    <string name="point_to_point">Point to Point</string>
+    <string name="track_order">Track order</string>
+    <!--Orders -->
+    <string name="from">From</string>
+    <string name="egp">EGP</string>
+    <string name="order_is_pending">Order is pending</string>
+    <string name="order_is_accepted">Order is accepted</string>
+    <string name="order_is_placed">Order is placed</string>
+    <string name="order_is_cancelled">Order is cancelled</string>
+    <string name="order_is_on_the_way">Order is on way</string>
+    <string name="order_is_delivered">Order is delivered</string>
+    <string name="order_is_arrived">Delivery arrived</string>
+    <string name="order_list_empty">Your order list is empty</string>
+    <!--Order Details -->
+    <string name="order_details">Order details</string>
+    <string name="order_number">Order number</string>
+    <string name="provider_name">Provider name</string>
+    <string name="client_name">Client name</string>
+    <string name="delivery_name">Delivery name</string>
+    <string name="delivery_number">Delivery number</string>
+    <string name="order_price">Order price</string>
+    <string name="delivery">Delivery</string>
+    <string name="total">Total</string>
+    <string name="user_estimated_price">User estimated order price</string>
+    <!-- Address -->
+    <string name="save">Save</string>
+    <string name="addresses">Addresses</string>
+    <string name="address_saved_successfully">Address saved successfully</string>
+    <!-- Point to Point -->
+    <string name="where_is_it_going">Where’s it going?</string>
+    <string name="choose_sender_address">Choose sender Address</string>
+    <string name="choose_recipient_Address">Choose recipient’s Address</string>
+    <string name="order_type">Order type</string>
+    <string name="estimated_price">Estimated price</string>
+    <string name="comment">Comment....</string>
+    <string name="delivery_fess">Delivery fess</string>
+    <string name="checkout">Checkout</string>
+    <string name="order_purpose_validation">Order purpose should not be empty</string>
+    <string name="sender_address_validation">Sender address should not be empty</string>
+    <string name="recipient_address_validation">Recipient address should not be empty</string>
+    <string name="estimated_price_validation">Estimated order price should not be empty</string>
+    <string name="we_received_order">We’ve received your order.</string>
+    <!-- Account -->
+    <string name="edit_account">Edit Profile</string>
+    <string name="my_orders">My Orders</string>
+    <string name="get_help">Get help</string>
+    <string name="account_info">Account info</string>
+    <string name="saved_location">Saved Location</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="logout">Log out</string>
+    <!-- Edit Account -->
+    <string name="edit">Edit</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="account_updated_successfully">Profile updated successfully</string>
+    <!-- Language -->
+    <string name="apply">Apply</string>
+    <!--map-->
+    <string name="please_select_a_location_on_the_map">Please select a location on the map</string>
+    <string name="choose_location">Choose Location</string>
+    <string name="search_for_a_location">Search for a location</string>
+    <string name="your_location_is_being_determined">Your location is being determined...</string>
+    <string name="selected_address">Selected Address:</string>
+    <string name="we_need_your_location_to_can_access_this_screen">We need your location to can access this screen</string>
+    <string name="location_permission_required">Location Permission Required</string>
+    <string name="allow_permission">Allow permission</string>
+    <string name="please_wait">Please wait a moment</string>
+    <!--Out Zone Delivery -->
+    <string name="outside_delivery_zone">Outside delivery zone</string>
+    <string name="do_not_deliver_to_your_area_yet">We don\'t deliver to your area yet, but you can vote for it to help us prioritize expanding our service. Your feedback helps us improve!</string>
+    <string name="vote_for_this_location">Vote for this location</string>
+    <string name="change_location">Change Location</string>
+    <!--Add Address -->
+    <string name="governorate">Governorate</string>
+    <string name="area">Area</string>
+    <string name="first_phone_number">First phone number</string>
+    <string name="second_phone_number">Second phone number</string>
+    <string name="street">Street</string>
+    <string name="building_number">Building number</string>
+    <string name="floor_number">Floor number</string>
+    <string name="apartment_number">Apartment number</string>
+    <string name="special_sign">Special sign</string>
+    <string name="extra_info">Extra info</string>
+    <!-- Fast Order -->
+    <string name="add_order_specific_details">Add order specific details here .....</string>
+    <string name="attach_image">Attach Image</string>
+    <!--Chat with Ai -->
+    <string name="ai" >AI</string>
+    <!-- Cancel Order -->
+    <string name="cancel_order">Cancel Order</string>
+    <string name="tell_us_why_to_cancel_order">Tell us why you want to cancel your order.</string>
+    <string name="cancel">Cancel</string>
+    <string name="sure_to_cancel">Cancel this order?</string>
+    <string name="keep">Keep</string>
+    <string name="order_canceled">The order has been canceled</string>
+    <!--Track Order-->
+    <string name="estimated_time_of_arrival">Estimated time of arrival</string>
+    <string name="is_your_delivery_hero_for_today">Your delivery hero for today</string>
+    <string name="order_from">Order From</string>
+    <string name="support">Support</string>
+    <string name="delivery_fee">"Delivery "</string>
+    <string name="open_map">open map</string>
+    <string name="driver_location">Driver Location</string>
+    <string name="price_of_user">Estimated order price from the user</string>
+    <string name="price_order">Price order</string>
+    <string name="total_price">Total price</string>
+    <string name="delivery_to">Delivery to</string>
+    <string name="minutes">M</string>
+    <string name="pending">Pending</string>
+    <string name="accepted">Accepted</string>
+    <string name="on_the_way">On the way</string>
+    <string name="delivered">Delivered</string>
+    <string name="home_location">Home Location</string>
+    <string name="first_point">First Point</string>
+    <string name="second_point">Second Point</string>
+    <string name="type_a_message">Type a message...</string>
+    <!-- Rate order -->
+    <string name="rate">Rate</string>
+    <string name="we_received_your_rate">We received your rating. Thank you!</string>
+
 </resources>

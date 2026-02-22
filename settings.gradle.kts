@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Delivary_User_Android"
 include(":app")
- 
