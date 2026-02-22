@@ -1,0 +1,164 @@
+package com.hyperdesign.delivaryUser.common.ui.viewmodel
+
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavOptionsBuilder
+import com.hyperdesign.delivaryUser.R
+import com.hyperdesign.delivaryUser.common.data.DelivaryUserException
+import com.hyperdesign.delivaryUser.common.domain.Resource
+import com.hyperdesign.delivaryUser.common.domain.exceptions.IErrorKeyEnum
+import com.hyperdesign.delivaryUser.common.domain.exceptions.RequestErrorKeyValues
+import com.hyperdesign.delivaryUser.common.ui.eventcontroller.IEventController
+import com.hyperdesign.delivaryUser.common.ui.extension.UIText
+import com.hyperdesign.delivaryUser.common.ui.extension.UIText.*
+import com.hyperdesign.delivaryUser.common.ui.language.ILanguageEvent
+import com.hyperdesign.delivaryUser.common.ui.loading.ILoadingEvent
+import com.hyperdesign.delivaryUser.common.ui.message.IMessageEvent
+import com.hyperdesign.delivaryUser.common.ui.message.MessageType
+import com.hyperdesign.delivaryUser.common.ui.navigation.IDestination
+import com.hyperdesign.delivaryUser.common.ui.navigation.INavigator
+import com.hyperdesign.delivaryUser.common.ui.urlhandler.IUrlEvent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.qualifier.named
+
+abstract class BaseViewModel<State, Action>(state: State) : ViewModel(), KoinComponent {
+    /** Because state flow always has a state even if the flow emits to it on the background stateflow will hold the latest value always
+    // Collect as StateWithLifeCycle collects the data not in the background
+    //With a regular Flow the value is lost:
+    //Flow emits value
+    //UI is in background → collectAsStateWithLifecycle stopped collecting
+    //Nobody is listening → emission is gone
+    //UI comes to foreground → gets NEXT emission, missed the previous one
+    //With StateFlow it is never lost:
+    //Flow emits value → StateFlow stores it
+    //UI is in background → collectAsStateWithLifecycle stopped collecting
+    //StateFlow holds the value waiting
+    //UI comes to foreground → StateFlow delivers the stored value immediately
+    App in background:
+    Flow emits → StateFlow receives and STORES the latest value
+    UI is not collecting → nobody reads it yet, but value is SAFE in StateFlow
+    App comes to foreground:
+    collectAsStateWithLifecycle resumes → reads the stored value from StateFlow
+    Value is never lost as long as it's the latest
+    But if multiple values emitted in background, only last one survives
+     */
+    private val _state = MutableStateFlow(state)
+    val state = _state.asStateFlow()
+    private val navigator: INavigator by inject()
+    private val messageEvent: IEventController<IMessageEvent> by inject(named("MessageEvent"))
+    private val loadingEvent: IEventController<ILoadingEvent> by inject(named("LoadingEvent"))
+    private val languageEvent: IEventController<ILanguageEvent> by inject(named("LanguageEvent"))
+    private val urlEvent: IEventController<IUrlEvent> by inject(named("UrlEvent"))
+    abstract fun onActionTrigger(action: Action)
+    fun updateState(update: State.() -> State) {
+        _state.update { it.update() }
+    }
+
+    fun fireLoading(loadingType: ILoadingEvent) = viewModelScope.launch { loadingEvent.emit(loadingType) }
+
+    fun fireMessage(messageType: IMessageEvent) = viewModelScope.launch { messageEvent.emit(messageType) }
+
+    fun fireNavigate(destination: IDestination, builder: NavOptionsBuilder.() -> Unit = {}) =
+        viewModelScope.launch { navigator.navigate(destination, builder = builder) }
+
+    suspend fun fireNavigateUp() {
+        navigator.navigateUp()
+    }
+
+    fun fireLanguageEvent(language: String) {
+        viewModelScope.launch {
+            languageEvent.emit(ILanguageEvent.ChangeLanguage(language))
+        }
+    }
+    fun fireUrlEvent(url: String) {
+        viewModelScope.launch {
+            urlEvent.emit(IUrlEvent.OpenUrl(url))
+        }
+    }
+    fun <Result> Flow<Resource<Result>>.collectResource(
+        onSuccess: suspend (Result) -> Unit = {},
+        onFailure: suspend (DelivaryUserException) -> Unit = {},
+        onLoading: suspend (Boolean) -> Unit = {},
+    ) = viewModelScope.launch {
+        this@collectResource.collect { resource ->
+            when (resource) {
+                is Resource.Failure -> {
+                    handleExceptions(resource.exception, ::onRequestValidation)
+                    onFailure(resource.exception)
+                }
+
+                is Resource.Loading -> onLoading(resource.isLoading)
+                is Resource.Success -> onSuccess(resource.model)
+            }
+        }
+    }
+
+    private fun handleExceptions(
+        exception: DelivaryUserException,
+        onRequestValidation: (Map<IErrorKeyEnum, UIText>) -> Unit = {},
+    ) {
+        when (exception) {
+            is DelivaryUserException.Client.ResponseValidation -> onRequestValidation(
+                exception.errors.mapValues { DynamicString(it.value) }
+            )
+
+            is DelivaryUserException.Client.UnAuthorized -> handleExceptionMessages(message = exception.message)
+
+            is DelivaryUserException.Client.Unhandled -> handleExceptionMessages(message = exception.message)
+
+            is DelivaryUserException.Local.IOOperation -> handleExceptionMessages(message = exception.message)
+
+            is DelivaryUserException.Local.RequestValidation -> {
+                onRequestValidation(
+                    exception.errors
+                        .mapValues { requestErrorMap[it.value] ?: StringResource(R.string.unknown_error) }
+                )
+            }
+
+            is DelivaryUserException.Local.Unhandled -> handleExceptionMessages(message = exception.message)
+
+            is DelivaryUserException.Network.Repeatable -> handleExceptionMessages(message = exception.message)
+
+            is DelivaryUserException.Network.Unhandled -> handleExceptionMessages(message = exception.message)
+
+            is DelivaryUserException.Server.InternalServerError -> handleExceptionMessages(message = exception.message)
+
+            is DelivaryUserException.UnKnown -> handleExceptionMessages(message = exception.message)
+            is DelivaryUserException.Client.NotFound -> handleExceptionMessages(message = exception.message)
+        }
+    }
+
+    open fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) {}
+
+    private fun handleExceptionMessages(message: String?) {
+        Log.d("TAG", "handleExceptionMessages: $message")
+        fireMessage(
+            messageType = IMessageEvent.Snackbar(
+                message = message?.let { UIText.DynamicString(it) }
+                    ?: UIText.StringResource(R.string.something_wrong),
+                messageType = MessageType.ERROR
+            )
+        )
+    }
+
+    companion object {
+        private val requestErrorMap = mapOf<RequestErrorKeyValues, UIText>(
+            RequestErrorKeyValues.PASSWORD_VALIDATION to UIText.StringResource(R.string.password_validation_message),
+            RequestErrorKeyValues.PHONE_VALIDATION to UIText.StringResource(R.string.phone_validation_message),
+            RequestErrorKeyValues.NAME_VALIDATION to UIText.StringResource(R.string.user_name_validation_message),
+            RequestErrorKeyValues.EMAIL_VALIDATION to UIText.StringResource(R.string.email_validation_message),
+            RequestErrorKeyValues.OTP_VALIDATION to UIText.StringResource(R.string.otp_validation_message),
+            RequestErrorKeyValues.CONFIRMATION_PASSWORD to UIText.StringResource(R.string.confirmation_password_does_not_match),
+            RequestErrorKeyValues.ADDRESS_FIRST_PHONE_VALIDATION to UIText.StringResource(R.string.phone_validation_message),
+            RequestErrorKeyValues.ADDRESS_SECOND_PHONE_VALIDATION to UIText.StringResource(R.string.phone_validation_message),
+            RequestErrorKeyValues.ADDRESS_SECOND_PHONE_VALIDATION_MUST_BE_DIFFERENT to UIText.StringResource(R.string.address_first_second_phone_must_be_different),
+        )
+    }
+}

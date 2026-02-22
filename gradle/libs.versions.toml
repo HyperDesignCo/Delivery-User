@@ -1,6 +1,6 @@
 [versions]
 #Build
-groupID = "com.example"
+groupID = "com.hyperdesign"
 subGroupID = "delivaryUser"
 agp = "8.13.2"
 kotlin = "2.3.0"
