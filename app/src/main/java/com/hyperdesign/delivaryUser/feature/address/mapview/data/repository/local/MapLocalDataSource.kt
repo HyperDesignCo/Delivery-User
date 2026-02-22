@@ -39,41 +39,7 @@ class MapLocalDataSource(
 
     }
 
-    override suspend fun saveLocationResponse(locationResponse: Location) {
-        val locationData = Location(
-            currentArea = locationResponse.currentArea,
-            currentRegion = locationResponse.currentRegion,
-            currentAreaName = locationResponse.currentAreaName,
-            currentRegionName = locationResponse.currentRegionName,
-            currentAreaDeliveryCost = locationResponse.currentAreaDeliveryCost,
-        )
-        val locationJsonString = json.encodeToString(Location.serializer(), locationData)
-        localProvider.save(
-            key = LocalDataSourceEnum.SAVED_LOCATION_RESPONSE, value = locationJsonString, type = String::class.java
-        )
-    }
 
-    override suspend fun getSavedLocationResponse(): Location {
-        val jsonString = localProvider.read(
-            key = LocalDataSourceEnum.SAVED_LOCATION_RESPONSE,
-            defaultValue = "",
-            type = String::class.java
-        )
-        return if (jsonString.isNotEmpty()) {
-            json.decodeFromString(
-                deserializer = Location.serializer(),
-                string = jsonString
-            )
-        } else {
-            Location(
-                currentArea = "",
-                currentAreaName = "",
-                currentAreaDeliveryCost = "",
-                currentRegion = "",
-                currentRegionName = ""
-            )
-        }
-    }
 
     override suspend fun setFirstLaunchComplete() {
 

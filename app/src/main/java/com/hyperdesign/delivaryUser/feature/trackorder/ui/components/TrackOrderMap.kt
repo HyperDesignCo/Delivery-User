@@ -87,7 +87,7 @@ fun MapSection(
 
 
                         when (orderType) {
-                            "1" -> {
+                            "3" -> {
 
                                 val homeMarkerBitmap = context.drawableToBitmap(
                                     R.drawable.img_home_user_location

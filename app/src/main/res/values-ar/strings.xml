@@ -57,7 +57,7 @@
     <string name="from">من</string>
     <string name="egp">ج.م</string>
     <string name="order_is_pending">الطلب قيد الانتظار</string>
-    <string name="order_is_accepted">لطلب مقبول</string>
+    <string name="order_is_accepted">الطلب مقبول</string>
     <string name="order_is_placed">الطلب تم تقديمه</string>
     <string name="order_is_cancelled">الطلب تم إلغاؤه</string>
     <string name="order_is_on_the_way">الطلب في الطريق</string>

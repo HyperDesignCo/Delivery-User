@@ -4,6 +4,12 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken
+import com.google.android.libraries.places.api.net.PlacesClient
 import com.hyperdesign.delivaryUser.BuildConfig
 import com.hyperdesign.delivaryUser.R
 import com.hyperdesign.delivaryUser.common.ui.extension.UIText
@@ -16,19 +22,12 @@ import com.hyperdesign.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.GetCurrentLocationUseCase
 import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.GetSavedLocationUseCase
 import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.ReverseGeocodeUseCase
-import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.SaveLocationResponseUseCase
 import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.SaveLocationUseCase
 import com.hyperdesign.delivaryUser.feature.pointtopoint.ui.components.AddressType
 import com.hyperdesign.delivaryUser.service.location.data.model.request.CheckLocationRequest
 import com.hyperdesign.delivaryUser.service.location.domain.interactors.CheckLocationUseCase
+import com.hyperdesign.delivaryUser.service.location.domain.interactors.SaveLocationCheckUseCase
 import com.hyperdesign.delivaryUser.service.location.domain.model.CheckLocation
-import com.hyperdesign.delivaryUser.service.location.domain.model.Location
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.AutocompleteSessionToken
-import com.google.android.libraries.places.api.net.PlacesClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -37,11 +36,11 @@ class MapViewModel(
     private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
     private val reverseGeocodeUseCase: ReverseGeocodeUseCase,
     private val saveLocationUseCase: SaveLocationUseCase,
-    private val savedLocationResponseUseCase: SaveLocationResponseUseCase,
+    private val savedLocationResponseUseCase: SaveLocationCheckUseCase,
     private val getSavedLocationUseCase: GetSavedLocationUseCase,
     private val checkLocationUseCase: CheckLocationUseCase,
     private val context: Context,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<MapContract.State, MapContract.Action>(
     state = MapContract.State()
 ) {
@@ -100,15 +99,13 @@ class MapViewModel(
                         savedLocationToApply = savedLatLng
                         updateState {
                             copy(
-                                currentLocation = savedLatLng,
-                                targetLocation = savedLatLng
+                                currentLocation = savedLatLng, targetLocation = savedLatLng
                             )
                         }
                     } else {
                         fetchCurrentUserLocation()
                     }
-                }
-            )
+                })
         }
     }
 
@@ -135,8 +132,7 @@ class MapViewModel(
 
             updateState {
                 copy(
-                    placesClient = placesClient,
-                    sessionToken = sessionToken
+                    placesClient = placesClient, sessionToken = sessionToken
                 )
             }
         }
@@ -263,9 +259,7 @@ class MapViewModel(
         val googleMap = state.value.googleMap
         if (googleMap != null) {
             googleMap.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(latLng, defaultZoom),
-                1000,
-                null
+                CameraUpdateFactory.newLatLngZoom(latLng, defaultZoom), 1000, null
             )
             viewModelScope.launch {
                 delay(1000)
@@ -278,9 +272,7 @@ class MapViewModel(
         val googleMap = state.value.googleMap
         if (googleMap != null && isValidLocation(currentUserLocation)) {
             googleMap.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(currentUserLocation, defaultZoom),
-                1000,
-                null
+                CameraUpdateFactory.newLatLngZoom(currentUserLocation, defaultZoom), 1000, null
             )
             updateState { copy(targetLocation = currentUserLocation) }
             viewModelScope.launch {
@@ -316,14 +308,11 @@ class MapViewModel(
         )
         viewModelScope.launch(Dispatchers.IO) {
             checkLocationUseCase.invoke(request).collectResource(
-                onLoading = ::loading,
-                onSuccess = { checkLocationResponse ->
+                onLoading = ::loading, onSuccess = { checkLocationResponse ->
                     getResponseOfCheckLocation(
-                        checkLocation = checkLocationResponse,
-                        targetLatLng = targetLatLng
+                        checkLocation = checkLocationResponse, targetLatLng = targetLatLng
                     )
-                }
-            )
+                })
         }
     }
 
@@ -335,7 +324,7 @@ class MapViewModel(
         updateState {
             copy(checkLocationResponse = checkLocation)
         }
-        if (checkLocation.data?.currentRegion.isNullOrEmpty() || checkLocation.data.currentArea.isNullOrEmpty()) {
+        if (checkLocation.data.currentRegion.isNullOrEmpty() || checkLocation.data.currentArea.isNullOrEmpty()) {
             fireNavigate(
                 IMainGraph.DeliveryOutZone(
                     latitude = targetLatLng.latitude,
@@ -343,26 +332,19 @@ class MapViewModel(
                 )
             )
         } else {
-            when (route.addressType) {
-                AddressType.SENDER -> {
-                    fireNavigate(IOrderGraph.SaveAddress(addressType = AddressType.SENDER))
-
-                }
-
-                AddressType.RECEIVER -> {
-                    fireNavigate(IOrderGraph.SaveAddress(addressType = AddressType.RECEIVER))
-
-                }
+            viewModelScope.launch(Dispatchers.IO) {
+                savedLocationResponseUseCase.invoke(body = checkLocation.data).collectResource(
+                    onSuccess = {
+                        when (route.addressType) {
+                            AddressType.SENDER -> fireNavigate(IOrderGraph.SaveAddress(addressType = AddressType.SENDER))
+                            AddressType.RECEIVER -> fireNavigate(IOrderGraph.SaveAddress(addressType = AddressType.RECEIVER))
+                        }
+                    }
+                )
             }
-            saveLocationResponse(checkLocation.data)
         }
     }
 
-    private fun saveLocationResponse(data: Location) {
-        viewModelScope.launch {
-            savedLocationResponseUseCase.invoke(body = data)
-        }
-    }
 
     private fun cameraIdleAtLocation(latLng: LatLng) {
         if (isValidLocation(latLng)) {
@@ -379,8 +361,7 @@ class MapViewModel(
             saveLocationUseCase.invoke(body = latLng).collectResource(
                 onSuccess = {
                     reverseGeocodeLocation(latLng)
-                }
-            )
+                })
         }
     }
 

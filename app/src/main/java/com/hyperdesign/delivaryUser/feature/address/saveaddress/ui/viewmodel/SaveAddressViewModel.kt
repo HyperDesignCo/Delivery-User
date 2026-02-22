@@ -10,7 +10,6 @@ import com.hyperdesign.delivaryUser.common.ui.loading.ILoadingEvent
 import com.hyperdesign.delivaryUser.common.ui.navigation.IMainGraph
 import com.hyperdesign.delivaryUser.common.ui.navigation.IOrderGraph
 import com.hyperdesign.delivaryUser.common.ui.viewmodel.BaseViewModel
-import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.GetLocationResponseUseCase
 import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.GetSavedLocationUseCase
 import com.hyperdesign.delivaryUser.feature.address.saveaddress.domain.interactors.SaveAddressUseCase
 import com.hyperdesign.delivaryUser.feature.pointtopoint.ui.components.AddressType
@@ -18,12 +17,13 @@ import com.hyperdesign.delivaryUser.service.address.data.models.request.AddAddre
 import com.hyperdesign.delivaryUser.service.address.domain.interactors.SaveRecipientAddressUseCase
 import com.hyperdesign.delivaryUser.service.address.domain.interactors.SaveSenderAddressUseCase
 import com.hyperdesign.delivaryUser.service.address.domain.models.domain.Address
+import com.hyperdesign.delivaryUser.service.location.domain.interactors.GetLocationCheckUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SaveAddressViewModel(
     private val saveAddress: SaveAddressUseCase,
-    private val getLocationRemote: GetLocationResponseUseCase,
+    private val getLocationRemote: GetLocationCheckUseCase,
     private val getLocationLocal: GetSavedLocationUseCase,
     private val saveSenderAddress: SaveSenderAddressUseCase,
     savedStateHandle: SavedStateHandle,
@@ -126,10 +126,10 @@ class SaveAddressViewModel(
                 onSuccess = { locationResponse ->
                     updateState {
                         copy(
-                            region = region.copy(value = locationResponse?.currentRegionName.toString()),
-                            area = area.copy(value = locationResponse?.currentAreaName.toString()),
-                            regionId = locationResponse?.currentRegion.toString(),
-                            areaId = locationResponse?.currentArea.toString()
+                            region = region.copy(value = locationResponse.currentRegionName),
+                            area = area.copy(value = locationResponse.currentAreaName),
+                            regionId = locationResponse.currentRegion,
+                            areaId = locationResponse.currentArea
                         )
                     }
                 })

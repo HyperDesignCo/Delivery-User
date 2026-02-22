@@ -1,13 +1,12 @@
 package com.hyperdesign.delivaryUser.service.location.data.mapper
 
 import com.hyperdesign.delivaryUser.common.data.mapper.Mapper
-import com.hyperdesign.delivaryUser.service.location.data.entity.CheckLocationEntity
-import com.hyperdesign.delivaryUser.service.location.data.entity.LocationEntity
 import com.hyperdesign.delivaryUser.service.location.data.model.dto.CheckLocationDto
 import com.hyperdesign.delivaryUser.service.location.domain.model.CheckLocation
 import com.hyperdesign.delivaryUser.service.location.domain.model.Location
 
-object CheckLocationMapper : Mapper<CheckLocationDto, CheckLocation, CheckLocationEntity>() {
+
+object CheckLocationMapper : Mapper<CheckLocationDto, CheckLocation, Unit>() {
     override fun dtoToDomain(model: CheckLocationDto): CheckLocation =
         CheckLocation(
             message = model.message.orEmpty(), data = Location(
@@ -19,11 +18,4 @@ object CheckLocationMapper : Mapper<CheckLocationDto, CheckLocation, CheckLocati
             )
         )
 
-    override fun dtoToEntity(model: CheckLocationDto): CheckLocationEntity =
-        CheckLocationEntity(
-            message = model.message.orEmpty(),
-            data = model.data?.let { AddressMapper.dtoToEntity(it) } as LocationEntity)
-
-    override fun entityToDomain(model: CheckLocationEntity): CheckLocation =
-        CheckLocation(message = model.message, data = model.data.let { AddressMapper.entityToDomain(it) })
 }

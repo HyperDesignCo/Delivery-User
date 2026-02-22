@@ -119,16 +119,18 @@ private fun OrderMainDate(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            if (stars.isNotBlank())
+            if (stars.isNotBlank()) {
+                val rating = stars.toFloatOrNull()?.toInt() ?: 0
                 for (i in 0..4) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_star),
                         contentDescription = null,
-                        tint = if (stars.toInt() > i) DelivaryUserTheme.colors.status.accentColor else DelivaryUserTheme.colors.background.hint.copy(
+                        tint = if (rating > i) DelivaryUserTheme.colors.status.accentColor else DelivaryUserTheme.colors.background.hint.copy(
                             alpha = 0.2f
                         )
                     )
                 }
+            }
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -140,6 +142,7 @@ private fun OrderMainDate(
                 style = DelivaryUserTheme.typography.body.small,
                 color = DelivaryUserTheme.colors.secondary
             )
+            if(orderPrice.isNotEmpty())
             Text(
                 text = stringResource(R.string.egp).plus(" ").plus(orderPrice),
                 style = DelivaryUserTheme.typography.title.large,

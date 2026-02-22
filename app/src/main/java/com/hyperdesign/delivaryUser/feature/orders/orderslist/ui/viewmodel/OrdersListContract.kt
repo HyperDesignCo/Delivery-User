@@ -1,5 +1,6 @@
 package com.hyperdesign.delivaryUser.feature.orders.orderslist.ui.viewmodel
 
+import com.hyperdesign.delivaryUser.common.ui.extension.formatDate
 import com.hyperdesign.delivaryUser.feature.orders.base.domain.models.domain.Order
 import com.hyperdesign.delivaryUser.feature.orders.base.domain.models.domain.OrderStatus
 import com.hyperdesign.delivaryUser.feature.orders.orderslist.ui.viewmodel.OrdersContract.DeliveryUiState
@@ -48,13 +49,12 @@ sealed interface OrdersContract {
 fun Order.toUiState() = OrderUiState(
     orderId = this.id,
     orderState = this.orderStatus,
-    orderDate = "Oct 13 . 11:56pm",
+    orderDate = this.createdAt.formatDate(),
     orderPrice = this.orderPrice,
     delivary = DeliveryUiState(
         deliveryName = this.deliveryName,
         deliveryImage = this.deliveryImage,
     ),
     provider = this.userName,
-    stars = this.deliveryRate
-
+    stars = if(this.deliveryRate == "0.0") "0" else this.deliveryRate
 )

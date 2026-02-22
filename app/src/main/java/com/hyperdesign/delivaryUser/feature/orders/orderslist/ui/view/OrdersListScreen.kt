@@ -38,6 +38,9 @@ fun OrdersScreen(viewModel: OrdersListViewModel = koinInject()) {
 @Composable
 private fun OrdersContent(state: OrdersContract.State, action: (OrdersContract.Action) -> Unit) {
     DelivaryUserScreen(
+        modifier = Modifier
+            .navigationBarsPadding()
+            .padding(bottom = 38.dp),
         header = {
             DelivaryUserTopBar(
                 endIcon = R.drawable.ic_menu,
