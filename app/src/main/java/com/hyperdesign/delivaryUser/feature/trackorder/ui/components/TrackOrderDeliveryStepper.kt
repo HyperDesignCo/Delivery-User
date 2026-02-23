@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +35,8 @@ data class StepItem(
     val label: String, val isCompleted: Boolean,
 )
 
+private val CIRCLE_ROW_HEIGHT = 32.dp
+
 @Composable
 fun DeliverySteps(
     currentStep: OrderStatus, orderState: String, time: String, modifier: Modifier = Modifier,
@@ -44,15 +47,13 @@ fun DeliverySteps(
         StepItem(stringResource(R.string.on_the_way), currentStep == OrderStatus.ON_WAY),
         StepItem(stringResource(R.string.delivered), currentStep == OrderStatus.DELIVERED)
     )
+
     Column(
         modifier = modifier
             .fillMaxWidth()
             .shadow(
                 elevation = 13.dp,
-                shape = RoundedCornerShape(
-                    bottomEnd = 20.dp,
-                    bottomStart = 20.dp
-                ),
+                shape = RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp),
                 clip = false
             )
             .background(
@@ -82,61 +83,82 @@ fun DeliverySteps(
             style = DelivaryUserTheme.typography.body.medium.copy(fontSize = 13.sp),
             color = DelivaryUserTheme.colors.secondary,
         )
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 32.dp)
-                .padding(horizontal = 16.dp)
-                .height(40.dp)
+                .padding(top = 24.dp, bottom = 16.dp)
+
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 30.dp)
                     .height(4.dp)
-                    .align(Alignment.Center)
-                    .background(
-                        color = DelivaryUserTheme.colors.background.disable,
-                        shape = RoundedCornerShape(2.dp)
-                    )
+                    .align(Alignment.TopCenter)
+                    .padding(top = 0.dp)
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Center),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                steps.forEachIndexed { index, _ ->
-                    StepCircle(
-                        isCompleted = index <= currentStep.ordinal,
-                        isActive = index == currentStep.ordinal
+
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(CIRCLE_ROW_HEIGHT)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(4.dp)
+                            .padding(horizontal = 30.dp)
+                            .align(Alignment.Center)
+                            .background(
+                                color = DelivaryUserTheme.colors.background.disable,
+                                shape = RoundedCornerShape(2.dp)
+                            )
                     )
-                }
-            }
-        }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 6.dp, bottom = 16.dp)
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            steps.forEachIndexed { index, step ->
-                Column(
-                    modifier = Modifier.weight(1f),
-
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.Center),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                    Text(
-                        text = step.label,
-                        style = DelivaryUserTheme.typography.title.small,
-                        color = when {
-                            index < currentStep.ordinal -> DelivaryUserTheme.colors.status.greenAccent
-                            index == currentStep.ordinal -> DelivaryUserTheme.colors.secondary
-                            else -> DelivaryUserTheme.colors.secondaryVariant
-                        },
+                        steps.forEachIndexed { index, _ ->
+                            Box(
+                                modifier = Modifier.width(60.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                StepCircle(
+                                    isCompleted = index <= currentStep.ordinal,
+                                    isActive = index == currentStep.ordinal
+                                )
+                            }
+                        }
+                    }
+                }
 
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 6.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    steps.forEachIndexed { index, step ->
+                        Text(
+                            text = step.label,
+                            style = DelivaryUserTheme.typography.title.small,
+                            color = when {
+                                index < currentStep.ordinal -> DelivaryUserTheme.colors.status.greenAccent
+                                index == currentStep.ordinal -> DelivaryUserTheme.colors.secondary
+                                else -> DelivaryUserTheme.colors.secondaryVariant
+                            },
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.width(60.dp)
                         )
+                    }
                 }
             }
         }
@@ -145,29 +167,45 @@ fun DeliverySteps(
 
 @Composable
 private fun StepCircle(
-    isCompleted: Boolean, isActive: Boolean, modifier: Modifier = Modifier,
+    isCompleted: Boolean,
+    isActive: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .size(19.dp)
-            .clip(CircleShape)
-            .background(
-                color = when {
-                    isActive -> DelivaryUserTheme.colors.status.redAccent
-                    isCompleted -> DelivaryUserTheme.colors.status.greenAccent
-                    else -> DelivaryUserTheme.colors.background.disable
-                }
-            ), contentAlignment = Alignment.Center
+        modifier = modifier.size(CIRCLE_ROW_HEIGHT), contentAlignment = Alignment.Center
     ) {
-        if (isCompleted || isActive) {
-            Image(
-                painter = painterResource(R.drawable.img_order_track_check),
-                contentDescription = null,
+        if (isActive) {
+            Box(
                 modifier = Modifier
-                    .width(12.dp)
-                    .height(10.dp),
-                contentScale = ContentScale.Fit
+                    .size(CIRCLE_ROW_HEIGHT)
+                    .clip(CircleShape)
+                    .background(
+                        color = DelivaryUserTheme.colors.status.redAccent.copy(alpha = 0.2f)
+                    )
             )
+        }
+        Box(
+            modifier = Modifier
+                .size(19.dp)
+                .clip(CircleShape)
+                .background(
+                    color = when {
+                        isActive -> DelivaryUserTheme.colors.status.redAccent
+                        isCompleted -> DelivaryUserTheme.colors.status.greenAccent
+                        else -> DelivaryUserTheme.colors.background.disable
+                    }
+                ), contentAlignment = Alignment.Center
+        ) {
+            if (isCompleted || isActive) {
+                Image(
+                    painter = painterResource(R.drawable.img_order_track_check),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .width(12.dp)
+                        .height(10.dp),
+                    contentScale = ContentScale.Fit
+                )
+            }
         }
     }
 }
@@ -176,9 +214,6 @@ private fun StepCircle(
 @Composable
 private fun DeliveryStepsPreview() = DelivaryUserTheme {
     DeliverySteps(
-        currentStep = OrderStatus.ON_WAY,
-        orderState = "Order is pending",
-        time = "7:15 PM"
+        currentStep = OrderStatus.ON_WAY, orderState = "Order is on the way", time = "7:15 PM"
     )
 }
-
