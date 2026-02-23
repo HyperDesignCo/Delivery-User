@@ -6,6 +6,7 @@ import com.hyperdesign.delivaryUser.common.domain.usecase.BaseUseCase
 import com.hyperdesign.delivaryUser.feature.authentication.base.domain.model.Authentication
 import com.hyperdesign.delivaryUser.feature.authentication.base.domain.repository.IAuthenticationRepository
 import com.hyperdesign.delivaryUser.feature.authentication.login.data.models.request.LoginRequest
+import com.hyperdesign.delivaryUser.service.fcm.FCMManager
 import kotlinx.coroutines.flow.Flow
 
 class LoginUseCase(private val repository: IAuthenticationRepository) :
@@ -13,6 +14,6 @@ class LoginUseCase(private val repository: IAuthenticationRepository) :
     override suspend fun invoke(body: LoginRequest): Flow<Resource<Authentication>> = flowExecute {
         val errors = body.validateFields()
         if (errors.isNotEmpty()) throw DelivaryUserException.Local.RequestValidation(errors = errors)
-        repository.login(body)
+        repository.login(body.copy(deviceToken = FCMManager.getDeviceToken().orEmpty()))
     }
 }

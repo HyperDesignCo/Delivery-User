@@ -171,4 +171,6 @@
     <!-- Rate order -->
     <string name="rate">تقييم</string>
     <string name="we_received_your_rate">لقد استلمنا تقييمك، شكرًا لك!</string>
+    <!--notifications -->
+    <string name="empty_notification"> لا توجد إشعارات</string>
 </resources>

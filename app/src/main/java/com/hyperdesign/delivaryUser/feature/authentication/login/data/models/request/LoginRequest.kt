@@ -13,6 +13,10 @@ data class LoginRequest(
     val phone: String,
     @SerialName("password")
     val password: String,
+    @SerialName("device_token")
+    val deviceToken: String= "",
+    @SerialName("device_type")
+    val deviceType: String,
     @Transient
     val rememberMe: Boolean = false
 ) {

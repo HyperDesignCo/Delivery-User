@@ -39,15 +39,18 @@ class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginCon
         val request = LoginRequest(
             phone = state.value.phone.value,
             password = state.value.password.value,
-            rememberMe = state.value.rememberMe
+            rememberMe = state.value.rememberMe,
+            deviceType = "android"
         )
         viewModelScope.launch {
             useCase.invoke(body = request).collectResource(
                 onSuccess = {
-                    fireMessage(IMessageEvent.Snackbar(
-                        UIText.StringResource(R.string.welcome_back),
-                        messageType = MessageType.SUCCESS
-                    ))
+                    fireMessage(
+                        IMessageEvent.Snackbar(
+                            UIText.StringResource(R.string.welcome_back),
+                            messageType = MessageType.SUCCESS
+                        )
+                    )
                     navigateToHome()
                 },
                 onLoading = {
@@ -56,6 +59,7 @@ class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginCon
             )
         }
     }
+
     private fun forgotPasswordClicked() = fireNavigate(IAuthGraph.ForgetPassword)
     private fun navigateToHome() = fireNavigate(IMainGraph.Home, builder = {
         popUpTo(0) {

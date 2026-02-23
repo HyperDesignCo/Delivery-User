@@ -72,7 +72,9 @@ foundation = "1.10.2"
 #WebView
 webkit = "1.15.0"
 
-
+#Firebase
+firebaseBom = "34.9.0"
+googleServices = "4.4.2"
 
 [libraries]
 #Compose
@@ -143,6 +145,10 @@ androidx-compose-foundation = { group = "androidx.compose.foundation", name = "f
 #Web View
 androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
 
+#Firebase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 
 [plugins]
 #Build
@@ -159,3 +165,6 @@ kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 google-android-libraries-mapsplatform-secrets-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "googleAndroidLibrariesMapsplatformSecretsGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+#Google Services
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
