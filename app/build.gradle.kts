@@ -4,13 +4,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    alias(libs.plugins.google.services)
 }
 
 android {
     namespace = libs.versions.groupID.get().plus(".").plus(libs.versions.subGroupID.get())
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = libs.versions.groupID.get().plus(".").plus(libs.versions.subGroupID.get())
@@ -116,4 +115,9 @@ dependencies {
 
     //Web view
     implementation(libs.androidx.webkit)
+
+    //Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.messaging)
 }

@@ -10,6 +10,7 @@
     <string name="user_name_validation_message">Name must be 3–50 letters and contain only alphabetic characters.</string>
     <string name="otp_validation_message">Code must be 4 digits.</string>
     <string name="address_first_second_phone_must_be_different">First and second phone must be different</string>
+    <string name="default_notification_channel_id" translatable="false">order_tracking_channel</string>
     <!-- navigation bar -->
     <string name="home">Home</string>
     <string name="notifications">Notifications</string>
@@ -155,6 +156,7 @@
     <string name="delivery_fee">"Delivery "</string>
     <string name="open_map">open map</string>
     <string name="driver_location">Driver Location</string>
+    <string name="driver_name">Driver Name</string>
     <string name="price_of_user">Estimated order price from the user</string>
     <string name="price_order">Price order</string>
     <string name="total_price">Total price</string>
@@ -171,5 +173,6 @@
     <!-- Rate order -->
     <string name="rate">Rate</string>
     <string name="we_received_your_rate">We received your rating. Thank you!</string>
-
+   <!-- notifications -->
+    <string name="empty_notification">No notifications</string>
 </resources>
