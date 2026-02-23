@@ -10,6 +10,7 @@ import com.hyperdesign.delivaryUser.feature.chatwithai.ui.view.ChatWithAiScreen
 import com.hyperdesign.delivaryUser.feature.chatwithdelivery.ui.view.ChatWithDeliveryScreen
 import com.hyperdesign.delivaryUser.feature.deliveryoutzone.ui.view.DeliveryOutZoneScreen
 import com.hyperdesign.delivaryUser.feature.home.ui.view.HomeScreen
+import com.hyperdesign.delivaryUser.feature.notification.ui.view.NotificationScreen
 import com.hyperdesign.delivaryUser.feature.orders.orderdetails.ui.view.OrderDetailsScreen
 import com.hyperdesign.delivaryUser.feature.orders.orderslist.ui.view.OrdersScreen
 import com.hyperdesign.delivaryUser.feature.trackorder.ui.view.TrackOrderScreen
@@ -66,7 +67,7 @@ fun NavGraphBuilder.buildNavMainGraph() {
         composable<IMainGraph.OrderDetails> { OrderDetailsScreen() }
         composable<IMainGraph.Account> { AccountScreen() }
         composable<IMainGraph.DeliveryOutZone> { DeliveryOutZoneScreen() }
-        composable<IMainGraph.Notifications> { }
+        composable<IMainGraph.Notifications> { NotificationScreen()}
         composable<IMainGraph.Chat> { ChatWithAiScreen() }
         composable<IMainGraph.TrackOrder> { TrackOrderScreen() }
         composable<IMainGraph.CancelOrder> { CancelOrderScreen() }

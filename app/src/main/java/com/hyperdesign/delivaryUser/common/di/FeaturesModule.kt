@@ -16,6 +16,7 @@ import com.hyperdesign.delivaryUser.feature.deliveryoutzone.di.deliveryOutZoneMo
 import com.hyperdesign.delivaryUser.feature.fastorder.di.fastOrderModule
 import com.hyperdesign.delivaryUser.feature.contact.di.getContactsModule
 import com.hyperdesign.delivaryUser.feature.home.di.homeModule
+import com.hyperdesign.delivaryUser.feature.notification.di.notificationModule
 import com.hyperdesign.delivaryUser.feature.orders.base.di.ordersModule
 import com.hyperdesign.delivaryUser.feature.orders.orderdetails.di.orderDetailsModule
 import com.hyperdesign.delivaryUser.feature.orders.orderslist.di.ordersListModule
@@ -62,6 +63,7 @@ val featuresModule = module {
         cancelOrderModule,
         trackOrderModule,
         chatWithDeliveryModule,
-        getContactsModule
+        getContactsModule,
+        notificationModule
     )
 }
