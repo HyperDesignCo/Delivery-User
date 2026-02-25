@@ -119,7 +119,10 @@ fun DelivaryUserTextInputField(
             }
         },
         colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = colors.contentColor,
+            unfocusedTextColor = colors.contentColor,
             unfocusedBorderColor = colors.unfocusedBorderColor,
+            cursorColor =colors.cursorColor ,
             focusedBorderColor = colors.focusedBorderColor,
             disabledBorderColor = colors.disabledBorderColor,
             unfocusedContainerColor = colors.unfocusedContainerColor,
@@ -147,6 +150,7 @@ data class DeliveryUserTextInputFieldColors(
     val disabledContainerColor: Color = Color.Unspecified,
     val errorContainerColor: Color = Color.Unspecified,
     val contentColor: Color = Color.Unspecified,
+    val cursorColor: Color = Color.Unspecified,
 )
 
 object DeliveryUserTextInputFieldDefaults {
@@ -179,6 +183,7 @@ object DeliveryUserTextInputFieldDefaults {
         disabledContainerColor: Color = DelivaryUserTheme.colors.background.surfaceHigh,
         errorContainerColor: Color = DelivaryUserTheme.colors.status.redAccent,
         contentColor: Color = DelivaryUserTheme.colors.secondary,
+        cursorColor: Color = DelivaryUserTheme.colors.primary
     ) = DeliveryUserTextInputFieldColors(
         focusedBorderColor = focusedBorderColor,
         unfocusedBorderColor = unfocusedBorderColor,
@@ -187,7 +192,8 @@ object DeliveryUserTextInputFieldDefaults {
         unfocusedContainerColor = unfocusedContainerColor,
         disabledContainerColor = disabledContainerColor,
         errorContainerColor = errorContainerColor,
-        contentColor = contentColor
+        contentColor = contentColor,
+        cursorColor = cursorColor
     )
 }
 
