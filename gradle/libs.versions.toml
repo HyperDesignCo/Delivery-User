@@ -34,6 +34,7 @@ ktor = "3.3.3"
 #Kotlinx
 kotlinxSerialization = "1.9.0"
 kotlinxDatetime = "0.7.1"
+kotlinxCoroutinesPlayServices = "1.10.2"
 
 #Koin
 koinBom = "4.1.1"
@@ -76,6 +77,10 @@ webkit = "1.15.0"
 firebaseBom = "34.9.0"
 googleServices = "4.4.2"
 
+#Credentials & Identity
+credentials = "1.5.0"
+googleid = "1.2.0"
+
 [libraries]
 #Compose
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -113,6 +118,7 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 #Kotlinx
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 
 #Koin
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
@@ -149,6 +155,12 @@ androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+
+#Credentials & Identity
+androidx-credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
+androidx-credentials-play-services-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 
 [plugins]
 #Build
