@@ -16,7 +16,7 @@ fun DelivaryUserPasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder : String = stringResource(R.string.password),
+    placeholder: String = stringResource(R.string.password),
     supportingText: String? = null,
 ) {
     DelivaryUserTextInputField(
@@ -30,7 +30,7 @@ fun DelivaryUserPasswordTextField(
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Next
-            ),
+        ),
         visualTransformation = PasswordVisualTransformation()
     )
 }
@@ -44,6 +44,7 @@ object DelivaryUserPasswordTextFieldDefaults {
             unfocusedContainerColor = DelivaryUserTheme.colors.background.surfaceHigh,
             focusedContainerColor = DelivaryUserTheme.colors.background.surfaceHigh,
             errorContainerColor = DelivaryUserTheme.colors.status.redAccent,
+            cursorColor = DelivaryUserTheme.colors.primary
         )
 }
 

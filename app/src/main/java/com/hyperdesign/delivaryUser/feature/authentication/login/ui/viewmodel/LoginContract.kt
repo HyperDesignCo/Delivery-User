@@ -10,6 +10,7 @@ interface LoginContract {
         data object ForgotPasswordClicked : Action
         data object RegisterClicked : Action
         data object RememberMeClicked : Action
+        data object GoogleSignInClicked : Action
     }
 
     data class State(

@@ -1,12 +1,10 @@
 package com.hyperdesign.delivaryUser.feature.authentication.register.ui.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -21,7 +19,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hyperdesign.delivaryUser.R
 import com.hyperdesign.delivaryUser.common.ui.components.buttons.DelivaryUserButtonPrimary
 import com.hyperdesign.delivaryUser.common.ui.components.preview.PreviewAllVariants
-import com.hyperdesign.delivaryUser.common.ui.components.screen.DelivaryUserScaffold
+import com.hyperdesign.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.hyperdesign.delivaryUser.common.ui.components.textfield.DelivaryUserPasswordTextField
 import com.hyperdesign.delivaryUser.common.ui.components.textfield.DelivaryUserTextInputField
 import com.hyperdesign.delivaryUser.common.ui.extension.asString
@@ -39,13 +37,9 @@ fun RegisterScreen(viewModel: RegisterViewModel = koinInject()) {
 
 @Composable
 private fun RegisterContent(state: RegisterContract.State, action: (RegisterContract.Action) -> Unit) {
-    Column(
-        modifier = Modifier
-
-            .fillMaxSize()
-            .background(color = DelivaryUserTheme.colors.background.surfaceHigh)
-            .padding(horizontal = 16.dp).padding(DelivaryUserScaffold.innerPadding),
-        horizontalAlignment = Alignment.CenterHorizontally,
+    DelivaryUserScreen(
+        isImePaddingEnabled = true,
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         Image(
             modifier = Modifier.padding(top = 32.dp),

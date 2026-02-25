@@ -12,10 +12,19 @@ import com.hyperdesign.delivaryUser.common.ui.navigation.IAuthGraph
 import com.hyperdesign.delivaryUser.common.ui.navigation.IMainGraph
 import com.hyperdesign.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.hyperdesign.delivaryUser.feature.authentication.login.data.models.request.LoginRequest
+import com.hyperdesign.delivaryUser.feature.authentication.login.data.models.request.SocialLoginRequest
+import com.hyperdesign.delivaryUser.feature.authentication.login.domain.interactors.GoogleSignInUseCase
 import com.hyperdesign.delivaryUser.feature.authentication.login.domain.interactors.LoginUseCase
+import com.hyperdesign.delivaryUser.feature.authentication.login.domain.interactors.SocialLoginUseCase
+import com.hyperdesign.delivaryUser.feature.authentication.login.domain.models.GoogleSignInResult
+import com.hyperdesign.delivaryUser.service.fcm.FCMManager
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginContract.State, LoginContract.Action>(
+class LoginViewModel(
+    private val useCase: LoginUseCase,
+    private val socialLoginUseCase: SocialLoginUseCase,
+    private val googleSignInUseCase: GoogleSignInUseCase,
+) : BaseViewModel<LoginContract.State, LoginContract.Action>(
     state = LoginContract.State()
 ) {
     override fun onActionTrigger(action: LoginContract.Action) {
@@ -26,6 +35,7 @@ class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginCon
             is LoginContract.Action.RegisterClicked -> registerClicked()
             is LoginContract.Action.ForgotPasswordClicked -> forgotPasswordClicked()
             is LoginContract.Action.LoginClicked -> loginClicked()
+            is LoginContract.Action.GoogleSignInClicked -> googleSignInClicked()
         }
     }
 
@@ -36,28 +46,63 @@ class LoginViewModel(private val useCase: LoginUseCase) : BaseViewModel<LoginCon
     private fun rememberMeClicked() = updateState { copy(rememberMe = rememberMe.not()) }
     private fun registerClicked() = fireNavigate(IAuthGraph.Register)
     private fun loginClicked() {
-        val request = LoginRequest(
-            phone = state.value.phone.value,
-            password = state.value.password.value,
-            rememberMe = state.value.rememberMe,
-            deviceType = "android"
-        )
         viewModelScope.launch {
+            fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = true))
+            val deviceToken = FCMManager.getDeviceToken() ?: ""
+            val request = LoginRequest(
+                phone = state.value.phone.value,
+                password = state.value.password.value,
+                deviceToken = deviceToken,
+                deviceType = "android",
+                rememberMe = state.value.rememberMe,
+            )
             useCase.invoke(body = request).collectResource(
+                onSuccess = { loginSuccess() },
+                onLoading = {
+                    fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
+                }
+            )
+        }
+    }
+
+    private fun googleSignInClicked() {
+        viewModelScope.launch {
+            googleSignInUseCase.invoke(R.string.default_web_client_id).collectResource(onSuccess = {
+                googleSignInSuccess(it)
+            })
+        }
+    }
+
+    private fun googleSignInSuccess(googleSignInResult: GoogleSignInResult) {
+        viewModelScope.launch {
+            fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = true))
+            val deviceToken = FCMManager.getDeviceToken().orEmpty()
+            val request = SocialLoginRequest(
+                email = googleSignInResult.email,
+                name = googleSignInResult.name,
+                deviceToken = deviceToken,
+                social = "google",
+                socialId = googleSignInResult.socialId
+            )
+            socialLoginUseCase.invoke(body = request).collectResource(
                 onSuccess = {
-                    fireMessage(
-                        IMessageEvent.Snackbar(
-                            UIText.StringResource(R.string.welcome_back),
-                            messageType = MessageType.SUCCESS
-                        )
-                    )
-                    navigateToHome()
+                    loginSuccess()
                 },
                 onLoading = {
                     fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
                 }
             )
         }
+    }
+
+    private fun loginSuccess() {
+        fireMessage(
+            IMessageEvent.Snackbar(
+                UIText.StringResource(R.string.welcome_back),
+                messageType = MessageType.SUCCESS
+            )
+        )
+        navigateToHome()
     }
 
     private fun forgotPasswordClicked() = fireNavigate(IAuthGraph.ForgetPassword)

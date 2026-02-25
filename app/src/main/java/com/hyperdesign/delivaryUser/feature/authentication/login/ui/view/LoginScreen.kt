@@ -1,12 +1,10 @@
 package com.hyperdesign.delivaryUser.feature.authentication.login.ui.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,7 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hyperdesign.delivaryUser.R
 import com.hyperdesign.delivaryUser.common.ui.components.buttons.DelivaryUserButtonPrimary
+import com.hyperdesign.delivaryUser.common.ui.components.buttons.DelivaryUserButtonSecondary
 import com.hyperdesign.delivaryUser.common.ui.components.preview.PreviewAllVariants
+import com.hyperdesign.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.hyperdesign.delivaryUser.common.ui.components.textfield.DelivaryUserPasswordTextField
 import com.hyperdesign.delivaryUser.common.ui.components.textfield.DelivaryUserTextInputField
 import com.hyperdesign.delivaryUser.common.ui.extension.asString
@@ -41,12 +41,9 @@ fun LoginScreen(viewModel: LoginViewModel = koinViewModel()) {
 
 @Composable
 private fun LoginContent(state: LoginContract.State, action: (LoginContract.Action) -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = DelivaryUserTheme.colors.background.surfaceHigh)
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+    DelivaryUserScreen(
+        isImePaddingEnabled = true,
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         Image(
             modifier = Modifier.padding(top = 32.dp),
@@ -76,12 +73,20 @@ private fun LoginContent(state: LoginContract.State, action: (LoginContract.Acti
                 action(LoginContract.Action.ForgotPasswordClicked)
             }
         )
-        Spacer(modifier = Modifier.weight(0.225f))
+        Spacer(modifier = Modifier.weight(0.1f))
         DelivaryUserButtonPrimary(
             modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.login),
             isEnabled = state.phone.error == null && state.password.error == null,
             onClick = { action(LoginContract.Action.LoginClicked) })
+
+        Spacer(modifier = Modifier.size(8.dp))
+        DelivaryUserButtonSecondary(
+            modifier = Modifier.fillMaxWidth(),
+            label = stringResource(R.string.login_with_google),
+            onClick = { action(LoginContract.Action.GoogleSignInClicked) }
+        )
+
         RegisterNewAccount(
             modifier = Modifier.padding(top = 8.dp),
             registerClicked = { action(LoginContract.Action.RegisterClicked) }
