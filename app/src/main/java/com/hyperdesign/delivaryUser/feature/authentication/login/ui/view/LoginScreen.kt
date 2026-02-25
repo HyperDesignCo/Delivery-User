@@ -15,14 +15,18 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.credentials.CredentialManager
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hyperdesign.delivaryUser.R
 import com.hyperdesign.delivaryUser.common.ui.components.buttons.DelivaryUserButtonPrimary
+import com.hyperdesign.delivaryUser.common.ui.components.buttons.DelivaryUserButtonSecondary
 import com.hyperdesign.delivaryUser.common.ui.components.preview.PreviewAllVariants
 import com.hyperdesign.delivaryUser.common.ui.components.textfield.DelivaryUserPasswordTextField
 import com.hyperdesign.delivaryUser.common.ui.components.textfield.DelivaryUserTextInputField
@@ -76,12 +80,20 @@ private fun LoginContent(state: LoginContract.State, action: (LoginContract.Acti
                 action(LoginContract.Action.ForgotPasswordClicked)
             }
         )
-        Spacer(modifier = Modifier.weight(0.225f))
+        Spacer(modifier = Modifier.weight(0.1f))
         DelivaryUserButtonPrimary(
             modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.login),
             isEnabled = state.phone.error == null && state.password.error == null,
             onClick = { action(LoginContract.Action.LoginClicked) })
+
+        Spacer(modifier = Modifier.size(8.dp))
+        DelivaryUserButtonSecondary(
+            modifier = Modifier.fillMaxWidth(),
+            label = stringResource(R.string.login_with_google),
+            onClick = { action(LoginContract.Action.GoogleSignInClicked) }
+        )
+
         RegisterNewAccount(
             modifier = Modifier.padding(top = 8.dp),
             registerClicked = { action(LoginContract.Action.RegisterClicked) }
