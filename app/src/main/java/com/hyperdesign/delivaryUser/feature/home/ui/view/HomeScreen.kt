@@ -210,7 +210,7 @@ private fun OrderTypeItem(
             modifier = Modifier.padding(vertical = 8.dp),
             text = label,
             style = DelivaryUserTheme.typography.headline.large,
-            color = DelivaryUserTheme.colors.background.surfaceHigh
+            color = DelivaryUserTheme.colors.background.background
         )
         Image(
             modifier = Modifier.size(34.dp),
