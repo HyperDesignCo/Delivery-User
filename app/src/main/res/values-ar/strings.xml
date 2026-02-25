@@ -24,6 +24,7 @@
     <string name="do_not_have_and_account">ليس لديك حساب؟</string>
     <string name="register">التسجيل</string>
     <string name="phone_number">رقم الهاتف</string>
+    <string name="login_with_google">تسجيل الدخول باستخدام جوجل</string>
     <!--Register -->
     <string name="name">اسم المستخدم</string>
     <string name="email">البريد الالكتروني</string>
