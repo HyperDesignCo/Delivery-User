@@ -5,6 +5,7 @@ import com.hyperdesign.delivaryUser.feature.authentication.base.domain.model.Aut
 import com.hyperdesign.delivaryUser.feature.authentication.base.domain.repository.IAuthenticationRepository
 import com.hyperdesign.delivaryUser.feature.authentication.base.domain.repository.remote.IAuthenticationRemoteDataSource
 import com.hyperdesign.delivaryUser.feature.authentication.login.data.models.request.LoginRequest
+import com.hyperdesign.delivaryUser.feature.authentication.login.data.models.request.SocialLoginRequest
 import com.hyperdesign.delivaryUser.feature.authentication.register.data.models.request.RegisterRequest
 import com.hyperdesign.delivaryUser.service.user.data.dto.UserDto
 import com.hyperdesign.delivaryUser.service.user.data.mapper.UserMapper
@@ -28,6 +29,14 @@ class AuthenticationRepository(val remote: IAuthenticationRemoteDataSource, val 
         local.saveToken(token = result.accessToken.orEmpty())
         local.saveIsAuthenticated(true)
         local.savePassword(request.password)
+        return AuthenticationMapper.dtoToDomain(model = result)
+    }
+
+    override suspend fun socialLogin(request: SocialLoginRequest): Authentication {
+        val result = remote.socialLogin(request)
+        local.saveUser(user = UserMapper.dtoToEntity(model = result.user ?: UserDto()))
+        local.saveToken(token = result.accessToken.orEmpty())
+        local.saveIsAuthenticated(true)
         return AuthenticationMapper.dtoToDomain(model = result)
     }
 }

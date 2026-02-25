@@ -4,6 +4,7 @@ import com.hyperdesign.delivaryUser.common.domain.remote.IRemoteDataSourceProvid
 import com.hyperdesign.delivaryUser.feature.authentication.base.data.dto.AuthenticationDto
 import com.hyperdesign.delivaryUser.feature.authentication.base.domain.repository.remote.IAuthenticationRemoteDataSource
 import com.hyperdesign.delivaryUser.feature.authentication.login.data.models.request.LoginRequest
+import com.hyperdesign.delivaryUser.feature.authentication.login.data.models.request.SocialLoginRequest
 import com.hyperdesign.delivaryUser.feature.authentication.register.data.models.request.RegisterRequest
 
 class AuthenticationRemoteDataSource(private val remoteProvider: IRemoteDataSourceProvider) :
@@ -20,8 +21,15 @@ class AuthenticationRemoteDataSource(private val remoteProvider: IRemoteDataSour
         serializer = AuthenticationDto.serializer()
     )
 
+    override suspend fun socialLogin(request: SocialLoginRequest): AuthenticationDto = remoteProvider.post(
+        endpoint = SOCIAL_LOGIN_ENDPOINT,
+        requestBody = request,
+        serializer = AuthenticationDto.serializer()
+    )
+
     companion object {
         const val LOGIN_ENDPOINT = "login"
         const val REGISTER_ENDPOINT = "register"
+        const val SOCIAL_LOGIN_ENDPOINT = "social_login"
     }
 }

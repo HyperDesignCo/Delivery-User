@@ -14,4 +14,6 @@ data class AuthenticationDto(
     val code: String? = null,
     @SerialName("access_token")
     val accessToken: String? = null,
+    @SerialName("token_type")
+    val tokenType: String? = null,
 )
