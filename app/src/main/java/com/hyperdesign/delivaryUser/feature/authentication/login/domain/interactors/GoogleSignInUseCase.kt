@@ -23,9 +23,9 @@ class GoogleSignInUseCase(private val context: Context) : BaseUseCase<Flow<Resou
         val result = credentialManager.getCredential(context, request)
         val credential = GoogleIdTokenCredential.createFrom(result.credential.data)
         GoogleSignInResult(
-            email = credential.id,
+            email = credential.email.orEmpty(),
             name = credential.displayName.orEmpty(),
-            socialId = credential.id
+            socialId = credential.uniqueId
         )
     }
 }

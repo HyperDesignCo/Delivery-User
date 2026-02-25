@@ -9,6 +9,7 @@ import com.hyperdesign.delivaryUser.feature.authentication.login.di.loginModule
 import com.hyperdesign.delivaryUser.feature.authentication.register.di.registerModule
 import com.hyperdesign.delivaryUser.feature.authentication.splash.di.splashModule
 import com.hyperdesign.delivaryUser.feature.authentication.verifyOtp.di.verifyOtpModule
+import com.hyperdesign.delivaryUser.feature.authentication.verifyphone.di.verifyPhoneModule
 import com.hyperdesign.delivaryUser.feature.cancelorder.di.cancelOrderModule
 import com.hyperdesign.delivaryUser.feature.chatwithai.di.chatWithAiModule
 import com.hyperdesign.delivaryUser.feature.chatwithdelivery.di.chatWithDeliveryModule
@@ -64,6 +65,7 @@ val featuresModule = module {
         trackOrderModule,
         chatWithDeliveryModule,
         getContactsModule,
-        notificationModule
+        notificationModule,
+        verifyPhoneModule
     )
 }

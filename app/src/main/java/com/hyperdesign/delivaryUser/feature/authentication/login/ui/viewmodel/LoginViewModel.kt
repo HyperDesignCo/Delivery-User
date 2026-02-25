@@ -86,7 +86,7 @@ class LoginViewModel(
             )
             socialLoginUseCase.invoke(body = request).collectResource(
                 onSuccess = {
-                    loginSuccess()
+                   fireNavigate(IAuthGraph.VerifyPhone)
                 },
                 onLoading = {
                     fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
