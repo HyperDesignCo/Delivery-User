@@ -8,6 +8,7 @@ import com.hyperdesign.delivaryUser.feature.authentication.login.ui.view.LoginSc
 import com.hyperdesign.delivaryUser.feature.authentication.register.ui.view.RegisterScreen
 import com.hyperdesign.delivaryUser.feature.authentication.splash.ui.view.SplashScreen
 import com.hyperdesign.delivaryUser.feature.authentication.verifyOtp.ui.view.VerifyOtpScreen
+import com.hyperdesign.delivaryUser.feature.authentication.verifyphone.ui.view.VerifyPhoneScreen
 import kotlinx.serialization.Serializable
 
 sealed interface IAuthGraph {
@@ -28,6 +29,9 @@ sealed interface IAuthGraph {
 
     @Serializable
     data object Splash : IDestination
+
+    @Serializable
+    data object VerifyPhone : IDestination
 }
 
 fun NavGraphBuilder.buildNavAuthGraph() {
@@ -37,5 +41,6 @@ fun NavGraphBuilder.buildNavAuthGraph() {
         composable<IAuthGraph.VerifyOtp> { VerifyOtpScreen() }
         composable<IAuthGraph.ForgetPassword> { ForgetPasswordScreen() }
         composable<IAuthGraph.Splash> { SplashScreen() }
+        composable<IAuthGraph.VerifyPhone> { VerifyPhoneScreen() }
     }
 }
