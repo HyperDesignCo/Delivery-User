@@ -67,6 +67,7 @@ fun HomeLocation(
                 .padding(vertical = 8.dp)
                 .padding(start = 24.dp, end = 50.dp)
             ,
+            color = DelivaryUserTheme.colors.secondary,
             text = location.ifBlank { stringResource(R.string.add_new_address) },
             style = DelivaryUserTheme.typography.body.large,
             maxLines = 1,
