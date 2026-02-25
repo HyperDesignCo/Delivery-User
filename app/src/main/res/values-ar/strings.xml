@@ -174,4 +174,7 @@
     <string name="we_received_your_rate">لقد استلمنا تقييمك، شكرًا لك!</string>
     <!--notifications -->
     <string name="empty_notification"> لا توجد إشعارات</string>
+    <!-- verify phone -->
+    <string name="verify_phone">تأكيد الهاتف</string>
+    <string name="last_step_verify_phone">خطوة اخيرة, يرجى تزويدنا برقم هاتفك</string>
 </resources>
