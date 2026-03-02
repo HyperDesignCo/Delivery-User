@@ -1,5 +1,6 @@
 package com.hyperdesign.delivaryUser.feature.authentication.login.ui.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,8 +14,11 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -31,6 +35,8 @@ import com.hyperdesign.delivaryUser.common.ui.extension.clickableWithNoRipple
 import com.hyperdesign.delivaryUser.common.ui.theme.DelivaryUserTheme
 import com.hyperdesign.delivaryUser.feature.authentication.login.ui.viewmodel.LoginContract
 import com.hyperdesign.delivaryUser.feature.authentication.login.ui.viewmodel.LoginViewModel
+import com.hyperdesign.delivaryUser.service.googlesignin.GoogleSignInManager
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -39,8 +45,12 @@ fun LoginScreen(viewModel: LoginViewModel = koinViewModel()) {
     LoginContent(state = state, action = viewModel::onActionTrigger)
 }
 
+@SuppressLint("ContextCastToActivity", "LocalContextGetResourceValueCall")
 @Composable
 private fun LoginContent(state: LoginContract.State, action: (LoginContract.Action) -> Unit) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val googleSignInManager = remember { GoogleSignInManager(context) }
     DelivaryUserScreen(
         isImePaddingEnabled = true,
         contentPadding = PaddingValues(horizontal = 16.dp)
@@ -84,7 +94,16 @@ private fun LoginContent(state: LoginContract.State, action: (LoginContract.Acti
         DelivaryUserButtonSecondary(
             modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.login_with_google),
-            onClick = { action(LoginContract.Action.GoogleSignInClicked) }
+            onClick = {
+                scope.launch {
+                    try {
+                        val result = googleSignInManager.signIn()
+                        action(LoginContract.Action.GoogleSignInClicked(googleRequest = result))
+                    } catch (e: Exception) {
+                        action(LoginContract.Action.ShowGoogleSignInError)
+                    }
+                }
+            }
         )
 
         RegisterNewAccount(
