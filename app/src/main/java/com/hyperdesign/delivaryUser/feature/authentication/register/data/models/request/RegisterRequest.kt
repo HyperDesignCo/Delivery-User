@@ -23,7 +23,12 @@ data class RegisterRequest(
 
     private fun validatePassword(): Boolean = Const.passwordRegex.matches(password)
 
-    private fun validateEmail(): Boolean = email.length in 8..50 && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun validateEmail(): Boolean =
+        when {
+            email.isEmpty() -> true
+            Patterns.EMAIL_ADDRESS.matcher(email).matches() -> true
+            else -> false
+        }
 
     private fun validateName(): Boolean = Const.nameRegex.matches(name)
 
