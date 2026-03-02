@@ -233,7 +233,7 @@ fun DelivaryUserTextInputFieldPreview() = DelivaryUserTheme {
             errorContainerColor = DelivaryUserTheme.colors.status.redAccent,
         ),
         leadingIconRes = R.drawable.ic_profile,
-        trailingIconRes = R.drawable.ic_password,
+        trailingIconRes = R.drawable.ic_password_invisible,
         supportingText = "password does not match"
     )
 }
