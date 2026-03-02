@@ -13,7 +13,6 @@ import com.hyperdesign.delivaryUser.common.ui.navigation.IMainGraph
 import com.hyperdesign.delivaryUser.common.ui.viewmodel.BaseViewModel
 import com.hyperdesign.delivaryUser.feature.authentication.login.data.models.request.LoginRequest
 import com.hyperdesign.delivaryUser.feature.authentication.login.data.models.request.SocialLoginRequest
-import com.hyperdesign.delivaryUser.feature.authentication.login.domain.interactors.GoogleSignInUseCase
 import com.hyperdesign.delivaryUser.feature.authentication.login.domain.interactors.LoginUseCase
 import com.hyperdesign.delivaryUser.feature.authentication.login.domain.interactors.SocialLoginUseCase
 import com.hyperdesign.delivaryUser.feature.authentication.login.domain.models.GoogleSignInResult
@@ -23,7 +22,6 @@ import kotlinx.coroutines.launch
 class LoginViewModel(
     private val useCase: LoginUseCase,
     private val socialLoginUseCase: SocialLoginUseCase,
-    private val googleSignInUseCase: GoogleSignInUseCase,
 ) : BaseViewModel<LoginContract.State, LoginContract.Action>(
     state = LoginContract.State()
 ) {
@@ -35,7 +33,8 @@ class LoginViewModel(
             is LoginContract.Action.RegisterClicked -> registerClicked()
             is LoginContract.Action.ForgotPasswordClicked -> forgotPasswordClicked()
             is LoginContract.Action.LoginClicked -> loginClicked()
-            is LoginContract.Action.GoogleSignInClicked -> googleSignInClicked()
+            is LoginContract.Action.GoogleSignInClicked -> googleSignInClicked(action.googleRequest)
+            is LoginContract.Action.ShowGoogleSignInError -> showGoogleSignInError()
         }
     }
 
@@ -65,15 +64,7 @@ class LoginViewModel(
         }
     }
 
-    private fun googleSignInClicked() {
-        viewModelScope.launch {
-            googleSignInUseCase.invoke(R.string.default_web_client_id).collectResource(onSuccess = {
-                googleSignInSuccess(it)
-            })
-        }
-    }
-
-    private fun googleSignInSuccess(googleSignInResult: GoogleSignInResult) {
+    private fun googleSignInClicked(googleSignInResult: GoogleSignInResult) {
         viewModelScope.launch {
             fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = true))
             val deviceToken = FCMManager.getDeviceToken().orEmpty()
@@ -86,7 +77,7 @@ class LoginViewModel(
             )
             socialLoginUseCase.invoke(body = request).collectResource(
                 onSuccess = {
-                   fireNavigate(IAuthGraph.VerifyPhone)
+                    fireNavigate(IAuthGraph.VerifyPhone)
                 },
                 onLoading = {
                     fireLoading(ILoadingEvent.CircularProgressIndicator(isLoading = it))
@@ -112,7 +103,12 @@ class LoginViewModel(
             inclusive = true
         }
     })
-
+    private fun showGoogleSignInError() =  fireMessage(
+        IMessageEvent.Snackbar(
+            UIText.StringResource(R.string.something_wrong),
+            messageType = MessageType.ERROR
+        )
+    )
     override fun onRequestValidation(errors: Map<IErrorKeyEnum, UIText>) = updateState {
         copy(
             phone = phone.copy(error = errors[ErrorKeyEnum.PHONE_NUMBER]),

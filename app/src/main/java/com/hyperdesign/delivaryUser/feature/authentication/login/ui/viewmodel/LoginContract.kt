@@ -1,6 +1,7 @@
 package com.hyperdesign.delivaryUser.feature.authentication.login.ui.viewmodel
 
 import com.hyperdesign.delivaryUser.common.ui.filedstate.TextFieldState
+import com.hyperdesign.delivaryUser.feature.authentication.login.domain.models.GoogleSignInResult
 
 interface LoginContract {
     sealed interface Action {
@@ -10,7 +11,8 @@ interface LoginContract {
         data object ForgotPasswordClicked : Action
         data object RegisterClicked : Action
         data object RememberMeClicked : Action
-        data object GoogleSignInClicked : Action
+        data class GoogleSignInClicked(val googleRequest: GoogleSignInResult) : Action
+        data object ShowGoogleSignInError : Action
     }
 
     data class State(
