@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hyperdesign.delivaryUser.R
@@ -30,6 +31,7 @@ import com.hyperdesign.delivaryUser.common.ui.components.preview.PreviewAllVaria
 import com.hyperdesign.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.hyperdesign.delivaryUser.common.ui.components.textfield.DelivaryUserPasswordTextField
 import com.hyperdesign.delivaryUser.common.ui.components.textfield.DelivaryUserTextInputField
+import com.hyperdesign.delivaryUser.common.ui.components.textfield.DeliveryUserTextInputFieldDefaults
 import com.hyperdesign.delivaryUser.common.ui.extension.asString
 import com.hyperdesign.delivaryUser.common.ui.extension.clickableWithNoRipple
 import com.hyperdesign.delivaryUser.common.ui.theme.DelivaryUserTheme
@@ -66,7 +68,10 @@ private fun LoginContent(state: LoginContract.State, action: (LoginContract.Acti
             value = state.phone.value,
             placeholder = stringResource(R.string.phone_number),
             onValueChange = { action(LoginContract.Action.PhoneChanged(phoneNumber = it)) },
-            supportingText = state.phone.error.asString()
+            supportingText = state.phone.error.asString(),
+            keyboardOptions = DeliveryUserTextInputFieldDefaults.keyboardOptions.copy(
+                keyboardType = KeyboardType.Number
+            )
         )
         DelivaryUserPasswordTextField(
             modifier = Modifier.fillMaxWidth(),
