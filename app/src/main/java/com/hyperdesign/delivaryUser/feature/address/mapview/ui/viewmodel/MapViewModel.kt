@@ -28,6 +28,7 @@ import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.I
 import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.ReverseGeocodeUseCase
 import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.SaveLocationUseCase
 import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.ValidateLocationUseCase
+import com.hyperdesign.delivaryUser.feature.address.mapview.ui.component.SaveAddressDestinationType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -243,11 +244,14 @@ class MapViewModel(
                     is ChooseLocationResult.NavigateToSaveAddress -> fireNavigate(
                         when (result.addressType) {
                             com.hyperdesign.delivaryUser.feature.pointtopoint.ui.components.AddressType.SENDER -> IOrderGraph.SaveAddress(
-                                addressType = result.addressType
+                                addressType = result.addressType,
+                                saveAddressDestinationType = route.saveAddressDestinationType
+
                             )
 
                             com.hyperdesign.delivaryUser.feature.pointtopoint.ui.components.AddressType.RECEIVER -> IOrderGraph.SaveAddress(
-                                addressType = result.addressType
+                                addressType = result.addressType,
+                                saveAddressDestinationType = route.saveAddressDestinationType
                             )
                         }
                     )
