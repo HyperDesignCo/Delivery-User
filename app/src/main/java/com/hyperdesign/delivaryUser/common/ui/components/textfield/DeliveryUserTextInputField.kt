@@ -121,6 +121,7 @@ fun DelivaryUserTextInputField(
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = colors.contentColor,
             unfocusedTextColor = colors.contentColor,
+            disabledTextColor = colors.contentColor,
             unfocusedBorderColor = colors.unfocusedBorderColor,
             cursorColor =colors.cursorColor ,
             focusedBorderColor = colors.focusedBorderColor,

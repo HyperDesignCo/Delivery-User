@@ -38,9 +38,9 @@ fun OrderCard(
     onRatingClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box {
+    Box(modifier = modifier) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .background(
                     color = order.orderState.toColor(), shape = RoundedCornerShape(8.dp)

@@ -20,6 +20,7 @@ import com.hyperdesign.delivaryUser.common.ui.components.preview.PreviewAllVaria
 import com.hyperdesign.delivaryUser.common.ui.components.screen.DelivaryUserScreen
 import com.hyperdesign.delivaryUser.common.ui.components.screen.DeliveryUserEmptyScreen
 import com.hyperdesign.delivaryUser.common.ui.theme.DelivaryUserTheme
+import com.hyperdesign.delivaryUser.feature.orders.base.domain.models.domain.OrderStatus
 import com.hyperdesign.delivaryUser.feature.orders.orderslist.ui.components.OrderCard
 import com.hyperdesign.delivaryUser.feature.orders.orderslist.ui.components.OrderRatingCard
 import com.hyperdesign.delivaryUser.feature.orders.orderslist.ui.viewmodel.OrdersContract
@@ -88,8 +89,27 @@ private fun OrdersContent(state: OrdersContract.State, action: (OrdersContract.A
 @Composable
 @PreviewAllVariants
 private fun OrdersScreenPreview() = DelivaryUserTheme {
+    val orders = listOf(
+        OrdersContract.OrderUiState(
+            orderState = OrderStatus.PENDING,
+            orderId = 1
+        ),
+        OrdersContract.OrderUiState(
+            orderState = OrderStatus.CANCELED,
+            orderId = 3
+        ),
+        OrdersContract.OrderUiState(
+            orderState = OrderStatus.ON_WAY,
+            orderId = 7
+        ),
+        OrdersContract.OrderUiState(
+            orderState = OrderStatus.ACCEPTED,
+            orderId =6
+        ),
+
+    )
     OrdersContent(
-        state = OrdersContract.State(),
+        state = OrdersContract.State(orders),
         action = {}
     )
 }
