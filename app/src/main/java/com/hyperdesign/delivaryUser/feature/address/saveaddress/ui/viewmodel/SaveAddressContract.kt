@@ -33,5 +33,6 @@ sealed interface SaveAddressContract {
         val latitude: String = "",
         val longitude: String = "",
         val name:String = "",
+        val isAddressExist: Boolean = false
     )
 }

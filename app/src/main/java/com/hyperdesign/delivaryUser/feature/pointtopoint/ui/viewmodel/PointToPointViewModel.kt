@@ -8,6 +8,7 @@ import com.hyperdesign.delivaryUser.common.ui.message.MessageType
 import com.hyperdesign.delivaryUser.common.ui.navigation.IMainGraph
 import com.hyperdesign.delivaryUser.common.ui.navigation.IOrderGraph
 import com.hyperdesign.delivaryUser.common.ui.viewmodel.BaseViewModel
+import com.hyperdesign.delivaryUser.feature.address.mapview.ui.component.SaveAddressDestinationType
 import com.hyperdesign.delivaryUser.feature.pointtopoint.data.models.request.DeliveryCostRequest
 import com.hyperdesign.delivaryUser.feature.pointtopoint.data.models.request.PointToPointRequest
 import com.hyperdesign.delivaryUser.feature.pointtopoint.domain.model.OrderPurpose
@@ -59,7 +60,8 @@ class PointToPointViewModel(
 
     private fun getSenderAddress() {
         viewModelScope.launch {
-            senderAddress.invoke(body = Unit).collectResource(onSuccess = ::onGetSenderAddressSuccess)
+            senderAddress.invoke(body = Unit)
+                .collectResource(onSuccess = ::onGetSenderAddressSuccess)
         }
     }
 
@@ -70,7 +72,8 @@ class PointToPointViewModel(
 
     private fun getReceiverAddress() {
         viewModelScope.launch {
-            recipientAddress.invoke(body = Unit).collectResource(onSuccess = ::onGetReceiverAddressSuccess)
+            recipientAddress.invoke(body = Unit)
+                .collectResource(onSuccess = ::onGetReceiverAddressSuccess)
         }
     }
 
@@ -92,7 +95,8 @@ class PointToPointViewModel(
 
     private fun getOrderPurposes() {
         viewModelScope.launch {
-            orderPurposes.invoke(body = Unit).collectResource(onSuccess = ::onGetOrderPurposesSuccess)
+            orderPurposes.invoke(body = Unit)
+                .collectResource(onSuccess = ::onGetOrderPurposesSuccess)
         }
     }
 
@@ -114,17 +118,28 @@ class PointToPointViewModel(
         state.value.senderAddress.address.id != 0 && state.value.receiverAddress.address.id != 0
 
     private fun addReceiverAddress() {
-        fireNavigate(IOrderGraph.Map(AddressType.RECEIVER))
+        fireNavigate(
+            IOrderGraph.Map(
+                AddressType.RECEIVER,
+                SaveAddressDestinationType.POINT_TO_POINT_DESTINATION
+            )
+        )
     }
 
     private fun addSenderAddress() {
-        fireNavigate(IOrderGraph.Map(AddressType.SENDER))
+        fireNavigate(
+            IOrderGraph.Map(
+                AddressType.SENDER,
+                SaveAddressDestinationType.POINT_TO_POINT_DESTINATION
+            )
+        )
     }
 
     private fun chooseReceiverAddress() {
         fireNavigate(
             destination = IOrderGraph.AddressList(
-                addressType = AddressType.RECEIVER, id = if (state.value.receiverAddress.address.id != 0) {
+                addressType = AddressType.RECEIVER,
+                id = if (state.value.receiverAddress.address.id != 0) {
                     state.value.receiverAddress.address.id
                 } else {
                     null
@@ -136,7 +151,8 @@ class PointToPointViewModel(
     private fun chooseSenderAddress() {
         fireNavigate(
             destination = IOrderGraph.AddressList(
-                addressType = AddressType.SENDER, id = if (state.value.senderAddress.address.id != 0) {
+                addressType = AddressType.SENDER,
+                id = if (state.value.senderAddress.address.id != 0) {
                     state.value.senderAddress.address.id
                 } else {
                     null
@@ -168,9 +184,10 @@ class PointToPointViewModel(
             addPointToPointOrderUseCase.invoke(body = request).collectResource(onSuccess = {
                 fireMessage(
                     IMessageEvent.Snackbar(
-                    UIText.StringResource(R.string.we_received_order),
-                    messageType = MessageType.SUCCESS
-                ))
+                        UIText.StringResource(R.string.we_received_order),
+                        messageType = MessageType.SUCCESS
+                    )
+                )
                 fireNavigate(destination = IMainGraph.Home)
             })
         }

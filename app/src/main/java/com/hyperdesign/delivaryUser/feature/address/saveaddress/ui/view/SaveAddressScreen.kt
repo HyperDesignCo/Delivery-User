@@ -124,7 +124,7 @@ fun SaveAddressContent(
 
         DelivaryUserButtonPrimary(
             label = stringResource(R.string.save),
-            isEnabled = state.firstPhone.error == null && state.secondPhone.error == null,
+            isEnabled = state.firstPhone.error == null && state.secondPhone.error == null && !state.isAddressExist,
             modifier = Modifier.fillMaxWidth(),
             onClick = { onActionTrigger(SaveAddressContract.Action.OnSaveAddressClicked) })
     }

@@ -3,6 +3,7 @@ package com.hyperdesign.delivaryUser.common.ui.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.hyperdesign.delivaryUser.feature.address.mapview.ui.component.SaveAddressDestinationType
 import com.hyperdesign.delivaryUser.feature.address.mapview.ui.view.MapScreen
 import com.hyperdesign.delivaryUser.feature.address.saveaddress.ui.view.SaveAddressScreen
 import com.hyperdesign.delivaryUser.feature.addresslist.ui.view.AddressListScreen
@@ -23,10 +24,16 @@ sealed interface IOrderGraph : IDestination {
     data object PointToPoint : IOrderGraph
 
     @Serializable
-    data class Map(val addressType: AddressType = AddressType.SENDER) : IDestination
+    data class Map(
+        val addressType: AddressType = AddressType.SENDER,
+        val saveAddressDestinationType: SaveAddressDestinationType = SaveAddressDestinationType.MAP_DESTINATION
+    ) : IDestination
 
     @Serializable
-    data class SaveAddress(val addressType: AddressType) : IDestination
+    data class SaveAddress(
+        val addressType: AddressType,
+        val saveAddressDestinationType: SaveAddressDestinationType
+        ) : IDestination
 
     @Serializable
     data object FastOrder : IDestination

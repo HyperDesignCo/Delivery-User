@@ -1,5 +1,6 @@
 package com.hyperdesign.delivaryUser.feature.address.saveaddress.ui.viewmodel
 
+
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
@@ -7,6 +8,8 @@ import com.hyperdesign.delivaryUser.common.data.repository.remote.ErrorKeyEnum
 import com.hyperdesign.delivaryUser.common.domain.exceptions.IErrorKeyEnum
 import com.hyperdesign.delivaryUser.common.ui.extension.UIText
 import com.hyperdesign.delivaryUser.common.ui.loading.ILoadingEvent
+import com.hyperdesign.delivaryUser.common.ui.message.IMessageEvent
+import com.hyperdesign.delivaryUser.common.ui.message.MessageType
 import com.hyperdesign.delivaryUser.common.ui.navigation.IMainGraph
 import com.hyperdesign.delivaryUser.common.ui.navigation.IOrderGraph
 import com.hyperdesign.delivaryUser.common.ui.viewmodel.BaseViewModel
@@ -14,20 +17,25 @@ import com.hyperdesign.delivaryUser.feature.address.mapview.domain.interactors.G
 import com.hyperdesign.delivaryUser.feature.address.saveaddress.domain.interactors.SaveAddressUseCase
 import com.hyperdesign.delivaryUser.feature.pointtopoint.ui.components.AddressType
 import com.hyperdesign.delivaryUser.service.address.data.models.request.AddAddressRequest
+import com.hyperdesign.delivaryUser.service.address.domain.interactors.GetAddressesUseCase
 import com.hyperdesign.delivaryUser.service.address.domain.interactors.SaveRecipientAddressUseCase
 import com.hyperdesign.delivaryUser.service.address.domain.interactors.SaveSenderAddressUseCase
 import com.hyperdesign.delivaryUser.service.address.domain.models.domain.Address
 import com.hyperdesign.delivaryUser.service.location.domain.interactors.GetLocationCheckUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+import com.hyperdesign.delivaryUser.R
+import com.hyperdesign.delivaryUser.feature.address.mapview.ui.component.SaveAddressDestinationType
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 class SaveAddressViewModel(
     private val saveAddress: SaveAddressUseCase,
     private val getLocationRemote: GetLocationCheckUseCase,
     private val getLocationLocal: GetSavedLocationUseCase,
     private val saveSenderAddress: SaveSenderAddressUseCase,
     savedStateHandle: SavedStateHandle,
-    private val saveRecipientAddress: SaveRecipientAddressUseCase
+    private val saveRecipientAddress: SaveRecipientAddressUseCase,
+    private val getAddress: GetAddressesUseCase
 ) : BaseViewModel<SaveAddressContract.State, SaveAddressContract.Action>(
     SaveAddressContract.State()
 ) {
@@ -42,22 +50,53 @@ class SaveAddressViewModel(
 
     override fun onActionTrigger(action: SaveAddressContract.Action) {
         when (action) {
-            is SaveAddressContract.Action.OnApartmentNumberChanged -> { onApartmentNumberChanged(action.apartmentNumber) }
-            is SaveAddressContract.Action.OnBuildingNumberChanged -> { onBuildingNumberChanged(action.buildingNumber) }
-            is SaveAddressContract.Action.OnExtraInfoChanged -> { onExtraInfoChanged(action.extraInfo) }
-            is SaveAddressContract.Action.OnFloorNumberChanged -> { onFloorNumberChanged(action.floorNumber) }
-            is SaveAddressContract.Action.OnFirstPhoneChanged -> { onFirstPhoneChanged(action.phone) }
-            is SaveAddressContract.Action.OnSecondPhoneChanged -> { onSecondPhoneChanged(action.phone) }
-            is SaveAddressContract.Action.OnSpecialSignChanged -> { onSpecialSignChanged(action.specialSign) }
-            is SaveAddressContract.Action.OnStreetChanged -> { onStreetChanged(action.street) }
-            is SaveAddressContract.Action.OnSaveAddressClicked -> { onSaveAddressClicked() }
-            is SaveAddressContract.Action.OnBackClick -> { onBackClick() }
+            is SaveAddressContract.Action.OnApartmentNumberChanged -> {
+                onApartmentNumberChanged(action.apartmentNumber)
+            }
+
+            is SaveAddressContract.Action.OnBuildingNumberChanged -> {
+                onBuildingNumberChanged(action.buildingNumber)
+            }
+
+            is SaveAddressContract.Action.OnExtraInfoChanged -> {
+                onExtraInfoChanged(action.extraInfo)
+            }
+
+            is SaveAddressContract.Action.OnFloorNumberChanged -> {
+                onFloorNumberChanged(action.floorNumber)
+            }
+
+            is SaveAddressContract.Action.OnFirstPhoneChanged -> {
+                onFirstPhoneChanged(action.phone)
+            }
+
+            is SaveAddressContract.Action.OnSecondPhoneChanged -> {
+                onSecondPhoneChanged(action.phone)
+            }
+
+            is SaveAddressContract.Action.OnSpecialSignChanged -> {
+                onSpecialSignChanged(action.specialSign)
+            }
+
+            is SaveAddressContract.Action.OnStreetChanged -> {
+                onStreetChanged(action.street)
+            }
+
+            is SaveAddressContract.Action.OnSaveAddressClicked -> {
+                onSaveAddressClicked()
+            }
+
+            is SaveAddressContract.Action.OnBackClick -> {
+                onBackClick()
+            }
         }
     }
+
     private fun onApartmentNumberChanged(value: String) {
         updateState {
             copy(
-                apartmentNumber = apartmentNumber.copy(value = value)
+                apartmentNumber = apartmentNumber.copy(value = value),
+                isAddressExist = false
             )
         }
     }
@@ -65,7 +104,8 @@ class SaveAddressViewModel(
     private fun onBuildingNumberChanged(value: String) {
         updateState {
             copy(
-                buildingNumber = buildingNumber.copy(value = value)
+                buildingNumber = buildingNumber.copy(value = value),
+                isAddressExist = false
             )
         }
     }
@@ -73,7 +113,8 @@ class SaveAddressViewModel(
     private fun onExtraInfoChanged(value: String) {
         updateState {
             copy(
-                extraInfo = extraInfo.copy(value = value)
+                extraInfo = extraInfo.copy(value = value),
+                isAddressExist = false
             )
         }
     }
@@ -81,27 +122,29 @@ class SaveAddressViewModel(
     private fun onFloorNumberChanged(value: String) {
         updateState {
             copy(
-                floorNumber = floorNumber.copy(value = value)
+                floorNumber = floorNumber.copy(value = value),
+                isAddressExist = false
             )
         }
     }
 
     private fun onFirstPhoneChanged(value: String) {
         updateState {
-            copy(firstPhone = firstPhone.copy(value = value, error = null))
+            copy(firstPhone = firstPhone.copy(value = value, error = null), isAddressExist = false)
         }
     }
 
     private fun onSecondPhoneChanged(value: String) {
         updateState {
-            copy(secondPhone = secondPhone.copy(value = value, error = null))
+            copy(secondPhone = secondPhone.copy(value = value, error = null), isAddressExist = false)
         }
     }
 
     private fun onSpecialSignChanged(value: String) {
         updateState {
             copy(
-                specialSign = specialSign.copy(value = value)
+                specialSign = specialSign.copy(value = value),
+                isAddressExist = false
             )
         }
     }
@@ -109,10 +152,12 @@ class SaveAddressViewModel(
     private fun onStreetChanged(value: String) {
         updateState {
             copy(
-                street = street.copy(value = value)
+                street = street.copy(value = value),
+                isAddressExist = false
             )
         }
     }
+
     private fun onBackClick() {
         viewModelScope.launch(Dispatchers.IO) {
             fireNavigateUp()
@@ -168,12 +213,23 @@ class SaveAddressViewModel(
             latitude = state.value.latitude,
             longitude = state.value.longitude
         )
-        viewModelScope.launch(Dispatchers.IO) {
-            saveAddress.invoke(request).collectResource(
-                onSuccess = ::onSaveAddressSuccess, onLoading = ::onLoading
-            )
-        }
 
+        viewModelScope.launch(Dispatchers.IO) {
+            if (addressIsExist()) {
+                updateState { copy(isAddressExist = true) }
+                fireMessage(
+                    IMessageEvent.Snackbar(
+                        UIText.StringResource(R.string.your_address_already_saved),
+                        messageType = MessageType.ERROR
+                    )
+                )
+            } else {
+                saveAddress.invoke(request).collectResource(
+                    onSuccess = ::onSaveAddressSuccess,
+                    onLoading = ::onLoading
+                )
+            }
+        }
     }
 
     fun onSaveAddressSuccess(saveAddressResponse: Address) {
@@ -190,12 +246,25 @@ class SaveAddressViewModel(
             }
         }
 
-        fireNavigate(destination = IMainGraph.Home, builder = {
-            popUpTo(IMainGraph.Home) {
-                inclusive = true
-                saveState = false
+        when(route.saveAddressDestinationType){
+
+            SaveAddressDestinationType.MAP_DESTINATION -> {
+                fireNavigate(destination = IMainGraph.Home, builder = {
+                    popUpTo(IMainGraph.Home) {
+                        inclusive = true
+                        saveState = false
+                    }
+                })
             }
-        })
+            SaveAddressDestinationType.POINT_TO_POINT_DESTINATION -> {
+                fireNavigate(destination = IOrderGraph.PointToPoint, builder = {
+                    popUpTo(IOrderGraph.PointToPoint) {
+                        inclusive = true
+                        saveState = false
+                    }
+                })
+            }
+        }
 
     }
 
@@ -207,6 +276,27 @@ class SaveAddressViewModel(
 
     fun onLoading(isLoad: Boolean) {
         fireLoading(ILoadingEvent.CircularProgressIndicator(isLoad))
+    }
+
+    private suspend fun addressIsExist(): Boolean = suspendCoroutine { continuation ->
+        viewModelScope.launch(Dispatchers.IO) {
+            getAddress.invoke(Unit).collectResource(
+                onSuccess = { addresses ->
+                    val exists = addresses.any {
+                        it.regionId == state.value.regionId &&
+                        it.areaId == state.value.areaId &&
+                        it.street == state.value.street.value &&
+                        it.floorNumber == state.value.floorNumber.value &&
+                        it.buildingNumber == state.value.buildingNumber.value &&
+                        it.apartmentNumber == state.value.apartmentNumber.value &&
+                        it.firstPhone == state.value.firstPhone.value &&
+                        it.secondPhone == state.value.secondPhone.value &&
+                        it.specialSign == state.value.specialSign.value
+                    }
+                    continuation.resume(exists)
+                }
+            )
+        }
     }
 
 
